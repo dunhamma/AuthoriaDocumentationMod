@@ -28,10 +28,13 @@ Open `http://localhost:3000`.
 ```bash
 pnpm lint
 pnpm build
+pnpm validate:content
 ```
 
 The build uses `output: "export"`, so all article routes must be statically
-generated.
+generated. The content validator runs against `site/out` after a build and
+checks public article counts plus banned public scaffolding/removed-companion
+terms.
 
 ## Content Rules
 

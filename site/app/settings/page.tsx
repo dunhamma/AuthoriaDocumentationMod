@@ -4,7 +4,7 @@ import { getPresetFacts } from "@/lib/arr/presets";
 
 export default async function SettingsPage() {
   const facts = await getPresetFacts();
-  const highlightedFacts = facts.filter((fact) => fact.confidence === "high").slice(0, 12);
+  const highlightedFacts = facts.filter((fact) => fact.confidence === "high");
 
   return (
     <div className="space-y-8 pb-12">

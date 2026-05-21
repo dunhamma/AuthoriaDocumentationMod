@@ -2,6 +2,9 @@
 
 Use this guide when turning ARR evidence into player-facing documentation.
 
+For current harvested coverage, implemented article families, and remaining
+high-value slices, see `docs/article-harvest-status.md`.
+
 ## Goal
 
 The output should help someone understand:

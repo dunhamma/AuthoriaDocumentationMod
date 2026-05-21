@@ -1,25 +1,52 @@
 import Link from "next/link";
-import { ArrowUpRight, BookOpenText, Compass, Layers3 } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpenText,
+  Compass,
+  Map,
+  Settings2,
+  ShieldAlert,
+  Users,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import type { ReferenceEntry } from "@/lib/content/schema";
+import { getArticleHref } from "@/lib/content/catalog";
 
 const kindStyles = {
-  system: {
+  systemArticle: {
     label: "System",
-    icon: Layers3,
+    icon: BookOpenText,
     accent: "text-teal-700",
     surface: "bg-teal-50",
   },
-  experience: {
-    label: "Experience",
+  companionArticle: {
+    label: "Companion",
+    icon: Users,
+    accent: "text-indigo-700",
+    surface: "bg-indigo-50",
+  },
+  regionGuide: {
+    label: "Region",
+    icon: Map,
+    accent: "text-emerald-700",
+    surface: "bg-emerald-50",
+  },
+  questArcGuide: {
+    label: "Quest Arc",
     icon: Compass,
     accent: "text-amber-700",
     surface: "bg-amber-50",
   },
-  mod: {
-    label: "Output Layer",
-    icon: BookOpenText,
+  presetFactReference: {
+    label: "Settings",
+    icon: Settings2,
+    accent: "text-sky-700",
+    surface: "bg-sky-50",
+  },
+  evidenceDossier: {
+    label: "Evidence",
+    icon: ShieldAlert,
     accent: "text-rose-700",
     surface: "bg-rose-50",
   },
@@ -31,7 +58,7 @@ export function TopicCard({ entry }: { entry: ReferenceEntry }) {
 
   return (
     <Link
-      href={`/${entry.kind}s/${entry.slug}`}
+      href={getArticleHref(entry)}
       className="group block rounded-lg border border-black/8 bg-white px-5 py-5 transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_18px_40px_-28px_rgba(15,23,42,0.35)]"
     >
       <div className="space-y-4">
@@ -70,4 +97,3 @@ export function TopicCard({ entry }: { entry: ReferenceEntry }) {
     </Link>
   );
 }
-

@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Authoria Reference Site
 
-## Getting Started
+Static-first Next.js guide for the live ARR-based Authoria build.
 
-First, run the development server:
+The public site is an article-grade gameplay reference, not a mod catalog. It
+organizes content by player questions and experience areas:
+
+- `Start Here`
+- `Progression`
+- `Combat`
+- `Survival`
+- `Companions`
+- `Regions`
+- `Quest Arcs`
+- `Settings`
+- `Evidence`
+
+## Local Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verification
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm lint
+pnpm build
+```
 
-## Learn More
+The build uses `output: "export"`, so all article routes must be statically
+generated.
 
-To learn more about Next.js, take a look at the following resources:
+## Content Rules
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Write for how Authoria plays, not for which mods are installed.
+- Keep raw mod/plugin names in evidence, maintainer context, or citations.
+- Do not render enabled-mod lists, MO2 separator dumps, or representative mod
+  lists as public guide content.
+- Quote concrete preset values through the ARR preset extraction layer when a
+  setting materially supports an article claim.
+- Mark unverified gameplay interpretation as a verification note instead of
+  presenting it as final.

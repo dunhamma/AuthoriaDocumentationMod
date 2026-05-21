@@ -15,9 +15,11 @@ type TopicBrowserProps = {
 
 const filterOptions: { value: ReferenceKind | "all"; label: string }[] = [
   { value: "all", label: "All" },
-  { value: "system", label: "Systems" },
-  { value: "experience", label: "Experiences" },
-  { value: "mod", label: "Output Layer" },
+  { value: "systemArticle", label: "Systems" },
+  { value: "companionArticle", label: "Companions" },
+  { value: "regionGuide", label: "Regions" },
+  { value: "questArcGuide", label: "Quest Arcs" },
+  { value: "presetFactReference", label: "Settings" },
 ];
 
 export function TopicBrowser({
@@ -77,7 +79,7 @@ export function TopicBrowser({
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search systems, experiences, outputs, or player questions"
+            placeholder="Search by player question, companion, region, quest arc, or setting"
             className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
           />
         </label>
@@ -115,10 +117,9 @@ export function TopicBrowser({
       {filteredEntries.length === 0 ? (
         <div className="rounded-lg border border-dashed border-black/10 bg-white px-5 py-10 text-sm text-slate-600">
           No topics matched the current filter. Narrow the question or add a new
-          reference topic to the catalog.
+          article topic to the catalog.
         </div>
       ) : null}
     </section>
   );
 }
-

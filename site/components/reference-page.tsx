@@ -2,36 +2,45 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 import type { ReferenceEntry } from "@/lib/content/schema";
+import type { PresetFact } from "@/lib/arr/presets";
 import { EvidenceList } from "@/components/evidence-list";
+import { getArticleHref, getSection } from "@/lib/content/catalog";
 
 const headings = {
-  system: "Systems",
-  experience: "Experiences",
-  mod: "Output Layer",
+  systemArticle: "System",
+  companionArticle: "Companion",
+  regionGuide: "Region",
+  questArcGuide: "Quest Arc",
+  presetFactReference: "Settings",
+  evidenceDossier: "Evidence",
 } as const;
 
 export function ReferencePage({
   entry,
   related,
+  presetFacts = [],
 }: {
   entry: ReferenceEntry;
   related: ReferenceEntry[];
+  presetFacts?: PresetFact[];
 }) {
+  const section = getSection(entry.section);
+
   return (
     <div className="space-y-10 pb-12">
       <section className="space-y-5">
         <Link
-          href={`/${entry.kind}s`}
+          href={`/${entry.section}`}
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-slate-950"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to {headings[entry.kind]}
+          Back to {section?.title ?? headings[entry.kind]}
         </Link>
 
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
           <div className="space-y-4">
             <div className="inline-flex rounded-lg bg-slate-950 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white">
-              {headings[entry.kind].slice(0, -1)}
+              {headings[entry.kind]}
             </div>
             <div className="space-y-3">
               <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-950">
@@ -86,10 +95,10 @@ export function ReferencePage({
             </div>
             <div className="rounded-lg border border-black/8 bg-white px-4 py-4">
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-700">
-                UX touchpoints
+                Practical guidance
               </p>
               <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                {entry.uxTouchpoints.map((item) => (
+                {entry.practicalGuidance.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
@@ -125,34 +134,61 @@ export function ReferencePage({
         <div className="space-y-6">
           <section className="rounded-lg border border-black/8 bg-white px-5 py-5">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-              Implementation chain
+              Provenance
             </p>
-            <div className="mt-4 space-y-4">
-              <div>
-                <h3 className="text-sm font-semibold text-slate-950">Upstream</h3>
-                <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-600">
-                  {entry.implementationChain.upstream.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-slate-950">Requiem layer</h3>
-                <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-600">
-                  {entry.implementationChain.requiem.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-slate-950">Authoria layer</h3>
-                <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-600">
-                  {entry.implementationChain.authoria.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+            <div className="mt-4 space-y-3">
+              {entry.evidenceDossier.map((item) => (
+                <div key={item.publicLabel}>
+                  <h3 className="text-sm font-semibold text-slate-950">
+                    {item.publicLabel}
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    {item.internalSources.join(", ")}
+                  </p>
+                </div>
+              ))}
             </div>
+          </section>
+
+          {entry.settingQuotes.length > 0 || presetFacts.length > 0 ? (
+            <section className="rounded-lg border border-black/8 bg-white px-5 py-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Quoteable settings
+              </p>
+              <div className="mt-4 space-y-4">
+                {entry.settingQuotes.map((quote) => (
+                  <div key={quote.factId} className="rounded-lg bg-slate-50 px-4 py-3">
+                    <p className="text-sm font-semibold text-slate-950">
+                      {quote.label}: {quote.value}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      {quote.interpretation}
+                    </p>
+                  </div>
+                ))}
+                {presetFacts.map((fact) => (
+                  <div key={fact.id} className="rounded-lg bg-slate-50 px-4 py-3">
+                    <p className="text-sm font-semibold text-slate-950">
+                      {fact.publicLabel}: {fact.section}.{fact.key} = {fact.value}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      {fact.interpretation}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <section className="rounded-lg border border-black/8 bg-white px-5 py-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+              UX touchpoints
+            </p>
+            <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-600">
+              {entry.uxTouchpoints.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </section>
 
           <section className="space-y-3">
@@ -161,6 +197,19 @@ export function ReferencePage({
             </p>
             <EvidenceList evidence={entry.evidence} />
           </section>
+
+          {entry.verificationNotes.length > 0 ? (
+            <section className="rounded-lg border border-black/8 bg-amber-50 px-5 py-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-800">
+                Verification notes
+              </p>
+              <ul className="mt-4 space-y-2 text-sm leading-6 text-amber-950">
+                {entry.verificationNotes.map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
           {related.length > 0 ? (
             <section className="rounded-lg border border-black/8 bg-white px-5 py-5">
@@ -171,7 +220,7 @@ export function ReferencePage({
                 {related.map((item) => (
                   <Link
                     key={item.slug}
-                    href={`/${item.kind}s/${item.slug}`}
+                    href={getArticleHref(item)}
                     className="flex items-start justify-between gap-3 rounded-lg border border-black/8 px-4 py-3 transition hover:border-slate-300 hover:bg-slate-50"
                   >
                     <div>
@@ -193,4 +242,3 @@ export function ReferencePage({
     </div>
   );
 }
-

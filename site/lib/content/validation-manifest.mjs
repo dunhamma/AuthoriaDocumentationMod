@@ -10,7 +10,7 @@ export const expectedSections = {
   combat: 1,
   survival: 1,
   companions: 1,
-  regions: 1,
+  regions: 2,
   "quest-arcs": 0,
 };
 
@@ -27,7 +27,7 @@ export const expectedPublicSlugs = {
   combat: ["combat-rhythm-and-dodge-commitment"],
   survival: ["survival-seasons-and-travel"],
   companions: ["followers-and-party-power"],
-  regions: ["riverwood-whiterun-early-hub"],
+  regions: ["falkreath-hub", "riverwood-whiterun-early-hub"],
   "quest-arcs": [],
 };
 
@@ -99,7 +99,21 @@ export const requiredExportedPageTerms = [
     route: "regions.html",
     requiredTerms: [
       "Regions",
+      "Falkreath Hub",
       "Riverwood and Whiterun Early Hub",
+    ],
+  },
+  {
+    route: "regions/falkreath-hub.html",
+    requiredTerms: [
+      "Falkreath Hub",
+      "Do this first",
+      "Know this before you leave town",
+      "Watch out for",
+      "What changed from vanilla Skyrim",
+      "Source notes",
+      "Preset source notes",
+      "Evidence view",
     ],
   },
   {

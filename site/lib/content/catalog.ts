@@ -855,11 +855,12 @@ const regionDetails: Record<
 > = {
   "falkreath-hub": {
     summary:
-      "Falkreath should be written as a tempting forest hub: it has town services and board work, but the surrounding hold can pull a fragile character into wilderness, predators, necromancy, and overlong road loops before the build is ready.",
+      "Falkreath is a good second-step hub after Riverwood and Whiterun: useful services, short work, and forest roads, but enough wilderness pull to punish a character who treats quiet scenery as safety.",
     tags: ["region", "hub", "falkreath", "forest", "early progression"],
     playerExperience: [
-      "The player sees a quieter hold that looks safer than it is because the danger is spread through woods, roads, and nearby quest hooks.",
+      "The hold feels calmer than Whiterun, but the danger is spread through woods, roads, and nearby quest hooks.",
       "Missives and town services make Falkreath useful, but leaving town without food, warmth, and retreat options can turn a simple errand into an attrition route.",
+      "The town works best when you use it as a recovery stop, not a launch button for every forest marker.",
     ],
     progressionImpact: [
       "Falkreath works best after the Riverwood/Whiterun loop has stabilized money, food, and a follower plan.",
@@ -870,20 +871,27 @@ const regionDetails: Record<
       "Use Falkreath for short board jobs, resupply, and local scouting before pushing toward remote ruins or Daedric hooks.",
       "Treat road exits as separate decisions: south and west routes can be longer and harder to recover from than they look on the map.",
       "Carry food and water even for short errands because forest travel can stretch if the player avoids direct fights.",
+      "Return to town when the route starts spending potions, warmth, fatigue, or daylight faster than it pays you back.",
     ],
     uxTouchpoints: ["Missives board", "Paper map", "Survival widgets", "Follower controls", "Town services"],
     sections: [
       {
-        title: "Safe early use",
+        title: "Use it after your first loop",
         paragraphs: [
-          "Falkreath is not a bad early hub, but it should be introduced as a second-step hub rather than the default first answer. ARR evidence supports that reading: Missives are weighted heavily toward easy work, important town and farm markers are visible, and the survival stack makes short, recoverable town loops valuable.",
-          "The guide should tell players to use Falkreath for controlled errands and supplies, then back out before the hold's wilderness quest density turns into a campaign commitment.",
+          "Falkreath is not a bad early hub, but it is a better second hub than first answer. Come here once the Riverwood and Whiterun loop has taught you how to sleep, sell, eat, take short work, and go home before the route turns sour.",
+          "Use the town for controlled errands, supplies, and scouting. If a job points deep into woods, ruins, or a long road with no obvious warm stop, treat that as a later route rather than today's paycheck.",
         ],
       },
       {
-        title: "Risk profile",
+        title: "The forest hides the cost",
         paragraphs: [
-          "The danger is route drift. A player can leave town for what looks like a short task and end up in poor recovery terrain, cold weather, or a fight they cannot disengage from cleanly. The page should label nearby caves, ruins, and Daedric-facing hooks as verify-before-commit rather than free early content.",
+          "The danger is route drift. You can leave town for what looks like a short task and end up in poor recovery terrain, bad weather, or a fight you cannot disengage from cleanly.",
+          "Read Falkreath jobs by return path first. A small reward is only small work when you can name the bed, food source, and road back before you leave.",
+        ],
+        bullets: [
+          "Stable: town errands, short roads, known beds, and work that brings you back before night.",
+          "Scouting: forest routes where you can turn around before the objective.",
+          "Delay: remote ruins, Daedric hooks, long wilderness loops, and any job that makes retreat unclear.",
         ],
       },
     ],
@@ -2397,7 +2405,7 @@ const entries: ReferenceEntry[] = [
     related: ["survival-seasons-and-travel", "route-readiness-and-return-rules"],
   }),
   ...[
-    ["falkreath-hub", "Falkreath Hub", "A forest hub where survival, roads, and nearby quest hooks need careful early labels."],
+    ["falkreath-hub", "Falkreath Hub", "Use Falkreath as a second-step forest hub: short work, supplies, scouting, and a quick return before the woods pull you too far."],
     ["riften-ivarstead-corridor", "Riften and Ivarstead Corridor", "A travel corridor where road safety, resupply, and quest temptation need explicit staging."],
     ["solitude-hub", "Solitude Hub", "A high-service hub that can stabilize money and travel but may tempt overcommitment."],
     ["windhelm-hub", "Windhelm Hub", "A cold-weather hub where season and survival pressure should be first-class guidance."],
@@ -2410,6 +2418,7 @@ const entries: ReferenceEntry[] = [
       slug,
       kind: "regionGuide",
       section: "regions",
+      ...(slug === "falkreath-hub" ? { publicationStatus: "evidence-backed" as const } : {}),
       title,
       strapline,
       summary:

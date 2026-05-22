@@ -53,7 +53,7 @@ These counts are enforced by `site/scripts/validate-content.mjs`:
 - `combat`: 1
 - `survival`: 1
 - `companions`: 1
-- `regions`: 1
+- `regions`: 2
 - `quest-arcs`: 0
 
 Seeded companion, region, and quest-arc pages remain in the catalog as
@@ -108,9 +108,9 @@ The guide now quotes or interprets local facts from these surfaces:
 
 ## Remaining High-Value Slices
 
-- Continue promoting the survival-first route path, starting from
-  Riverwood/Whiterun and then adding route-specific danger labels as local
-  evidence supports them.
+- Continue promoting the survival-first route path from Riverwood/Whiterun and
+  Falkreath into the next recovery loops, then add route-specific danger labels
+  as local evidence supports them.
 - Record-level verification for specific Requiem/NoxCrab/Noxrim claims:
   perk gates, locks, spell learning, bosses, dragons, vendor behavior, and
   starting-kit item lists.

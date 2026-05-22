@@ -44,17 +44,20 @@ representative mod cards, and removed companion routes.
   route-readiness article that connects system rules to practical early
   recovery decisions.
 
-## Current Article Counts
+## Current Public Almanac Counts
 
 These counts are enforced by `site/scripts/validate-content.mjs`:
 
 - `start-here`: 2
-- `progression`: 4
+- `progression`: 3
 - `combat`: 1
 - `survival`: 1
-- `companions`: 10
-- `regions`: 7
-- `quest-arcs`: 12
+- `companions`: 1
+- `regions`: 1
+- `quest-arcs`: 0
+
+Seeded companion, region, and quest-arc pages remain in the catalog as
+maintainer drafts until promoted through `docs/almanac-promotion-pipeline.md`.
 
 ## Evidence Added To Articles
 
@@ -105,6 +108,9 @@ The guide now quotes or interprets local facts from these surfaces:
 
 ## Remaining High-Value Slices
 
+- Continue promoting the survival-first route path, starting from
+  Riverwood/Whiterun and then adding route-specific danger labels as local
+  evidence supports them.
 - Record-level verification for specific Requiem/NoxCrab/Noxrim claims:
   perk gates, locks, spell learning, bosses, dragons, vendor behavior, and
   starting-kit item lists.

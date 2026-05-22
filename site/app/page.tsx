@@ -75,6 +75,13 @@ export default function Home() {
               Plan a safe route
               <ArrowUpRight className="h-4 w-4" />
             </Link>
+            <Link
+              href="/regions/riverwood-whiterun-early-hub"
+              className="inline-flex items-center gap-2 rounded-lg border border-black/8 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-teal-300 hover:bg-teal-50"
+            >
+              Find your first hub
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
 
@@ -86,6 +93,7 @@ export default function Home() {
             <li>Rest before leaving a warm hub.</li>
             <li>Carry food, recovery supplies, and a way back.</li>
             <li>Take short work before remote quests.</li>
+            <li>Use Riverwood and Whiterun as your first safety loop.</li>
             <li>Assume Requiem makes bad fights worse than you remember.</li>
           </ul>
         </aside>

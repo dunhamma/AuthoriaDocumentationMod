@@ -85,6 +85,7 @@ export function isPublicArticle(entry: ReferenceEntry) {
   return (
     entry.section !== "settings" &&
     entry.section !== "evidence" &&
+    entry.publicationStatus !== undefined &&
     publicArticleStates.includes(entry.publicationStatus)
   );
 }
@@ -94,8 +95,11 @@ export function isProofArticle(entry: ReferenceEntry) {
 }
 
 function toPublicEntry(entry: ReferenceEntry): ReferenceEntry {
+  const publicEntry = { ...entry };
+  delete publicEntry.publicationStatus;
+
   return {
-    ...entry,
+    ...publicEntry,
     evidence: entry.evidence.map((item) => ({
       label: item.label,
       note: item.note,
@@ -1644,10 +1648,10 @@ const entries: ReferenceEntry[] = [
       "Follower support can make a route safer in combat while making stealth, dialogue pacing, carriage use, and resource management more complex.",
     ],
     practicalGuidance: [
-      "Teach readers to ask where they sleep, eat, warm up, sell, and retreat before accepting distant work.",
+      "Ask where you sleep, eat, warm up, sell, and retreat before accepting distant work.",
       "Treat easy board work and modest deliveries as stabilization tools, not as generic content filler.",
       "Treat giant, dragon, remote ruin, new-land, and long-corridor hooks as readiness checks until local route evidence proves otherwise.",
-      "Use hub pages to name nearby recovery loops before naming nearby dangers.",
+      "Use hub pages to find nearby recovery loops before chasing nearby danger.",
     ],
     uxTouchpoints: [
       "Missives board",
@@ -2308,56 +2312,89 @@ const entries: ReferenceEntry[] = [
     slug: "riverwood-whiterun-early-hub",
     kind: "regionGuide",
     section: "regions",
+    publicationStatus: "evidence-backed",
     title: "Riverwood and Whiterun Early Hub",
     strapline:
-      "The safest first route is a stabilizing loop: shelter, vendors, low-commitment work, and known roads before ambition.",
+      "Use Riverwood and Whiterun as your first safety loop: beds, food, vendors, short work, and roads you can learn before ambition takes over.",
     summary:
-      "The first region guide should answer where to go first by describing Riverwood and Whiterun as a practical stabilization corridor: resupply, rest, map readability, manageable work, nearby dangers, and follower-supported expansion.",
+      "This is the first place to practice Authoria's rhythm. Rest before leaving, sell before you overload, buy food before luxuries, take short work before remote quests, and treat nearby dungeons as readiness checks rather than automatic first stops.",
     tags: ["region", "early game", "whiterun", "riverwood", "safe route"],
     playerExperience: [
-      "The player needs a place to turn system knowledge into routine: sleep, eat, sell, buy, take work, and avoid bad fights.",
+      "This corridor turns survival rules into routine: sleep, eat, sell, buy, take work, test roads, and come back before trouble compounds.",
       "A good early hub reduces confusion without pretending Requiem danger is gone.",
+      "The route is useful because mistakes are more recoverable here than on remote roads or inside long quest arcs.",
     ],
     progressionImpact: [
       "Stable hubs let fragile characters build money and gear before campaign arcs.",
-      "Nearby dungeons and roads need risk labels, not only location names.",
+      "Treat nearby caves, ruins, cold roads, and large quest hooks as later choices until the character has tools and a return plan.",
+      "Short work can stabilize a character; distant work can become a survival problem even when the reward looks modest.",
     ],
     practicalGuidance: [
-      "Describe resupply, bed access, vendors, carriage access, and board work.",
-      "Mark nearby danger as safe, risky, or avoid.",
-      "Mention whether winter or survival pressure changes the route.",
+      "Start with a bed, food, a vendor, and a known road back.",
+      "Use local errands, delivery work, and short board jobs before major dungeon pushes.",
+      "Treat Bleak Falls-style ambition, giant work, dragon hooks, cold corridors, and remote ruins as later readiness checks.",
+      "Recruit help only when it supports the route; do not use followers as permission to ignore food, rest, and retreat.",
     ],
     uxTouchpoints: ["Map markers", "Missives", "Trade", "Survival widgets"],
+    evidenceDossier: [
+      {
+        publicLabel: "Local survival settings",
+        internalSources: ["SunHelm profiles", "camping and inn settings"],
+      },
+      {
+        publicLabel: "Local work-board weighting",
+        internalSources: ["Missives settings"],
+      },
+      {
+        publicLabel: "Local map and travel settings",
+        internalSources: ["map marker settings", "carriage settings"],
+      },
+    ],
     sections: [
       {
-        title: "Hub guide standard",
+        title: "Do the small loop first",
         paragraphs: [
-          "Each hub page should help a player decide whether to stay local, take short work, recruit help, or travel. The article should be practical enough to prevent an accidental campaign start.",
-          "Riverwood and Whiterun should be treated as the first stabilization corridor because they let the player test the core loop without committing to a remote worldspace: sell loot, buy food, rest, inspect board work, learn roads, and decide whether a follower is needed before pushing into dungeons or larger quests.",
+          "Riverwood and Whiterun are useful because they let you practice Authoria without committing to a long absence from safety. Sell what you do not need, buy food, check bed access, inspect short work, and learn which roads you can walk without burning your whole recovery buffer.",
+          "A safe loop is not harmless. It is recoverable. If a fight, cold night, bad road, or missed meal goes wrong, this corridor gives you a reasonable chance to return to a bed, vendor, and food source before the mistake becomes the whole session.",
         ],
       },
       {
-        title: "What is safe here",
+        title: "Short work is not filler",
         paragraphs: [
-          "Safe does not mean harmless. It means recoverable. A safe early hub has beds, vendors, food, reachable roads, and short tasks that let a weak character make mistakes without being stranded. Riverwood and Whiterun should be written as a place to practice Authoria's rules: do small work, evaluate supplies, and leave major threats alone until the build has tools.",
-          "Missives evidence supports this role because easy jobs are common and very hard jobs are disabled in the local preset. That makes the board loop a reasonable early suggestion once the player understands that even easy work can become risky if it sends them into cold, darkness, or hostile terrain.",
+          "Short local work is how a fragile character turns the first week into food, rooms, repairs, and better equipment. Delivery work, nearby errands, and modest board jobs are stabilization tools when the route is close enough to return from.",
+          "Do not read easy work as guaranteed safety. A simple job can still become a bad choice if it sends you through cold weather, darkness, hostile terrain, or a road with no useful retreat.",
         ],
         bullets: [
-          "Use local errands and delivery work before major dungeon pushes.",
-          "Treat Bleak Falls-style ambition as a readiness check, not automatic first content.",
-          "Recruiting help can be sensible, but party power should be chosen deliberately.",
+          "Stable: a short road, known bed, vendor access, affordable food, and a familiar retreat.",
+          "Scouting: an unknown road with enough supplies to turn around before the objective.",
+          "Delay: remote ruins, long cold routes, boss markers, dragon risk, new-land travel, and quest hooks that may not release you quickly.",
+        ],
+      },
+      {
+        title: "What to leave alone",
+        paragraphs: [
+          "The biggest early mistake is treating familiar Skyrim names as permission. A famous dungeon, visible marker, or large reward can be real content and still be wrong for the first week.",
+          "Use this hub to learn the return rule: if the route spends your food, warmth, potions, fatigue, or retreat path before the objective, go back. Coming home alive with a little gold is progress.",
+        ],
+        bullets: [
+          "Delay major dungeon pushes until the build has tools, supplies, and recovery money.",
+          "Delay cold or remote corridors when you cannot name the next warm stop.",
+          "Delay giant, dragon, boss, and campaign-scale hooks until route readiness is obvious.",
         ],
       },
     ],
     evidence: [
       ...coreEvidence,
-      { label: "Map marker settings", path: `${mcm}/mapmarkers/Atlas Map Markers.json`, note: "Supports map-readability claims." },
-      { label: "Missives preset", path: `${mcm}/MCM/Settings/Missives.ini`, note: "Supports local work-loop claims." },
+      { label: "Map marker settings", path: `${mcm}/mapmarkers/Atlas Map Markers.json`, note: "Supports map-readability source notes." },
+      { label: "Missives preset", path: `${mcm}/MCM/Settings/Missives.ini`, note: "Supports local work-loop source notes." },
+      { label: "Carriage destination preset", path: `${mcm}/MCM/Settings/Better Carriage Destinations.ini`, note: "Supports settlement-anchor travel guidance." },
+      { label: "SunHelm normal profile", path: `${mcm}/SunHelm/Config/normal.json`, note: "Supports first-week food and fatigue guidance." },
+      { label: "Inn availability preset", path: `${mcm}/MCM/Settings/Inns Can Be Closed.ini`, note: "Supports backup-rest guidance." },
     ],
     verificationNotes: [
-      "Specific nearby dungeon danger labels need in-game or xEdit-backed review.",
+      "Specific nearby dungeon danger labels still need in-game or record-backed review before exact danger tiers are published.",
     ],
-    related: ["economy-gear-and-open-world-work", "survival-seasons-and-travel"],
+    related: ["survival-seasons-and-travel", "route-readiness-and-return-rules"],
   }),
   ...[
     ["falkreath-hub", "Falkreath Hub", "A forest hub where survival, roads, and nearby quest hooks need careful early labels."],
@@ -2625,9 +2662,15 @@ export function getEntriesBySection(section: ReferenceSection) {
 }
 
 export function getEntry(section: ReferenceSection, slug: string) {
-  return getRoutableEntries().find(
+  const entry = getRoutableEntries().find(
     (entry) => entry.section === section && entry.slug === slug,
   );
+
+  if (!entry) {
+    return undefined;
+  }
+
+  return isPublicArticle(entry) ? toPublicEntry(entry) : entry;
 }
 
 export function getEntryBySlug(slug: string) {
@@ -2637,12 +2680,20 @@ export function getEntryBySlug(slug: string) {
 export function getRelatedEntries(slugs: string[]) {
   return slugs
     .map((slug) => getEntryBySlug(slug))
-    .filter((entry): entry is ReferenceEntry => {
+    .flatMap((entry) => {
       if (!entry) {
-        return false;
+        return [];
       }
 
-      return isPublicArticle(entry) || isProofArticle(entry);
+      if (isPublicArticle(entry)) {
+        return [toPublicEntry(entry)];
+      }
+
+      if (isProofArticle(entry)) {
+        return [entry];
+      }
+
+      return [];
     });
 }
 

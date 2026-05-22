@@ -4,6 +4,7 @@ import path from "node:path";
 import {
   bannedPublicTerms,
   expectedSections,
+  expectedPublicSlugs,
   exportedSections,
   forbiddenMainNavHrefs,
   forbiddenSlugs,
@@ -176,6 +177,28 @@ async function exportedSlugs() {
   return slugs;
 }
 
+async function exportedGuideSlugsBySection() {
+  const slugsBySection = new Map();
+
+  for (const section of Object.keys(expectedSections)) {
+    const sectionPath = path.join(root, section);
+    const slugs = [];
+
+    if (await exists(sectionPath)) {
+      const entries = await readdir(sectionPath, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory() && !entry.name.startsWith("__next.")) {
+          slugs.push(entry.name);
+        }
+      }
+    }
+
+    slugsBySection.set(section, slugs.sort());
+  }
+
+  return slugsBySection;
+}
+
 async function collectPublicFiles(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   const files = [];
@@ -256,6 +279,26 @@ if (!(await exists(root))) {
     const actualCount = await sectionArticleCount(section);
     if (actualCount !== expectedCount) {
       failures.push(`${section} expected ${expectedCount} articles, found ${actualCount}.`);
+    }
+  }
+
+  const guideSlugsBySection = await exportedGuideSlugsBySection();
+  for (const [section, expectedSlugs] of Object.entries(expectedPublicSlugs)) {
+    const actualSlugs = guideSlugsBySection.get(section) ?? [];
+    const expected = [...expectedSlugs].sort();
+
+    for (const slug of actualSlugs) {
+      if (!expected.includes(slug)) {
+        failures.push(
+          `Unexpected public guide route exported: /${section}/${slug}. Check publicationStatus before publishing seeded pages.`,
+        );
+      }
+    }
+
+    for (const slug of expected) {
+      if (!actualSlugs.includes(slug)) {
+        failures.push(`Expected public guide route is missing: /${section}/${slug}.`);
+      }
     }
   }
 

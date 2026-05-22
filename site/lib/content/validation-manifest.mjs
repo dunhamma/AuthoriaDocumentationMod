@@ -10,8 +10,25 @@ export const expectedSections = {
   combat: 1,
   survival: 1,
   companions: 1,
-  regions: 0,
+  regions: 1,
   "quest-arcs": 0,
+};
+
+export const expectedPublicSlugs = {
+  "start-here": [
+    "controls-hud-and-interaction",
+    "first-session-setup",
+  ],
+  progression: [
+    "character-creation-and-starting-choices",
+    "requiem-progression",
+    "route-readiness-and-return-rules",
+  ],
+  combat: ["combat-rhythm-and-dodge-commitment"],
+  survival: ["survival-seasons-and-travel"],
+  companions: ["followers-and-party-power"],
+  regions: ["riverwood-whiterun-early-hub"],
+  "quest-arcs": [],
 };
 
 export const exportedSections = [
@@ -55,9 +72,48 @@ export const guideLeakTerms = [
   "needs in-game",
   "plugin records",
   "late patch layer",
+  "verification debt",
+  "TODO",
+  "evidence-backed",
 ];
 
 export const requiredExportedPageTerms = [
+  {
+    route: "index.html",
+    requiredTerms: [
+      "Survive Your First Week",
+      "Start with survival",
+      "Plan a safe route",
+      "Find your first hub",
+      "Use Riverwood and Whiterun as your first safety loop.",
+    ],
+  },
+  {
+    route: "survival.html",
+    requiredTerms: [
+      "Survival",
+      "Survival, Seasons, and Travel",
+    ],
+  },
+  {
+    route: "regions.html",
+    requiredTerms: [
+      "Regions",
+      "Riverwood and Whiterun Early Hub",
+    ],
+  },
+  {
+    route: "regions/riverwood-whiterun-early-hub.html",
+    requiredTerms: [
+      "Do this first",
+      "Know this before you leave town",
+      "Watch out for",
+      "What changed from vanilla Skyrim",
+      "Source notes",
+      "Preset source notes",
+      "Evidence view",
+    ],
+  },
   {
     route: "evidence.html",
     requiredTerms: [
@@ -70,6 +126,15 @@ export const requiredExportedPageTerms = [
 ];
 
 export const requiredArchitectureSources = [
+  {
+    relativePath: "../docs/almanac-promotion-pipeline.md",
+    requiredTerms: [
+      "Seed review",
+      "Evidence pass",
+      "Player rewrite",
+      "Publication gate",
+    ],
+  },
   {
     relativePath: "../docs/authoria-creation-roadmap.md",
     requiredTerms: [

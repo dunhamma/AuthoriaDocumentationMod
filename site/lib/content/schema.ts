@@ -17,6 +17,12 @@ export type ReferenceSection =
   | "settings"
   | "evidence";
 
+export type ArticlePublicationState =
+  | "seeded"
+  | "evidence-backed"
+  | "record-verified"
+  | "playtested";
+
 export type EvidenceItem = {
   label: string;
   path: string;
@@ -45,6 +51,7 @@ export type ReferenceEntry = {
   slug: string;
   kind: ReferenceKind;
   section: ReferenceSection;
+  publicationStatus: ArticlePublicationState;
   title: string;
   strapline: string;
   summary: string;

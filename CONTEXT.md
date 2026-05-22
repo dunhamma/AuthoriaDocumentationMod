@@ -106,11 +106,17 @@ Not every document needs every category. But this is the checklist for "rich eno
 
 Use these terms consistently.
 
+- `Authoria Almanac`: the public player-facing guide experience for Authoria.
+  It is written for players who know vanilla Skyrim but are new to Requiem,
+  Noxrim, and this modlist's local tuning.
 - `ARR install`: the local modlist instance at `D:\Wabbajack\modlists\ARR`.
 - `profile`: an MO2 profile; by default this means `ARSE`.
 - `mod`: an MO2 mod entry from `modlist.txt` or `modlist_report_gold.csv`.
 - `plugin`: a `.esm`, `.esp`, or `.esl` participating in gameplay records and load order.
 - `upstream mod`: the original mod as published by its author on Nexus, GitHub, or another source.
+- `Noxrim`: the specific NoxCrab mod family present in the Authoria build. Do
+  not use this as a broad label for every Requiem-adjacent, survival,
+  progression, economy, or local tuning effect.
 - `Authoria mod`: a local/custom ARR mod whose name starts with `Authoria` or `Auhoria`, or another clearly project-owned output.
 - `generated output`: content produced by tools such as xEdit, Synthesis, Reqtificator Lite, DynDOLOD, TexGen, xLODGen, Nemesis, or CK.
 - `source of truth`: the local ARR files that determine current behavior.

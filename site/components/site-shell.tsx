@@ -2,14 +2,11 @@ import Link from "next/link";
 import {
   BookOpenText,
   Compass,
-  FileSearch,
   Flame,
   Layers3,
   Map,
-  Settings2,
   Swords,
   Users,
-  Waypoints,
 } from "lucide-react";
 
 type SiteShellProps = {
@@ -17,6 +14,12 @@ type SiteShellProps = {
 };
 
 const primaryLinks = [
+  {
+    href: "/survival",
+    label: "Survival",
+    detail: "Survive the first week, then plan longer roads",
+    icon: Flame,
+  },
   {
     href: "/start-here",
     label: "Start Here",
@@ -36,12 +39,6 @@ const primaryLinks = [
     icon: Swords,
   },
   {
-    href: "/survival",
-    label: "Survival",
-    detail: "Seasons, travel, supplies, and maps",
-    icon: Flame,
-  },
-  {
     href: "/companions",
     label: "Companions",
     detail: "Follower-specific play guidance",
@@ -59,24 +56,6 @@ const primaryLinks = [
     detail: "Campaign readiness and worldspace travel",
     icon: BookOpenText,
   },
-  {
-    href: "/settings",
-    label: "Settings",
-    detail: "Concrete preset values",
-    icon: Settings2,
-  },
-  {
-    href: "/evidence",
-    label: "Evidence",
-    detail: "Maintainer provenance and extraction",
-    icon: FileSearch,
-  },
-  {
-    href: "/",
-    label: "Overview",
-    detail: "Article browser and coverage map",
-    icon: Waypoints,
-  },
 ] as const;
 
 export function SiteShell({ children }: SiteShellProps) {
@@ -87,15 +66,15 @@ export function SiteShell({ children }: SiteShellProps) {
           <div className="space-y-8">
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-700">
-                Authoria Reference
+                Authoria Almanac
               </p>
               <div className="space-y-2">
                 <p className="text-[1.75rem] font-semibold tracking-tight text-slate-950">
-                  Gameplay guide for the live ARR build
+                  A practical guide to staying alive
                 </p>
                 <p className="max-w-sm text-sm leading-6 text-slate-600">
-                  A reader-first view of how Authoria actually plays, with
-                  local evidence and patch provenance kept visible.
+                  Start with survival, learn what changed from Skyrim, and
+                  use Source notes when you want to see what supports the advice.
                 </p>
               </div>
             </div>
@@ -129,15 +108,11 @@ export function SiteShell({ children }: SiteShellProps) {
 
             <section className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
-                Operating rule
+                First rule
               </p>
               <p className="text-sm leading-6 text-slate-600">
-                Document the game as it exists in
-                {" "}
-                <span className="font-medium text-slate-950">
-                  D:\Wabbajack\modlists\ARR
-                </span>
-                , not as upstream pages describe it in isolation.
+                Eat before long roads, sleep before cold routes, and treat
+                early dungeons as a choice instead of a reflex.
               </p>
             </section>
           </div>

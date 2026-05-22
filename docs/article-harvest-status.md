@@ -3,6 +3,10 @@
 This document records the current state of the article-grade ARR guide harvest.
 It is a maintainer-facing sync note, not public player copy.
 
+For the end-to-end creation lifecycle that connects playable ARR build work to
+reference-site evidence and release gates, see
+`docs/authoria-creation-roadmap.md`.
+
 ## Current Site Shape
 
 The public site is organized by player experience instead of installed-mod

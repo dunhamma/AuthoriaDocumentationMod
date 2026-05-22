@@ -2,16 +2,16 @@ import { notFound } from "next/navigation";
 
 import { ReferencePage } from "@/components/reference-page";
 import {
-  getAllEntries,
   getEntry,
   getRelatedEntries,
+  getRoutableEntries,
   getSection,
 } from "@/lib/content/catalog";
 import { findPresetFacts, getPresetFacts } from "@/lib/arr/presets";
 import type { ReferenceSection } from "@/lib/content/schema";
 
 export function generateStaticParams() {
-  return getAllEntries().map((entry) => ({
+  return getRoutableEntries().map((entry) => ({
     section: entry.section,
     slug: entry.slug,
   }));

@@ -1,4 +1,5 @@
 import type {
+  ArticlePublicationState,
   EvidenceItem,
   ReferenceEntry,
   ReferenceKind,
@@ -18,43 +19,43 @@ export const sectionDefinitions: SectionDefinition[] = [
     slug: "start-here",
     title: "Start Here",
     description:
-      "First-session setup, new-save choices, and the opening flow from character creation into a stable early route.",
+      "Set up the first session before Skyrim muscle memory gets you into trouble.",
   },
   {
     slug: "progression",
     title: "Progression",
     description:
-      "How Authoria builds power through Requiem, starting choices, traits, Experience, economy, and gear access.",
+      "Learn how power, money, gear, and route readiness differ from vanilla Skyrim.",
   },
   {
     slug: "combat",
     title: "Combat",
     description:
-      "The practical rhythm of commitment-heavy fights, dodge gates, stamina pressure, wounds, and retreat discipline.",
+      "Fight with stamina, wounds, dodge commitment, and retreat in mind.",
   },
   {
     slug: "survival",
     title: "Survival",
     description:
-      "Food, fatigue, cold, seasons, map readability, and route planning as core gameplay pressure.",
+      "Start here: food, fatigue, cold, seasons, maps, and safe roads.",
   },
   {
     slug: "companions",
     title: "Companions",
     description:
-      "Follower-specific pages focused on party power, chatter, travel utility, Requiem tuning, and management cost.",
+      "Decide when a follower adds safety, story, utility, or too much extra noise.",
   },
   {
     slug: "regions",
     title: "Regions",
     description:
-      "Hub and route guides keyed to safe early progression, resupply, bounty work, and local danger.",
+      "Use towns and roads as recovery loops before you chase distant trouble.",
   },
   {
     slug: "quest-arcs",
     title: "Quest Arcs",
     description:
-      "Large authored campaigns and worldspaces framed by readiness, travel expectations, delayed starts, and local patches.",
+      "Treat big questlines and worldspaces as commitments, not casual map markers.",
   },
   {
     slug: "settings",
@@ -70,34 +71,72 @@ export const sectionDefinitions: SectionDefinition[] = [
   },
 ];
 
+export const guideSectionDefinitions = sectionDefinitions.filter(
+  (section) => section.slug !== "settings" && section.slug !== "evidence",
+);
+
+const publicArticleStates: ArticlePublicationState[] = [
+  "evidence-backed",
+  "record-verified",
+  "playtested",
+];
+
+export function isPublicArticle(entry: ReferenceEntry) {
+  return (
+    entry.section !== "settings" &&
+    entry.section !== "evidence" &&
+    publicArticleStates.includes(entry.publicationStatus)
+  );
+}
+
+export function isProofArticle(entry: ReferenceEntry) {
+  return entry.section === "settings" || entry.section === "evidence";
+}
+
+function toPublicEntry(entry: ReferenceEntry): ReferenceEntry {
+  return {
+    ...entry,
+    evidence: entry.evidence.map((item) => ({
+      label: item.label,
+      note: item.note,
+      path: "",
+    })),
+    evidenceDossier: entry.evidenceDossier.map((item) => ({
+      publicLabel: item.publicLabel,
+      internalSources: [],
+    })),
+    verificationNotes: [],
+  };
+}
+
 const coreEvidence: EvidenceItem[] = [
   {
-    label: "Active profile mod order",
+    label: "Local Authoria setup",
     path: `${profile}/modlist.txt`,
-    note: "Shows reader-topic groupings, enabled profile order, and local customization separators.",
+    note: "Shows the installed guide sources and local customization groups.",
   },
   {
-    label: "Active plugin load order",
+    label: "Local gameplay setup",
     path: `${profile}/loadorder.txt`,
-    note: "Confirms enabled plugins and late patch/output authority.",
+    note: "Confirms the local gameplay stack that supports the guide.",
   },
   {
-    label: "Inventory report",
+    label: "Local inventory support",
     path: `${profile}/modlist_report_gold.csv`,
-    note: "Supports enabled/custom status without turning the public guide into a mod catalog.",
+    note: "Supports local status checks without turning the guide into a catalog.",
   },
 ];
 
 const outputEvidence: EvidenceItem[] = [
   {
-    label: "Late Authoria patch layer",
+    label: "Authoria patch support",
     path: xedit,
-    note: "Where local conflict resolution and Requiem/worldspace compatibility can override upstream behavior.",
+    note: "Supports claims where Authoria changes Requiem or worldspace behavior.",
   },
   {
-    label: "Generated gameplay and worldspace output",
+    label: "Generated Authoria support",
     path: synthesis,
-    note: "Generated records should be checked before treating upstream behavior as final.",
+    note: "Supports claims about the final local gameplay and worldspace setup.",
   },
 ];
 
@@ -1042,19 +1081,24 @@ const regionDetails: Record<
 };
 
 const entry = (
-  value: Omit<ReferenceEntry, "questionsAnswered" | "evidenceDossier" | "settingQuotes"> & {
+  value: Omit<
+    ReferenceEntry,
+    "questionsAnswered" | "evidenceDossier" | "settingQuotes" | "publicationStatus"
+  > & {
     questionsAnswered?: string[];
     evidenceDossier?: ReferenceEntry["evidenceDossier"];
+    publicationStatus?: ArticlePublicationState;
     settingQuotes?: SettingQuote[];
   },
 ): ReferenceEntry => ({
+  publicationStatus: "seeded",
   questionsAnswered: [
-    "What does the player need to know before acting on this?",
-    "Which local Authoria evidence supports the claim?",
+    "What should I do before acting on this?",
+    "What changed from vanilla Skyrim?",
   ],
   evidenceDossier: [
     {
-      publicLabel: "Active ARR profile evidence",
+      publicLabel: "Local Authoria source notes",
       internalSources: ["modlist.txt", "plugins.txt", "loadorder.txt", "modlist_report_gold.csv"],
     },
   ],
@@ -1067,14 +1111,15 @@ const entries: ReferenceEntry[] = [
     slug: "first-session-setup",
     kind: "systemArticle",
     section: "start-here",
+    publicationStatus: "evidence-backed",
     title: "First Session Setup",
     strapline:
       "Authoria starts before the cart, because difficulty, controls, survival, and presets are part of the character build.",
     summary:
-      "The old guide correctly warned that customization choices are new-save decisions. This page turns that warning into a first-session workflow: pick controls, difficulty, season, survival posture, and start-kit assumptions before the game state hardens around them.",
+      "Your first session starts with practical choices: controls, difficulty, season, survival posture, and starting-kit assumptions. Set those before the game state hardens around them.",
     questionsAnswered: [
       "What should be decided before a new save?",
-      "Why must MO2 difficulty and in-game difficulty match?",
+      "Why must the selected difficulty setup and in-game difficulty match?",
       "Which setup choices affect the first hour most?",
     ],
     tags: ["onboarding", "setup", "difficulty", "controls", "new save"],
@@ -1089,7 +1134,7 @@ const entries: ReferenceEntry[] = [
     ],
     practicalGuidance: [
       "Choose keyboard or controller support before starting.",
-      "Match MO2 difficulty choices with the in-game difficulty prompt.",
+      "Match the selected difficulty setup with the in-game difficulty prompt.",
       "Pick season and survival posture before committing to a travel-heavy start.",
       "Use the keybind reminder and controller menu before leaving the initial setup flow.",
     ],
@@ -1146,13 +1191,13 @@ const entries: ReferenceEntry[] = [
     ],
     sections: [
       {
-        title: "What the old setup guide was really warning about",
+        title: "Why setup is part of play",
         paragraphs: [
-          "The old guide said customization choices must be made on a new save. The practical reason is that these are not cosmetic toggles. Controller support, pausing behavior, difficulty, follower damage, survival profile, skill leveling, and visual setup decide what the opening hour feels like and what assumptions later articles can safely make.",
+          "Some setup choices are not cosmetic toggles. Controller support, pausing behavior, difficulty, follower damage, survival posture, skill leveling, and visual setup decide what the opening hour feels like and what assumptions later articles can safely make.",
           "Treat the customization stage as part of character creation. A player who chooses hard settings, survival pressure, and multiple followers is not starting the same game as a player who enables Requiem Lite, normal survival, and a solo route.",
         ],
         bullets: [
-          "Resolve save-unsafe MO2 customization before the character starts.",
+          "Resolve save-unsafe customization before the character starts.",
           "Match the in-game difficulty prompt to the selected setup profile.",
           "Check keybind and controller surfaces before combat asks for dodge, power attack, or quick menu fluency.",
         ],
@@ -1161,7 +1206,7 @@ const entries: ReferenceEntry[] = [
         title: "First-session checklist",
         paragraphs: [
           "A new player should leave setup with a complete operating posture, not a vague sense that many systems exist. The guide should explicitly tell them to decide input method, difficulty, season, survival pressure, starter kit, first hub, and follower posture before leaving the initial room.",
-          "The first stable destination should be chosen before the player accepts travel-heavy work. This matters because the local profile has active hunger, thirst, fatigue, and Requiem danger layered together.",
+          "The first stable destination should be chosen before the player accepts travel-heavy work. This matters because Authoria layers hunger, thirst, fatigue, and Requiem danger together.",
           "Local keybind evidence adds another concrete checklist item: interaction, mount recovery, and managed presentation hotkeys should be tested while the character is still safe.",
         ],
         bullets: [
@@ -1192,11 +1237,12 @@ const entries: ReferenceEntry[] = [
     slug: "controls-hud-and-interaction",
     kind: "systemArticle",
     section: "start-here",
+    publicationStatus: "evidence-backed",
     title: "Controls, HUD, and Interaction",
     strapline:
       "Authoria has enough deliberate controls and HUD state that learning the interface is part of the first route.",
     summary:
-      "The old guide treated keybinds, OBody, and MCM checks as setup chores. The article-grade guide should explain why they matter in play: time and season are visible, looting and harvesting have interaction pacing, power attacks and recovery have configured keys, and appearance tools are controlled surfaces rather than invisible background systems.",
+      "Controls are part of survival here. Time and season are visible, looting and harvesting have interaction pacing, recovery needs practiced inputs, and appearance tools belong in safe downtime.",
     tags: ["controls", "hud", "keybinds", "interaction", "first session"],
     playerExperience: [
       "The player sees more state on screen than vanilla: clock, date, season, moon/state widgets, survival icons, and configured interaction prompts.",
@@ -1265,7 +1311,7 @@ const entries: ReferenceEntry[] = [
         title: "Why controls are gameplay",
         paragraphs: [
           "Authoria asks the player to read and act on more state than vanilla. The local HUD shows clock, date, season, and moon/season symbols, while survival and map systems make that information useful. A distant job is not only a marker; it is a time, weather, food, and recovery decision.",
-          "Controls are equally practical. Power attack, potion recovery, dynamic activation, horse whistle, and presentation tools are configured locally. The guide should tell players to test those surfaces early so route and combat advice is actually usable.",
+          "Controls are equally practical. Power attack, potion recovery, dynamic activation, horse whistle, and presentation tools are configured locally. Test those surfaces early so route and combat advice is actually usable.",
         ],
       },
       {
@@ -1300,6 +1346,7 @@ const entries: ReferenceEntry[] = [
     slug: "character-creation-and-starting-choices",
     kind: "systemArticle",
     section: "progression",
+    publicationStatus: "evidence-backed",
     title: "Character Creation and Starting Choices",
     strapline:
       "Race, birthsign, traits, religion, starting kit, and route are one pipeline rather than isolated flavor picks.",
@@ -1358,7 +1405,7 @@ const entries: ReferenceEntry[] = [
         title: "What build planning means here",
         paragraphs: [
           "A good build plan starts with a near-term route: how the character survives, earns, sleeps, eats, and avoids bad fights. Race, sign, trait, religion, kit, and first hub should be described together because the player experiences them as one practical opening package.",
-          "The old guide pointed players at Races Redone, Birthsigns Redone, Biggie Traits, Starting Choices, and Archon. The deeper article should explain the combined pipeline: race and birthsign shape baseline role, traits add tradeoffs, religion encourages a long-term identity, and starting choices decide whether the first route is supported or under-equipped.",
+          "Race and birthsign shape your baseline role, traits add tradeoffs, religion encourages a long-term identity, and starting choices decide whether the first route is supported or under-equipped.",
         ],
       },
       {
@@ -1396,11 +1443,12 @@ const entries: ReferenceEntry[] = [
     slug: "requiem-progression",
     kind: "systemArticle",
     section: "progression",
+    publicationStatus: "evidence-backed",
     title: "Requiem Progression",
     strapline:
-      "Requiem is the baseline, but Authoria's final behavior comes from local patches, presets, and generated outputs.",
+      "Requiem changes what counts as safe, ready, and worth attempting.",
     summary:
-      "Progression in Authoria should be documented as a layered ruleset: Requiem establishes danger and role definition, NoxCrab/Noxrim-adjacent tweaks reshape starts and survival, and late Authoria outputs decide many final record-level outcomes.",
+      "Authoria asks you to read the world before you push forward. Gear, resistances, stamina, money, food, route knowledge, and follower choices often matter before raw level does.",
     tags: ["requiem", "progression", "noxrim", "difficulty", "power curve"],
     playerExperience: [
       "The player cannot treat generic level gain as a universal safety net.",
@@ -1410,19 +1458,18 @@ const entries: ReferenceEntry[] = [
     progressionImpact: [
       "Early character choices remain load-bearing longer than in vanilla.",
       "Economy, food, spell learning, locks, dragons, and boss encounters should all be framed as progression systems.",
-      "Generated and late Authoria patches can be more authoritative than upstream descriptions.",
+      "Authoria's local setup can change advice you remember from other Requiem guides.",
     ],
     practicalGuidance: [
-      "Write Requiem claims from local evidence first.",
-      "Separate general Requiem advice from ARR-final behavior.",
-      "Mark any boss, dragon, or quest readiness claim as unverified until checked against local output or play.",
+      "Treat level as a readiness hint, not a permission slip.",
+      "Prepare for the route you are taking: food, money, tools, resistances, and an escape plan.",
+      "If a dungeon feels impossible, leave and come back with better answers.",
       "Treat locks, spell learning, vendor access, standing stones, dragons, and boss bars as progression signals rather than isolated features.",
     ],
     uxTouchpoints: [
       "Requiem MCM",
       "Experience config",
       "Static Skill Leveling",
-      "Late output plugins",
       "Difficulty settings",
       "Lock and key rules",
       "Spell learning",
@@ -1436,10 +1483,10 @@ const entries: ReferenceEntry[] = [
       },
       {
         publicLabel: "Noxrim starting-choice layer",
-        internalSources: ["Starting Choices - Noxrim entries in profile and load order"],
+        internalSources: ["Starting Choices - Noxrim"],
       },
       {
-        publicLabel: "Late Authoria patch layer",
+        publicLabel: "Authoria Requiem support",
         internalSources: [
           "Authoria - Requiem Master Patch.esp",
           "Authoria - Reqtificator Lite Output.esp",
@@ -1493,10 +1540,10 @@ const entries: ReferenceEntry[] = [
     ],
     sections: [
       {
-        title: "Article standard for Requiem claims",
+        title: "Why Requiem changes planning",
         paragraphs: [
-          "A Requiem article should not say only that Requiem changes combat or progression. It should say what the player should do differently, what evidence supports that claim, and which local output could have changed the final rule.",
-          "The live profile carries a dense Requiem-family stack: core Requiem, Magic Redone, Alchemy Redone, Birthsigns Redone, Races Redone, Weapons and Armor Redone, Stealth Redone, Special Feats, food and beverage patches, survival patches, bounty patches, boss patches, and late Authoria Requiem outputs. The article should translate that stack into player rules: prepare, specialize, avoid bad matchups, and expect local finalization.",
+          "A Requiem character is not safe just because a quest marker is nearby. The useful question is what the route asks for: damage, armor, stamina, food, resistance, lock access, money, a follower, or a clean way home.",
+          "Authoria builds on that idea. It expects preparation, specialization, and the discipline to walk away from bad matchups instead of treating every cave as first-session content.",
         ],
       },
       {
@@ -1504,26 +1551,26 @@ const entries: ReferenceEntry[] = [
         paragraphs: [
           "Vanilla Skyrim encourages broad wandering because scaling and skill-use leveling smooth over bad plans. Authoria should be explained almost the opposite way. The player is reading the world for danger bands, required tools, route costs, and whether a fight is worth taking now.",
           "The local preset also makes world persistence meaningful. Long respawn times mean clearing and route decisions are not disposable loops. A safe hub, a cleared nearby mine, or a missed supply opportunity can remain relevant for a long stretch of play.",
-          "Some famous Requiem pressures also need local wording. Fear/yield and on-hit disarm are disabled in the local preset, while dragon timing and killmove thresholds are configured. That means the guide should describe ARR's final combat feel from local facts, not from remembered upstream behavior.",
+          "Some famous Requiem pressures also need local wording. Fear/yield and on-hit disarm are disabled here, while dragon timing and killmove thresholds are configured. That means the Almanac should describe Authoria as played, not Requiem from memory.",
         ],
         bullets: [
           "Level is a readiness hint, not a universal permission slip.",
           "Gear, resistances, food, money, and escape routes are progression resources.",
-          "Do not import upstream Requiem warnings when the local preset disables that behavior.",
-          "If upstream Requiem advice conflicts with late Authoria output, document the Authoria result.",
+          "Do not assume every upstream Requiem warning applies unchanged.",
+          "When Authoria changes the final behavior, follow the Authoria result.",
         ],
       },
       {
         title: "Noxrim and starting pressure",
         paragraphs: [
-          "Starting Choices - Noxrim appears in the live profile beside the broader leveling and Requiem setup. That makes it part of progression, not only alternate-start flavor. Starting kits, easy-mode locks, and starting-choice patches should be written as the first authored balance pass the player encounters.",
+          "Noxrim starting choices are part of progression, not just alternate-start flavor. Starting kits, easier early locks, and opening-route support decide whether the first trip feels equipped or desperate.",
         ],
       },
       {
         title: "Locks, keys, and spell learning",
         paragraphs: [
-          "Authoria should explain locks as tool and build gates, not just as the vanilla minigame with harsher numbers. The local profile includes Requiem-aware lockpicking, lock-bashing, and key-based chest support, so a locked object can mean several different things: bring the right skill, find the local key route, come back with force, or leave the reward for a later pass.",
-          "Spell learning belongs in the same progression conversation. The local stack includes Requiem and immersive spell-learning support, so the guide should not imply that every spell is instantly solved by reading one book. A magic build needs money, time, safety, study resources, and enough route discipline to avoid buying spells it cannot practically absorb yet.",
+          "Locks are tool and build gates, not just the vanilla minigame with harsher numbers. A locked object can mean several things: bring the right skill, find the key route, come back with force, or leave the reward for later.",
+          "Spell learning belongs in the same progression conversation. A magic build needs money, time, safety, study resources, and enough route discipline to avoid buying spells it cannot practically absorb yet.",
         ],
         bullets: [
           "Early locks are route information: they tell the player whether this character, this tool kit, or this timing fits the place.",
@@ -1534,14 +1581,14 @@ const entries: ReferenceEntry[] = [
       {
         title: "Vendors, standing stones, dragons, and bosses",
         paragraphs: [
-          "Vendor behavior is also progression. Local vendor and conditional-bartering support means prices, trade access, and social preparation can determine whether a route is ready before the first fight starts. The economy article should carry the buying and selling detail, but Requiem progression should make the core rule clear: money is power only when the local trade layer lets the character convert it into usable supplies.",
-          "Standing stones and birthsigns should be treated as campaign decisions because Authoria carries local Requiem and world-space support for them. The guide should warn players that these are not lightweight flavor picks when they are planning armor, magic, survival, and early route pressure.",
-          "Dragons and bosses need the strongest wording. The local profile includes dragon-combat support, fixed-level dragon support, boss-specific patches, and boss-bar readability. A boss bar or dragon encounter is not permission to win now; it is a signal that the route has entered a readiness check where resistance, tools, terrain, followers, and retreat planning matter.",
+          "Vendor behavior is also progression. Prices, trade access, and social preparation can decide whether a route is ready before the first fight starts. Money is power only when you can turn it into usable supplies.",
+          "Standing stones and birthsigns should be treated as campaign decisions. They are not lightweight flavor picks when you are planning armor, magic, survival, and early route pressure.",
+          "Dragons and bosses need the strongest wording. A boss bar or dragon encounter is not permission to win now; it is a signal that the route has entered a readiness check where resistance, tools, terrain, followers, and retreat planning matter.",
         ],
         bullets: [
           "If a vendor cannot make the route affordable, the practical answer may be bounties, missives, safer loot, or a different hub.",
           "Standing-stone advice should connect to the build plan instead of being presented as a one-off bonus list.",
-          "Dragon and boss advice should stay conservative until local records or play capture confirm exact thresholds.",
+          "Dragon and boss advice should stay conservative unless the Almanac has direct Source notes for the exact route.",
         ],
       },
     ],
@@ -1553,19 +1600,19 @@ const entries: ReferenceEntry[] = [
         note: "Quoteable runtime settings for local Requiem behavior.",
       },
       {
-        label: "Lock and key progression evidence",
+        label: "Lock and key progression support",
         path: `${profile}/modlist.txt`,
-        note: "Confirms local Requiem lockpicking, lock-bashing, and key-based chest layers for article interpretation.",
+        note: "Supports local lockpicking, lock-bashing, and key-route interpretation.",
       },
       {
-        label: "Spell-learning evidence",
+        label: "Spell-learning support",
         path: `${profile}/loadorder.txt`,
-        note: "Confirms Requiem and immersive spell-learning surfaces in the final plugin order.",
+        note: "Supports local spell-learning guidance.",
       },
       {
-        label: "Dragon and boss readiness evidence",
+        label: "Dragon and boss readiness support",
         path: `${profile}/modlist.txt`,
-        note: "Confirms local dragon combat, fixed-level, boss, and boss-bar support surfaces.",
+        note: "Supports conservative dragon and boss readiness guidance.",
       },
       ...outputEvidence,
     ],
@@ -1579,11 +1626,12 @@ const entries: ReferenceEntry[] = [
     slug: "route-readiness-and-return-rules",
     kind: "systemArticle",
     section: "progression",
+    publicationStatus: "evidence-backed",
     title: "Route Readiness and Return Rules",
     strapline:
       "Safe early play means recoverable choices: short routes, known beds, readable maps, affordable supplies, and a plan to come back.",
     summary:
-      "Authoria needs a practical article between the system guides and region pages: how a player decides whether a job, road, cave, bounty, or worldspace hook is safe to attempt now. The answer is not level alone; it is recovery access, travel cost, season, reward tier, map readability, follower burden, and whether the route has an obvious exit.",
+      "Before accepting a job, road, cave, bounty, or worldspace hook, ask whether the route is recoverable. The answer is not level alone; it is beds, food, warmth, travel cost, season, reward tier, map readability, follower burden, and whether the route has an obvious exit.",
     tags: ["progression", "routes", "early game", "missives", "bounties", "travel"],
     playerExperience: [
       "The player looks at a job or route and needs to decide whether it is a stable errand, a scouting trip, or a campaign commitment.",
@@ -1753,11 +1801,12 @@ const entries: ReferenceEntry[] = [
     slug: "combat-rhythm-and-dodge-commitment",
     kind: "systemArticle",
     section: "combat",
+    publicationStatus: "evidence-backed",
     title: "Combat Rhythm and Dodge Commitment",
     strapline:
       "Combat is about commitment, stamina, spacing, and knowing when the correct answer is to leave.",
     summary:
-      "The old guide named the combat stack. The article-grade guide explains how it plays: dodge access can be gated, animation commitment matters, wounds and stamina turn mistakes into route problems, and Requiem makes enemy selection part of combat skill.",
+      "Combat asks for commitment. Dodge access can be gated, animations matter, wounds and stamina turn mistakes into route problems, and Requiem makes enemy selection part of combat skill.",
     tags: ["combat", "dodge", "stamina", "wounds", "bosses"],
     playerExperience: [
       "The player needs to watch enemy commitment, stamina state, injury state, and escape options.",
@@ -1769,9 +1818,9 @@ const entries: ReferenceEntry[] = [
       "Follower-backed play can make difficult fights readable sooner but can also add management overhead.",
     ],
     practicalGuidance: [
-      "Document whether an encounter punishes aggression, bad spacing, or attrition.",
-      "Tell readers when retreat is normal.",
-      "Quote dodge, movement, and wound settings when available.",
+      "Ask what the fight punishes: aggression, bad spacing, poor stamina, or attrition.",
+      "Retreat before victory becomes too expensive.",
+      "Practice dodge, power attack, and potion recovery before the first serious fight.",
     ],
     uxTouchpoints: [
       "TK Dodge Addon",
@@ -1820,9 +1869,9 @@ const entries: ReferenceEntry[] = [
     ],
     sections: [
       {
-        title: "How to write fights",
+        title: "How to read fights",
         paragraphs: [
-          "Encounter guidance should mention the kind of mistake the fight punishes. A bandit route, boss room, dragon, and Vicn boss should not all be described as merely hard; they need different preparation language.",
+          "A bandit route, boss room, dragon, and major quest boss should not all feel like the same kind of hard. They punish different mistakes and need different preparation.",
           "The local dodge settings make this especially important. Dodging costs stamina, sprint dodge is disabled, MCO recovery is used, and perk locking is enabled. The player should understand dodge as a committed defensive tool they build into, not a universal panic button.",
         ],
       },
@@ -1863,11 +1912,12 @@ const entries: ReferenceEntry[] = [
     slug: "survival-seasons-and-travel",
     kind: "systemArticle",
     section: "survival",
+    publicationStatus: "evidence-backed",
     title: "Survival, Seasons, and Travel",
     strapline:
       "Travel is part of the challenge loop; winter, distance, weather, food, and map readability all change route quality.",
     summary:
-      "Authoria's survival layer should be explained as route design. SunHelm, Frostfall, seasons, camping, map markers, paper maps, and Requiem survival patches combine to make movement between objectives a real gameplay decision.",
+      "Survival turns movement into a real decision. Food, fatigue, cold, seasons, camping, maps, and Requiem pressure all affect whether a route is a quick errand or a bad idea.",
     tags: ["survival", "travel", "seasons", "map", "camping"],
     playerExperience: [
       "The player needs to think about supplies and return paths before accepting distant work.",
@@ -1879,15 +1929,15 @@ const entries: ReferenceEntry[] = [
       "Hub guides need survival and map notes, not only enemy notes.",
     ],
     practicalGuidance: [
-      "Document food, fatigue, cold, rest, camping, and resupply together.",
-      "Mention whether a route is a day trip, overnight risk, or campaign departure.",
+      "Plan food, fatigue, cold, rest, camping, and resupply together.",
+      "Decide whether a route is a day trip, overnight risk, or campaign departure.",
       "Treat winter as a progression modifier.",
     ],
     uxTouchpoints: [
       "SunHelm",
       "Frostfall",
       "Campfire",
-      "Seasonal presets",
+      "Seasonal settings",
       "Map markers and paper maps",
     ],
     settingQuotes: [
@@ -1940,7 +1990,7 @@ const entries: ReferenceEntry[] = [
         title: "Winter is a progression rule",
         paragraphs: [
           "Season choice belongs in early progression guidance because it changes how expensive distance feels. A low-level character who can solve a summer errand may still be poorly prepared for a northern or exposed winter route. The player needs to know whether a destination is safe because of enemy level, supply access, weather, or all three.",
-          "The old guide listed SunHelm and Frostfall as MCMs to tweak. The deeper guide should say what those MCMs imply: hunger, thirst, fatigue, cold, widgets, rest, and water access form a travel loadout just like weapons and armor form a combat loadout.",
+          "Survival settings matter because they decide what travel costs. Hunger, thirst, fatigue, cold, widgets, rest, and water access form a travel loadout just like weapons and armor form a combat loadout.",
           "Local inn and camping presets make recovery less abstract. Inns can be full, while camping has configured shelter support. That means an overnight route should mention backup shelter, return plans, and whether the player can recover if the expected bed fails.",
         ],
         bullets: [
@@ -2109,25 +2159,26 @@ const entries: ReferenceEntry[] = [
     slug: "followers-and-party-power",
     kind: "systemArticle",
     section: "companions",
+    publicationStatus: "evidence-backed",
     title: "Followers and Party Power",
     strapline:
       "Followers can make Requiem survivable earlier, but they also change pacing, chatter density, and management burden.",
     summary:
-      "Party play in Authoria is deliberately moderated: the live profile has follower weakening, a 50 follower stat scale, follower controls, carriage seating support, dialogue interruption controls, and quest/new-land companion hooks. The article should explain how that changes risk, travel, combat readability, banter, and management burden.",
+      "Party play in Authoria is deliberately moderated. Followers can make travel and combat safer, but they also change readability, banter density, carriage use, dialogue pacing, and how crowded a quest route feels.",
     tags: ["companions", "followers", "party", "balance"],
     playerExperience: [
       "The player can choose a harsher solo route or a party-backed route with more support and more overhead.",
       "Follower-heavy play can flatten some early danger while increasing dialogue and control burden.",
-      "The guide should help the player choose companions for route and tone, not only popularity.",
+      "Choose companions for route and tone, not only popularity.",
     ],
     progressionImpact: [
-      "Follower access can change what is safe early, but the 50-scale preset means ARR is not assuming full-strength custom follower power.",
+      "Follower access can change what is safe early, but Authoria is not assuming full-strength custom follower power.",
       "Follower weakening and local balance settings are essential context for party size advice.",
       "Follower support is strongest when matched to the route: travel companions for roads, story companions for arcs, specialists for themed spaces, and combat companions for dangerous open-world work.",
     ],
     practicalGuidance: [
-      "Every companion page should say whether the follower helps combat, utility, travel, story, or banter most.",
-      "Do not include companions that are being removed from the build.",
+      "Ask whether a follower helps combat, utility, travel, story, or banter most.",
+      "Keep the party small when you still need clear fights and quiet roads.",
       "Mention when a follower has major quest or new-land interactions.",
       "Warn that large parties can improve survival while making fights harder to read and quest pacing more crowded.",
       "Explain follower transport and interruption controls as quality-of-life systems, not extra power.",
@@ -2150,15 +2201,15 @@ const entries: ReferenceEntry[] = [
       {
         title: "Companion page template",
         paragraphs: [
-          "Each page should cover recruitment, early safety, combat role, chatter density, travel utility, local tuning, party-size expectations, and quest interactions. The goal is to let readers choose a party strategy, not browse installed follower mods.",
-          "The old guide treated weaker followers as a customization separator with percentages. The deeper guide should explain why that exists: Requiem danger and custom followers can pull in opposite directions. Followers add safety, utility, and personality, but unmanaged party power can erase the intended risk curve.",
-          "The local preset gives the article a concrete anchor: follower stat scale is set to 50. That does not prove every follower is weak in every circumstance, but it does show the build is trying to preserve risk while still allowing party play.",
+          "A good companion guide helps readers choose a party strategy instead of browsing installed follower mods. Recruitment, early safety, combat role, chatter density, travel utility, party-size expectations, and quest interactions all matter.",
+          "Requiem danger and custom followers can pull in opposite directions. Followers add safety, utility, and personality, but unmanaged party power can erase the intended risk curve.",
+          "Authoria reins in follower strength while still allowing party play. That does not make every follower weak in every circumstance, but it does mean the guide should not assume followers are meant to carry the campaign.",
         ],
       },
       {
         title: "What followers change",
         paragraphs: [
-          "A follower changes more than damage output. The live profile includes follower weakening, follower controls, carriage seating support, dialogue interruption control, vanilla follower dialogue expansions, and major companion integrations with museum and new-land routes. Public guidance should translate that into player outcomes: travel is smoother, story routes can be richer, and management overhead rises.",
+          "A follower changes more than damage output. Travel can be smoother, story routes can be richer, and management overhead rises.",
           "Follower transport and interruption controls should be presented as friction reduction. They make a party easier to live with, but they do not remove the need to choose safe routes, manage supplies, or retreat from fights that still overmatch the character.",
         ],
         bullets: [
@@ -2174,17 +2225,17 @@ const entries: ReferenceEntry[] = [
           "Party size also changes clarity. More followers can make fights safer but noisier, pathing more fragile, and story pacing more crowded. Companion pages should state whether they are best as a solo partner, one member of a small party, or a high-banter campaign companion.",
         ],
         bullets: [
-          "Call out companion interactions with Vigilant, Wyrmstooth, Sirenroot, or other major arcs.",
-          "State whether a follower is early-safe, midgame-oriented, or verification pending.",
-          "Keep removed companions out of the public planning set.",
+          "Call out companion interactions with Vigilant, Wyrmstooth, Sirenroot, or other major arcs when Source notes support them.",
+          "State whether a follower is early-safe or midgame-oriented.",
+          "Keep the public planning set focused on companions that are actually part of Authoria.",
         ],
       },
     ],
     evidence: [
       ...coreEvidence,
       { label: "Follower stats preset", path: `${mcm}/MCM/Settings/Follower Stats.ini`, note: "Local follower scaling surface." },
-      { label: "Follower weakening profile layer", path: `${profile}/modlist.txt`, note: "Confirms the local follower weakening layer is part of the active profile." },
-      { label: "Follower control/load-order evidence", path: `${profile}/loadorder.txt`, note: "Confirms follower controls, follower stats, carriage support, and dialogue management are active surfaces." },
+      { label: "Follower weakening support", path: `${profile}/modlist.txt`, note: "Supports cautious follower-power guidance." },
+      { label: "Follower control support", path: `${profile}/loadorder.txt`, note: "Supports follower controls, carriage support, and dialogue-management guidance." },
       ...outputEvidence,
     ],
     verificationNotes: [
@@ -2463,11 +2514,12 @@ const entries: ReferenceEntry[] = [
     slug: "preset-facts",
     kind: "presetFactReference",
     section: "settings",
-    title: "Quoteable Preset Facts",
+    publicationStatus: "evidence-backed",
+    title: "Preset Source Notes",
     strapline:
-      "Settings should be quoted as concrete local values when the guide uses them to explain gameplay.",
+      "Local preset details that support Almanac guide claims.",
     summary:
-      "The settings layer extracts values from local ARR configuration files so article text can say what is actually configured instead of pointing vaguely at a file.",
+      "This proof page keeps local preset values available without making normal guide pages read like setup files.",
     tags: ["settings", "presets", "evidence", "extraction"],
     playerExperience: [
       "The player sees clearer explanations when the guide quotes important local values instead of naming config files.",
@@ -2503,6 +2555,7 @@ const entries: ReferenceEntry[] = [
     slug: "authoria-evidence-dossier",
     kind: "evidenceDossier",
     section: "evidence",
+    publicationStatus: "evidence-backed",
     title: "Authoria Evidence Dossier",
     strapline:
       "The maintainer view keeps raw mod, plugin, preset, and output provenance available without turning the public guide into a catalog.",
@@ -2555,16 +2608,26 @@ export function getAllEntries() {
   return entries;
 }
 
+export function getPublicEntries() {
+  return entries.filter(isPublicArticle).map(toPublicEntry);
+}
+
+export function getRoutableEntries() {
+  return entries.filter((entry) => isPublicArticle(entry) || isProofArticle(entry));
+}
+
 export function getEntriesByKind(kind: ReferenceKind) {
-  return entries.filter((entry) => entry.kind === kind);
+  return getPublicEntries().filter((entry) => entry.kind === kind);
 }
 
 export function getEntriesBySection(section: ReferenceSection) {
-  return entries.filter((entry) => entry.section === section);
+  return getPublicEntries().filter((entry) => entry.section === section);
 }
 
 export function getEntry(section: ReferenceSection, slug: string) {
-  return entries.find((entry) => entry.section === section && entry.slug === slug);
+  return getRoutableEntries().find(
+    (entry) => entry.section === section && entry.slug === slug,
+  );
 }
 
 export function getEntryBySlug(slug: string) {
@@ -2574,7 +2637,13 @@ export function getEntryBySlug(slug: string) {
 export function getRelatedEntries(slugs: string[]) {
   return slugs
     .map((slug) => getEntryBySlug(slug))
-    .filter((entry): entry is ReferenceEntry => Boolean(entry));
+    .filter((entry): entry is ReferenceEntry => {
+      if (!entry) {
+        return false;
+      }
+
+      return isPublicArticle(entry) || isProofArticle(entry);
+    });
 }
 
 export function getSection(section: string) {

@@ -1,29 +1,37 @@
 import Link from "next/link";
-import { ArrowUpRight, BookOpenText, Compass, FileSearch, Map, Settings2, Users } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpenText,
+  Compass,
+  FileSearch,
+  Flame,
+  Map,
+  Settings2,
+  Users,
+} from "lucide-react";
 
 import { TopicBrowser } from "@/components/topic-browser";
 import {
-  getAllEntries,
   getEntriesBySection,
+  getPublicEntries,
   sectionDefinitions,
 } from "@/lib/content/catalog";
 
 const featuredSections = [
+  "survival",
   "start-here",
   "progression",
   "combat",
-  "survival",
   "companions",
   "regions",
   "quest-arcs",
-  "settings",
 ] as const;
 
 const sectionIcons = {
   "start-here": Compass,
   progression: BookOpenText,
   combat: BookOpenText,
-  survival: Map,
+  survival: Flame,
   companions: Users,
   regions: Map,
   "quest-arcs": BookOpenText,
@@ -32,40 +40,54 @@ const sectionIcons = {
 } as const;
 
 export default function Home() {
-  const entries = getAllEntries();
+  const entries = getPublicEntries();
 
   return (
     <div className="space-y-8 pb-12">
-      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-        <div className="space-y-4 rounded-lg border border-black/8 bg-white px-6 py-6">
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="space-y-5 rounded-lg border border-black/8 bg-white px-6 py-6">
           <div className="inline-flex rounded-lg bg-teal-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
-            Article-grade reference
+            Authoria Almanac
           </div>
           <div className="space-y-3">
             <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-950">
-              How Authoria actually plays
+              Survive Your First Week
             </h1>
             <p className="max-w-4xl text-base leading-8 text-slate-600">
-              This guide turns the old gameplay checklist into evidence-backed
-              articles about progression, combat, survival, companions, routes,
-              quest arcs, and concrete local settings. The public surface is a
-              play guide, not a rendered mod list.
+              Authoria still begins in Skyrim, but the first week asks for more
+              care than a vanilla run. Eat before long roads, sleep before cold
+              weather, use towns as anchors, and treat early dungeons as a
+              decision rather than a reflex.
             </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/survival/survival-seasons-and-travel"
+              className="inline-flex items-center gap-2 rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
+            >
+              Start with survival
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/progression/route-readiness-and-return-rules"
+              className="inline-flex items-center gap-2 rounded-lg border border-black/8 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-teal-300 hover:bg-teal-50"
+            >
+              Plan a safe route
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
 
         <aside className="rounded-lg border border-black/8 bg-slate-950 px-5 py-5 text-slate-100">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-300">
-            Coverage target
+            First-week checklist
           </p>
-          <p className="mt-4 text-2xl font-semibold tracking-tight">
-            {entries.length} article seeds
-          </p>
-          <p className="mt-3 text-sm leading-6 text-slate-300">
-            Every article is expected to explain what the player sees, why it
-            behaves that way, what is safe or risky, and which local evidence
-            supports the claim.
-          </p>
+          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+            <li>Rest before leaving a warm hub.</li>
+            <li>Carry food, recovery supplies, and a way back.</li>
+            <li>Take short work before remote quests.</li>
+            <li>Assume Requiem makes bad fights worse than you remember.</li>
+          </ul>
         </aside>
       </section>
 
@@ -107,8 +129,8 @@ export default function Home() {
 
       <TopicBrowser
         entries={entries}
-        heading="Reference browser"
-        description="Search by the question a player would ask: where to start, what is safe, which companion changes a route, how a system works, or what a setting means."
+        heading="Almanac guides"
+        description="Search by the question you would ask before acting: where to start, what is safe, which companion changes a route, or how a system differs from vanilla Skyrim."
       />
     </div>
   );

@@ -19,7 +19,6 @@ const filterOptions: { value: ReferenceKind | "all"; label: string }[] = [
   { value: "companionArticle", label: "Companions" },
   { value: "regionGuide", label: "Regions" },
   { value: "questArcGuide", label: "Quest Arcs" },
-  { value: "presetFactReference", label: "Settings" },
 ];
 
 export function TopicBrowser({
@@ -79,7 +78,7 @@ export function TopicBrowser({
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search by player question, companion, region, quest arc, or setting"
+            placeholder="Search by player question, companion, region, quest arc, or system"
             className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
           />
         </label>
@@ -115,9 +114,9 @@ export function TopicBrowser({
       </div>
 
       {filteredEntries.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-black/10 bg-white px-5 py-10 text-sm text-slate-600">
-          No topics matched the current filter. Narrow the question or add a new
-          article topic to the catalog.
+          <div className="rounded-lg border border-dashed border-black/10 bg-white px-5 py-10 text-sm text-slate-600">
+          No published guide matched the current filter. Try a broader question
+          or check back after more Almanac drafts are promoted.
         </div>
       ) : null}
     </section>

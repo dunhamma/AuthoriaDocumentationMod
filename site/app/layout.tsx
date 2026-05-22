@@ -16,9 +16,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Authoria Reference",
+  title: "Authoria Almanac",
   description:
-    "Evidence-first documentation for the live ARR-based Authoria modlist build.",
+    "A survival-first gameplay guide for players learning Authoria, Requiem, and Noxrim.",
 };
 
 export default function RootLayout({

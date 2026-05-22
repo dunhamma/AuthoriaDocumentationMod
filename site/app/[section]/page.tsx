@@ -4,12 +4,12 @@ import { TopicBrowser } from "@/components/topic-browser";
 import {
   getEntriesBySection,
   getSection,
-  sectionDefinitions,
+  guideSectionDefinitions,
 } from "@/lib/content/catalog";
 import type { ReferenceSection } from "@/lib/content/schema";
 
 export function generateStaticParams() {
-  return sectionDefinitions.map((section) => ({ section: section.slug }));
+  return guideSectionDefinitions.map((section) => ({ section: section.slug }));
 }
 
 export default async function SectionPage({

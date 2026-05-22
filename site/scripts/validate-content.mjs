@@ -1,78 +1,20 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
+import {
+  bannedPublicTerms,
+  expectedSections,
+  exportedSections,
+  forbiddenMainNavHrefs,
+  forbiddenSlugs,
+  guideLeakTerms,
+  quoteableTargets,
+  requiredExportedPageTerms,
+  requiredArchitectureSources,
+} from "../lib/content/validation-manifest.mjs";
+
 const root = path.resolve("out");
 const siteRoot = path.resolve(".");
-const arrRoot = "D:/Wabbajack/modlists/ARR";
-const mcmSettingsDir = `${arrRoot}/mods/Authoria - MCM and INI Settings/MCM/Settings`;
-const sksePluginsDir = `${arrRoot}/mods/Authoria - MCM and INI Settings/SKSE/Plugins`;
-const sunhelmConfigDir = `${arrRoot}/mods/Authoria - MCM and INI Settings/SunHelm/Config`;
-
-const expectedSections = {
-  "start-here": 2,
-  progression: 4,
-  combat: 1,
-  survival: 1,
-  companions: 10,
-  regions: 7,
-  "quest-arcs": 12,
-};
-
-const exportedSections = [
-  ...Object.keys(expectedSections),
-  "settings",
-  "evidence",
-];
-
-const bannedPublicTerms = [
-  "Val Serano",
-  "Representative enabled mods",
-  "MO2 groups",
-  "Authoria highlights",
-  "Requiem highlights",
-  "first-pass article shell",
-  "This hub guide shell",
-  "Open capture questions",
-  "Capture target",
-  "not an entry in a mod list",
-];
-
-const forbiddenSlugs = [
-  ["companions", "val-serano"],
-];
-
-const quoteableTargets = [
-  ["requiem", `${mcmSettingsDir}/Requiem.ini`, "ini"],
-  ["experience", `${sksePluginsDir}/Experience.ini`, "ini"],
-  ["static-skill-leveling", `${mcmSettingsDir}/StaticSkillLeveling.ini`, "ini"],
-  ["trade-and-barter", `${mcmSettingsDir}/trade & barter.ini`, "ini"],
-  ["follower-stats", `${mcmSettingsDir}/Follower Stats.ini`, "ini"],
-  ["missives", `${mcmSettingsDir}/Missives.ini`, "ini"],
-  ["bounty-hunter", `${mcmSettingsDir}/Bounty Hunter - Bounty Perks.ini`, "ini"],
-  ["dynamic-activation-key", `${mcmSettingsDir}/Dynamic Activation Key - MCM.ini`, "ini"],
-  ["horse-whistle", `${mcmSettingsDir}/Horse Whistle Key.ini`, "ini"],
-  ["camping-expansion", `${mcmSettingsDir}/Camping Expansion.ini`, "ini"],
-  ["inns-can-be-closed", `${mcmSettingsDir}/Inns Can Be Closed.ini`, "ini"],
-  ["simple-hunting-overhaul", `${mcmSettingsDir}/Simple Hunting Overhaul MCM Helper.ini`, "ini"],
-  ["immersive-hunting", `${mcmSettingsDir}/ImmersiveHunting.ini`, "ini"],
-  ["stress-and-fear", `${mcmSettingsDir}/Stress and Fear.ini`, "ini"],
-  ["optimal-potion-hotkey", `${mcmSettingsDir}/OptimalPotionHotkeyMCM.ini`, "ini"],
-  ["tk-dodge", `${mcmSettingsDir}/TKDodgeAddon.ini`, "ini"],
-  ["true-directional-movement", `${mcmSettingsDir}/TrueDirectionalMovement.ini`, "ini"],
-  ["wounds", `${mcmSettingsDir}/Wounds.ini`, "ini"],
-  ["sunhelm-normal", `${sunhelmConfigDir}/normal.json`, "json"],
-  ["sunhelm-hard", `${sunhelmConfigDir}/hard.json`, "json"],
-  ["better-carriage-destinations", `${mcmSettingsDir}/Better Carriage Destinations.ini`, "ini"],
-  ["map-marker-framework", `${sksePluginsDir}/MapMarkerFramework.ini`, "ini"],
-  ["mcm-keybinds", `${mcmSettingsDir}/keybinds.json`, "json"],
-  ["a-matter-of-time", `${mcmSettingsDir}/AMatterOfTime.ini`, "ini"],
-  ["helmet-toggle", `${mcmSettingsDir}/Helmet Toggle 2.ini`, "ini"],
-  ["first-person-interactions", `${mcmSettingsDir}/FirstPersonInteractions.ini`, "ini"],
-  ["looting-animations", `${mcmSettingsDir}/LootingAnimations.ini`, "ini"],
-  ["obody", `${mcmSettingsDir}/OBody NG.ini`, "ini"],
-  ["photo-mode", `${mcmSettingsDir}/PhotoMode.ini`, "ini"],
-  ["ocpa", `${mcmSettingsDir}/OCPA.ini`, "ini"],
-];
 
 async function exists(filePath) {
   try {
@@ -189,21 +131,28 @@ async function quotedSettingIds() {
   return Array.from(raw.matchAll(/setting\(\s*"([^"]+)"/g), (match) => match[1]);
 }
 
-async function quotedRelatedSlugs() {
-  const catalogPath = path.join(siteRoot, "lib/content/catalog.ts");
-  const raw = await readFile(catalogPath, "utf8");
-  const slugs = [];
+async function quotedVerificationOverrideSlugs() {
+  const verificationPath = path.join(siteRoot, "lib/content/verification.ts");
+  const raw = await readFile(verificationPath, "utf8");
+  const overrideMatch = raw.match(
+    /articleVerificationOverrides:[\s\S]*?=\s*\{([\s\S]*?)\n\};/,
+  );
 
-  for (const relatedMatch of raw.matchAll(/related:\s*\[([^\]]*)\]/g)) {
-    const relatedBody = relatedMatch[1];
-    slugs.push(...Array.from(relatedBody.matchAll(/"([^"]+)"/g), (match) => match[1]));
+  if (!overrideMatch) {
+    return [];
   }
 
-  return slugs;
+  return Array.from(
+    overrideMatch[1].matchAll(/"([^"]+)":\s*\{/g),
+    (match) => match[1],
+  );
 }
 
 async function sectionArticleCount(section) {
   const sectionPath = path.join(root, section);
+  if (!(await exists(sectionPath))) {
+    return 0;
+  }
   const entries = await readdir(sectionPath, { withFileTypes: true });
   return entries.filter((entry) => entry.isDirectory() && !entry.name.startsWith("__next.")).length;
 }
@@ -250,7 +199,55 @@ async function collectPublicFiles(dir) {
   return files;
 }
 
+async function collectGuideFiles() {
+  const files = [];
+
+  for (const section of Object.keys(expectedSections)) {
+    const sectionPath = path.join(root, section);
+    const sectionHtml = path.join(root, `${section}.html`);
+
+    if (await exists(sectionHtml)) {
+      files.push(sectionHtml);
+    }
+
+    if (await exists(sectionPath)) {
+      files.push(...(await collectPublicFiles(sectionPath)));
+    }
+  }
+
+  return files;
+}
+
 const failures = [];
+
+for (const source of requiredArchitectureSources) {
+  const filePath = path.resolve(siteRoot, source.relativePath);
+  const raw = await readOptional(filePath);
+  if (!raw) {
+    failures.push(`Missing architecture support file: ${filePath}`);
+    continue;
+  }
+
+  for (const term of source.requiredTerms) {
+    if (!raw.includes(term)) {
+      failures.push(
+        `Architecture support file ${filePath} is missing required term: ${term}`,
+      );
+    }
+  }
+}
+
+const siteShellPath = path.resolve(siteRoot, "components/site-shell.tsx");
+const siteShellRaw = await readOptional(siteShellPath);
+if (!siteShellRaw) {
+  failures.push(`Missing site shell file: ${siteShellPath}`);
+} else {
+  for (const href of forbiddenMainNavHrefs) {
+    if (siteShellRaw.includes(`href: "${href}"`)) {
+      failures.push(`Forbidden main-nav href remains in site shell: ${href}`);
+    }
+  }
+}
 
 if (!(await exists(root))) {
   failures.push("Expected static export at site/out. Run `pnpm build` before content validation.");
@@ -268,11 +265,40 @@ if (!(await exists(root))) {
     }
   }
 
+  for (const page of requiredExportedPageTerms) {
+    const pagePath = path.join(root, page.route);
+    const text = await readOptional(pagePath);
+
+    if (!text) {
+      failures.push(`Required exported page is missing: ${page.route}`);
+      continue;
+    }
+
+    for (const term of page.requiredTerms) {
+      if (!text.includes(term)) {
+        failures.push(
+          `Required exported page ${page.route} is missing term: ${term}`,
+        );
+      }
+    }
+  }
+
   for (const filePath of await collectPublicFiles(root)) {
     const text = await readFile(filePath, "utf8");
     for (const term of bannedPublicTerms) {
       if (text.includes(term)) {
         failures.push(`Banned public term "${term}" found in ${path.relative(root, filePath)}.`);
+      }
+    }
+  }
+
+  for (const filePath of await collectGuideFiles()) {
+    const text = await readFile(filePath, "utf8");
+    for (const term of guideLeakTerms) {
+      if (text.includes(term)) {
+        failures.push(
+          `Guide leak term "${term}" found in ${path.relative(root, filePath)}.`,
+        );
       }
     }
   }
@@ -291,9 +317,12 @@ if (!(await exists(root))) {
   }
 
   const slugs = await exportedSlugs();
-  for (const relatedSlug of await quotedRelatedSlugs()) {
-    if (!slugs.has(relatedSlug)) {
-      failures.push(`Related article slug does not resolve to an exported route: ${relatedSlug}`);
+
+  for (const overrideSlug of await quotedVerificationOverrideSlugs()) {
+    if (!slugs.has(overrideSlug)) {
+      failures.push(
+        `Article verification override does not resolve to an exported route: ${overrideSlug}`,
+      );
     }
   }
 }

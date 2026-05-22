@@ -1,5 +1,6 @@
-import { TopicBrowser } from "@/components/topic-browser";
-import { getEntriesBySection } from "@/lib/content/catalog";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+
 import { getPresetFacts } from "@/lib/arr/presets";
 
 export default async function SettingsPage() {
@@ -8,11 +9,28 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-8 pb-12">
-      <TopicBrowser
-        entries={getEntriesBySection("settings")}
-        heading="Settings"
-        description="Concrete local preset values that article pages can quote when explaining gameplay behavior."
-      />
+      <section className="rounded-lg border border-black/8 bg-white px-5 py-5">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-700">
+            Source notes
+          </p>
+          <h1 className="text-3xl font-semibold tracking-tight text-slate-950">
+            Preset Source Notes
+          </h1>
+          <p className="max-w-3xl text-sm leading-6 text-slate-600">
+            These values support Almanac guidance. They stay out of the main
+            guide path so players can read advice before auditing settings.
+          </p>
+        </div>
+
+        <Link
+          href="/settings/preset-facts"
+          className="mt-5 inline-flex items-center gap-2 rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
+        >
+          Open preset source page
+          <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      </section>
 
       <section className="rounded-lg border border-black/8 bg-white px-5 py-5">
         <div className="space-y-2">
@@ -22,11 +40,6 @@ export default async function SettingsPage() {
           <h2 className="text-xl font-semibold tracking-tight text-slate-950">
             High-confidence preset values
           </h2>
-          <p className="max-w-3xl text-sm leading-6 text-slate-600">
-            These values come from local ARR preset files. They are suitable as
-            article evidence, but the gameplay interpretation still belongs in
-            the article text.
-          </p>
         </div>
 
         <div className="mt-5 grid gap-3 xl:grid-cols-2">

@@ -123,6 +123,21 @@ The guide now quotes or interprets local facts from these surfaces:
 - A richer maintainer evidence view that exposes dossiers without making the
   public guide feel like a mod catalog.
 
+## Almanac Kickoff Lessons
+
+- Exact public slug validation is now part of the publication gate. Update it
+  when a page is promoted instead of relying on section counts alone.
+- Public guide objects should be sanitized after routing. Do not allow
+  publication status, raw evidence paths, internal source arrays, or
+  verification notes to travel into public page props.
+- Build before validating content because the validator reads `site/out`.
+- Browser checks need to include section pages, not only the promoted article.
+  The kickoff pass found status leakage on listing pages through serialized
+  page data.
+- Treat Source notes as player reassurance. Technical evidence remains
+  available through proof links, but the guide path should keep the player in
+  practical advice.
+
 ## Last Overnight Verification
 
 The final pre-cutoff verification pass covered:

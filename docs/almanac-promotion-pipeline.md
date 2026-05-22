@@ -61,3 +61,28 @@ The first survival-route tranche proves the workflow by promoting:
 
 Later companion and quest-arc waves should use the same pipeline after the
 survival-route path is working well.
+
+## Kickoff Lessons
+
+- Counts are not enough. Validation should assert the exact public guide slugs
+  for each section so a seeded page cannot slip into the export while the count
+  still happens to match.
+- Publication state is an internal routing gate, not public data. Strip
+  `publicationStatus` from public guide props after routing because Next's
+  static export can serialize server props into page payloads even when the
+  value is not visibly rendered.
+- Run `pnpm build` before `pnpm validate:content`. The validator reads
+  `site/out`, so validating against a stale export can produce misleading
+  article counts and leak results.
+- Browser checks should cover both listing pages and article pages. Section
+  cards can leak serialized data or unfinished wording even when the article
+  template itself looks clean.
+- Public leak checks should fail on technical paths, raw config surfaces,
+  verification debt, TODO language, and visible article status terms. Those
+  belong in Source notes destinations or maintainer views, not in guide copy.
+- Source notes should prove confidence with plain labels first. Paths, plugin
+  names, raw keys, and exact verification notes are useful, but they should
+  stay one click away from the normal player reading path.
+- Promote one complete route loop at a time. A small, coherent player path is
+  more useful than exposing many seeded pages that still read like planning
+  notes.

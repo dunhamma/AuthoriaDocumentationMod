@@ -85,6 +85,25 @@ When documenting a system, questline, region, follower setup, or overhaul, try t
 
 The standard is not "list the mod." The standard is "explain the player experience and support it with evidence."
 
+## Almanac implementation lessons
+
+When changing the public Authoria Almanac site, treat publication state and
+evidence as internal machinery unless a proof page is explicitly being edited.
+
+- `publicationStatus` decides whether a guide route exists, but it should not
+  be serialized into public guide props or displayed as a public badge.
+- Public route validation should check exact slugs, not only article counts.
+  Counts can pass while the wrong seeded article is exported.
+- Content validation reads the static export in `site/out`; run the site build
+  before `pnpm validate:content`.
+- Check section listings as well as article detail pages. Listing cards can
+  leak unfinished wording or serialized implementation fields even when the
+  article page template looks player-safe.
+- Keep Source notes plain on public pages. Put raw paths, plugin names, raw
+  setting keys, and verification debt in proof or maintainer views.
+- Promote coherent player routes before broad catalog coverage. The first
+  successful pattern is Survival -> Route Readiness -> Riverwood/Whiterun.
+
 ## Player-experience categories
 
 Future documentation should try to cover gameplay and UX through these lenses:

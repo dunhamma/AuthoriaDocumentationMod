@@ -1217,7 +1217,7 @@ const entries: ReferenceEntry[] = [
       {
         title: "First-session checklist",
         paragraphs: [
-          "A new player should leave setup with a complete operating posture, not a vague sense that many systems exist. The guide should explicitly tell them to decide input method, difficulty, season, survival pressure, starter kit, first hub, and follower posture before leaving the initial room.",
+          "Leave setup with a complete operating posture, not a vague sense that many systems exist. Decide input method, difficulty, season, survival pressure, starter kit, first hub, and follower posture before leaving the initial room.",
           "The first stable destination should be chosen before the player accepts travel-heavy work. This matters because Authoria layers hunger, thirst, fatigue, and Requiem danger together.",
           "Local keybind evidence adds another concrete checklist item: interaction, mount recovery, and managed presentation hotkeys should be tested while the character is still safe.",
         ],

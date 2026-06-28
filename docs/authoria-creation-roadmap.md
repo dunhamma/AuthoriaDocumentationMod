@@ -5,8 +5,9 @@ end. It connects the playable ARR/Authoria build to the static reference site
 that explains and verifies the build.
 
 The repository already owns the reference product. The live playable product is
-the ARR install at `D:\Wabbajack\modlists\ARR`, with the `ARSE` profile treated
-as the default source of truth.
+the ARR install at `D:\Wabbajack\modlists\ARR`, with the profile selected in
+`ModOrganizer.ini` treated as the default source of truth. As of the 2026-06-14
+rebaseline that profile is `Authoria - Requiem Reforged - Main Profile`.
 
 ## Product Model
 
@@ -114,8 +115,8 @@ surfaces, not in article copy.
 
 Playable build release gate:
 
-1. Freeze selected profile and confirm `ModOrganizer.ini` still points at
-   `ARSE`.
+1. Freeze selected profile and confirm `ModOrganizer.ini` still points at the
+   intended Authoria profile.
 2. Confirm `modlist.txt`, `plugins.txt`, and `loadorder.txt` reflect the
    intended build.
 3. Regenerate required Authoria outputs.
@@ -133,6 +134,14 @@ Reference site release gate:
 5. Run `pnpm build` from `site/`.
 6. Run `pnpm validate:content` from `site/`.
 7. Browser-check changed sections and the evidence page.
+
+Stage 1 friend-preview release gate:
+
+1. Keep houseCARL read-only; do not author patch ESPs for the friend preview.
+2. Promote one coherent route tranche at a time.
+3. Build a static export from `site/out`.
+4. Package the export with a short feedback README that asks for player-clarity
+   feedback and states the evidence-backed, not playtested, boundary.
 
 ## Acceptance Standard
 

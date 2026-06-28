@@ -12,7 +12,7 @@ The output should help someone understand:
 - what the feature or system is
 - how it feels in play
 - what the player must do to engage with it
-- what choices are safe early, risky early, or campaign-defining
+- what choices are recoverable early, risky early, or campaign-defining
 - what other mods or patches shape the final experience
 - where the claims came from
 
@@ -60,7 +60,7 @@ Prioritize these for early documentation work:
 - UI and menu burden
 - Authoria-specific patch behavior
 - companion-specific pages for major followers
-- region or hub guides keyed to safe early progression
+- region or hub guides keyed to recoverable early progression
 - dedicated quest-arc guides for Vigilant, Glenmoril, Unslaad, and adjacent large worldspaces
 - preset fact references that quote local settings instead of only pointing at files
 
@@ -86,7 +86,7 @@ The current site organizes public reference pages into these sections:
 - `Combat`: dodge, wounds, stamina, animation commitment, encounter selection, and retreat discipline.
 - `Survival`: food, fatigue, cold, seasons, map readability, travel, and route planning.
 - `Companions`: follower-specific pages for route usefulness, combat role, banter, party power, and local tuning.
-- `Regions`: safe hubs, roads, resupply, board work, and avoid-until-ready routes.
+- `Regions`: recovery hubs, roads, resupply, board work, and avoid-until-ready routes.
 - `Quest Arcs`: campaign-scale content, delayed starts, readiness, travel, boss profile, and local patch authority.
 - `Settings`: extracted preset facts that can support article claims.
 - `Evidence`: maintainer-facing provenance and extraction context.

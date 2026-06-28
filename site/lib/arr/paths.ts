@@ -1,5 +1,5 @@
 export const ARR_ROOT = "D:/Wabbajack/modlists/ARR";
-export const DEFAULT_PROFILE = "ARSE";
+export const DEFAULT_PROFILE = "Authoria - Requiem Reforged - Main Profile";
 
 export const arrPaths = {
   root: ARR_ROOT,

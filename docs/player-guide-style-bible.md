@@ -47,7 +47,8 @@ Use this pattern for normal player guide pages:
 
 1. **Do this first**
    - Immediate actions the player can take.
-   - Keep this concrete: buy food, sleep, take short work, avoid remote quests.
+   - Keep this concrete: buy food, sleep, take Missives deliveries or gathering
+     requests near town, avoid remote quests.
 2. **Know this before you leave town**
    - The system or route rule the player must understand before acting.
 3. **Watch out for**
@@ -76,7 +77,7 @@ Keep these out of normal player copy unless the page is a proof or maintainer
 view:
 
 - `ARR install`
-- `ARSE profile`
+- active MO2 profile names
 - `MO2`
 - `load order`
 - `plugin`
@@ -152,9 +153,9 @@ Before:
 
 After:
 
-> Use Riverwood and Whiterun as your first safety loop. Rest, sell, buy food,
-> take short work, and learn which roads you can survive before you chase a
-> dungeon marker.
+> Use Riverwood and Whiterun as your first recovery loop. Rest, sell, buy food,
+> take Missives deliveries, gathering requests, nearby errands, and one-road
+> jobs, then come back before you chase a dungeon marker.
 
 ### Quest Arc Guidance
 

@@ -40,7 +40,7 @@ export function EvidenceDashboardView({
           </p>
           <p className="mt-3 text-sm leading-6 text-slate-300">
             {dashboard.snapshot.available
-              ? "The file paths below were resolved against the local ARSE profile."
+              ? "The file paths below were resolved against the selected local ARR profile."
               : "The local report was unavailable, so these paths are the expected defaults from the repo context."}
           </p>
         </aside>
@@ -77,6 +77,50 @@ export function EvidenceDashboardView({
           value={dashboard.counts.highConfidenceFacts}
           description="High-confidence local preset facts available for article work."
         />
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="rounded-lg border border-black/8 bg-white px-5 py-5">
+          <h2 className="text-xl font-semibold tracking-tight text-slate-950">
+            ARR profile baseline
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            This maintainer view resolves against the profile currently selected
+            by ModOrganizer.ini, then keeps public guide pages sanitized from
+            raw install inventory.
+          </p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <EvidenceMetric
+              label="Enabled mods"
+              value={dashboard.snapshot.totals.enabledMods}
+            />
+            <EvidenceMetric
+              label="Authoria modules"
+              value={dashboard.snapshot.totals.authoriaMods}
+            />
+            <EvidenceMetric
+              label="Generated outputs"
+              value={dashboard.snapshot.totals.generatedOutputMods}
+            />
+            <EvidenceMetric
+              label="Requiem matches"
+              value={dashboard.snapshot.totals.requiemMods}
+            />
+          </div>
+        </div>
+
+        <aside className="rounded-lg border border-black/8 bg-white px-5 py-5">
+          <h2 className="text-xl font-semibold tracking-tight text-slate-950">
+            Profile notes
+          </h2>
+          <div className="mt-4 space-y-2">
+            {dashboard.snapshot.notes.map((note) => (
+              <p key={note} className="text-sm leading-6 text-slate-600">
+                {note}
+              </p>
+            ))}
+          </div>
+        </aside>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
@@ -311,6 +355,19 @@ function MetricCard({
         {value}
       </p>
       <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+    </div>
+  );
+}
+
+function EvidenceMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-lg border border-black/8 bg-slate-50 px-4 py-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+        {label}
+      </p>
+      <p className="mt-3 font-mono text-2xl font-semibold text-slate-950">
+        {value}
+      </p>
     </div>
   );
 }

@@ -51,7 +51,7 @@ export type ReferenceEntry = {
   slug: string;
   kind: ReferenceKind;
   section: ReferenceSection;
-  publicationStatus: ArticlePublicationState;
+  publicationStatus?: ArticlePublicationState;
   title: string;
   strapline: string;
   summary: string;

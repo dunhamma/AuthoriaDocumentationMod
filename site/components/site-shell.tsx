@@ -47,7 +47,7 @@ const primaryLinks = [
   {
     href: "/regions",
     label: "Regions",
-    detail: "Safe hubs and route expectations",
+    detail: "Recovery hubs and route expectations",
     icon: Map,
   },
   {

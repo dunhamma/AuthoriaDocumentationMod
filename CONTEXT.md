@@ -12,15 +12,16 @@ This repo should prefer evidence over memory. When a claim about gameplay behavi
 
 - Modlist root: `D:\Wabbajack\modlists\ARR`
 - Game: Skyrim Special Edition
-- Mod Organizer profile currently selected in `ModOrganizer.ini`: `ARSE`
-- The profile-specific files under `D:\Wabbajack\modlists\ARR\profiles\ARSE\` are the default reference point unless the work explicitly says to document a different profile.
+- Mod Organizer profile currently selected in `ModOrganizer.ini`: `Authoria - Requiem Reforged - Main Profile`
+- The profile-specific files under `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\` are the default reference point unless the work explicitly says to document a different profile.
+- Treat `ModOrganizer.ini` as the active-profile authority. If it changes, update the site profile helper, validation manifest, and docs before making new gameplay claims.
 
 ## What counts as authoritative
 
 Use sources in this order:
 
 1. The ARR install itself.
-2. The active MO2 profile files for `ARSE`.
+2. The active MO2 profile files selected by `ModOrganizer.ini`.
 3. Files inside enabled mod folders under `D:\Wabbajack\modlists\ARR\mods\`.
 4. Upstream Nexus pages, GitHub repos, and release notes.
 
@@ -36,13 +37,13 @@ Start with these before making claims:
 
 - `D:\Wabbajack\modlists\ARR\ModOrganizer.ini`
   - Confirms the selected profile and toolchain.
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\modlist.txt`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\modlist.txt`
   - The enabled and disabled MO2 mod order.
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\plugins.txt`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\plugins.txt`
   - The enabled plugin set.
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\loadorder.txt`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\loadorder.txt`
   - The plugin load order.
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\modlist_report_gold.csv`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\modlist_report_gold.csv`
   - The best single inventory file for versioning, priorities, custom-mod status, and plugin hashes.
 
 Use `modlist_report_gold.csv` when you need to answer questions like:
@@ -85,6 +86,25 @@ When documenting a system, questline, region, follower setup, or overhaul, try t
 
 The standard is not "list the mod." The standard is "explain the player experience and support it with evidence."
 
+## Almanac implementation lessons
+
+When changing the public Authoria Almanac site, treat publication state and
+evidence as internal machinery unless a proof page is explicitly being edited.
+
+- `publicationStatus` decides whether a guide route exists, but it should not
+  be serialized into public guide props or displayed as a public badge.
+- Public route validation should check exact slugs, not only article counts.
+  Counts can pass while the wrong seeded article is exported.
+- Content validation reads the static export in `site/out`; run the site build
+  before `pnpm validate:content`.
+- Check section listings as well as article detail pages. Listing cards can
+  leak unfinished wording or serialized implementation fields even when the
+  article page template looks player-safe.
+- Keep Source notes plain on public pages. Put raw paths, plugin names, raw
+  setting keys, and verification debt in proof or maintainer views.
+- Promote coherent player routes before broad catalog coverage. The first
+  successful pattern is Survival -> Route Readiness -> Riverwood/Whiterun.
+
 ## Player-experience categories
 
 Future documentation should try to cover gameplay and UX through these lenses:
@@ -110,7 +130,7 @@ Use these terms consistently.
   It is written for players who know vanilla Skyrim but are new to Requiem,
   Noxrim, and this modlist's local tuning.
 - `ARR install`: the local modlist instance at `D:\Wabbajack\modlists\ARR`.
-- `profile`: an MO2 profile; by default this means `ARSE`.
+- `profile`: an MO2 profile; by default this means the profile currently selected in `ModOrganizer.ini`, which is `Authoria - Requiem Reforged - Main Profile` as of the 2026-06-14 ARR rebaseline.
 - `mod`: an MO2 mod entry from `modlist.txt` or `modlist_report_gold.csv`.
 - `plugin`: a `.esm`, `.esp`, or `.esl` participating in gameplay records and load order.
 - `upstream mod`: the original mod as published by its author on Nexus, GitHub, or another source.
@@ -187,9 +207,9 @@ If the question is "what does the player see, touch, configure, or feel," inspec
   - Controller-specific experience if enabled.
 - `D:\Wabbajack\modlists\ARR\mods\Authoria - FMWF Map Marker Settings`
   - Map readability and world navigation shaping.
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\Skyrim.ini`
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\SkyrimPrefs.ini`
-- `D:\Wabbajack\modlists\ARR\profiles\ARSE\skyrimcustom.ini`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\Skyrim.ini`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\SkyrimPrefs.ini`
+- `D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\skyrimcustom.ini`
   - Profile-level user experience and runtime defaults.
 
 When a doc claims a system is "comfortable," "harsh," "confusing," "streamlined," or "high-friction," try to back that up with one of these local surfaces, not only a subjective summary.
@@ -231,7 +251,7 @@ If an upstream mod page says one thing but a late Authoria plugin changes the re
 
 When writing repo docs, prefer statements like:
 
-- "The `ARSE` profile enables `Authoria - Requiem Master Patch.esp` through `Authoria - xEdit Output`."
+- "The active ARR profile enables `Authoria - Requiem Master Patch.esp` through `Authoria - xEdit Output`."
 - "The local MCM preset for Requiem lives in `Authoria - MCM and INI Settings\\MCM\\Settings\\Requiem.ini`."
 - "The outfit distribution layer uses `_DISTR.ini` files and SkyPatcher configs inside `Authoria - Modded Outfit Distribution`."
 

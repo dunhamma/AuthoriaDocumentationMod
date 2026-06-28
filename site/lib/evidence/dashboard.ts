@@ -7,9 +7,9 @@ import {
 import { getArrSnapshot, type ArrSnapshot } from "@/lib/arr/snapshot";
 import {
   getAllEntries,
-  getArticleHref,
   sectionDefinitions,
 } from "@/lib/content/catalog";
+import { getArticleHref } from "@/lib/content/routes";
 import type {
   ReferenceEntry,
   SectionDefinition,

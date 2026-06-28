@@ -11,6 +11,8 @@ export type ArrSnapshot = {
     enabledMods: number;
     customMods: number;
     authoriaMods: number;
+    authoriaModsInReport: number;
+    generatedOutputMods: number;
     requiemMods: number;
   };
   highlights: {
@@ -38,12 +40,33 @@ function sliceNames(
     .map((entry) => entry.name);
 }
 
+function dedupe(items: string[]) {
+  return Array.from(new Set(items));
+}
+
 export const getArrSnapshot = cache(async (): Promise<ArrSnapshot> => {
   const install = await getArrInstallData();
-  const { records, selectedProfile } = install;
+  const { groups, records, selectedProfile } = install;
   const enabledRecords = records.filter((entry) => entry.enabled);
+  const enabledModlistNames = dedupe(
+    groups.flatMap((group) => group.enabledMods),
+  );
+  const enabledModuleNames = enabledModlistNames.length
+    ? enabledModlistNames
+    : enabledRecords.map((entry) => entry.name);
   const authoriaMatcher = /authoria|auhoria/i;
+  const generatedMatcher =
+    /output|cache|dyndolod|texgen|xlodgen|synthesis|rfti|pandora|pg/i;
   const requiemMatcher = /requiem/i;
+  const authoriaModules = enabledModuleNames.filter((name) =>
+    authoriaMatcher.test(name),
+  );
+  const generatedOutputs = authoriaModules.filter((name) =>
+    generatedMatcher.test(name),
+  );
+  const reportAuthoriaCount = enabledRecords.filter((entry) =>
+    authoriaMatcher.test(entry.name),
+  ).length;
 
   return {
     available: install.available,
@@ -52,19 +75,15 @@ export const getArrSnapshot = cache(async (): Promise<ArrSnapshot> => {
       allMods: records.length,
       enabledMods: enabledRecords.length,
       customMods: enabledRecords.filter((entry) => entry.custom).length,
-      authoriaMods: enabledRecords.filter((entry) =>
-        authoriaMatcher.test(entry.name),
-      ).length,
+      authoriaMods: authoriaModules.length,
+      authoriaModsInReport: reportAuthoriaCount,
+      generatedOutputMods: generatedOutputs.length,
       requiemMods: enabledRecords.filter((entry) =>
         requiemMatcher.test(entry.name),
       ).length,
     },
     highlights: {
-      authoria: sliceNames(
-        enabledRecords,
-        (entry) => authoriaMatcher.test(entry.name),
-        8,
-      ),
+      authoria: authoriaModules.slice(0, 8),
       requiem: sliceNames(
         enabledRecords,
         (entry) => requiemMatcher.test(entry.name),
@@ -78,6 +97,11 @@ export const getArrSnapshot = cache(async (): Promise<ArrSnapshot> => {
     notes: records.length
       ? [
           ...install.notes,
+          ...(authoriaModules.length !== reportAuthoriaCount
+            ? [
+                "Authoria module inventory uses modlist.txt because the generated CSV report can lag behind profile changes.",
+              ]
+            : []),
           "Counts reflect the local install rather than upstream mod metadata.",
         ]
       : install.notes,

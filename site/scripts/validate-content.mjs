@@ -2,8 +2,11 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
 import {
+  arrRoot,
   bannedPublicTerms,
   expectedSections,
+  expectedPublicSlugs,
+  expectedSelectedProfile,
   exportedSections,
   forbiddenMainNavHrefs,
   forbiddenSlugs,
@@ -15,6 +18,7 @@ import {
 
 const root = path.resolve("out");
 const siteRoot = path.resolve(".");
+const repoRoot = path.resolve("..");
 
 async function exists(filePath) {
   try {
@@ -148,6 +152,16 @@ async function quotedVerificationOverrideSlugs() {
   );
 }
 
+function parseSelectedProfile(rawIni) {
+  const match = rawIni?.match(/selected_profile\s*=\s*@ByteArray\(([^)]+)\)/);
+  return match?.[1] ?? null;
+}
+
+function parseDefaultProfile(rawPathsTs) {
+  const match = rawPathsTs?.match(/DEFAULT_PROFILE\s*=\s*"([^"]+)"/);
+  return match?.[1] ?? null;
+}
+
 async function sectionArticleCount(section) {
   const sectionPath = path.join(root, section);
   if (!(await exists(sectionPath))) {
@@ -174,6 +188,28 @@ async function exportedSlugs() {
   }
 
   return slugs;
+}
+
+async function exportedGuideSlugsBySection() {
+  const slugsBySection = new Map();
+
+  for (const section of Object.keys(expectedSections)) {
+    const sectionPath = path.join(root, section);
+    const slugs = [];
+
+    if (await exists(sectionPath)) {
+      const entries = await readdir(sectionPath, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory() && !entry.name.startsWith("__next.")) {
+          slugs.push(entry.name);
+        }
+      }
+    }
+
+    slugsBySection.set(section, slugs.sort());
+  }
+
+  return slugsBySection;
 }
 
 async function collectPublicFiles(dir) {
@@ -249,6 +285,49 @@ if (!siteShellRaw) {
   }
 }
 
+const modOrganizerIniRaw = await readOptional(path.resolve(arrRoot, "ModOrganizer.ini"));
+const selectedProfile = parseSelectedProfile(modOrganizerIniRaw);
+if (!selectedProfile) {
+  failures.push(`Could not resolve selected profile from ${arrRoot}/ModOrganizer.ini.`);
+} else if (selectedProfile !== expectedSelectedProfile) {
+  failures.push(
+    `Selected ARR profile drift: ModOrganizer.ini has "${selectedProfile}", expected "${expectedSelectedProfile}".`,
+  );
+}
+
+const arrPathsRaw = await readOptional(path.resolve(siteRoot, "lib/arr/paths.ts"));
+const defaultProfile = parseDefaultProfile(arrPathsRaw);
+if (defaultProfile !== expectedSelectedProfile) {
+  failures.push(
+    `site/lib/arr/paths.ts DEFAULT_PROFILE is "${defaultProfile}", expected "${expectedSelectedProfile}".`,
+  );
+}
+
+const selectedProfileFiles = [
+  "modlist.txt",
+  "plugins.txt",
+  "loadorder.txt",
+  "modlist_report_gold.csv",
+];
+for (const filename of selectedProfileFiles) {
+  const filePath = path.resolve(arrRoot, "profiles", expectedSelectedProfile, filename);
+  if (!(await exists(filePath))) {
+    failures.push(`Selected profile evidence file is missing: ${filePath}`);
+  }
+}
+
+for (const relativePath of [
+  "CONTEXT.md",
+  "docs/authoria-creation-roadmap.md",
+  "docs/article-harvest-status.md",
+]) {
+  const filePath = path.resolve(repoRoot, relativePath);
+  const raw = await readOptional(filePath);
+  if (raw?.includes("profiles\\ARSE") || raw?.includes("profiles/ARSE")) {
+    failures.push(`Stale ARSE profile path remains in ${relativePath}.`);
+  }
+}
+
 if (!(await exists(root))) {
   failures.push("Expected static export at site/out. Run `pnpm build` before content validation.");
 } else {
@@ -256,6 +335,26 @@ if (!(await exists(root))) {
     const actualCount = await sectionArticleCount(section);
     if (actualCount !== expectedCount) {
       failures.push(`${section} expected ${expectedCount} articles, found ${actualCount}.`);
+    }
+  }
+
+  const guideSlugsBySection = await exportedGuideSlugsBySection();
+  for (const [section, expectedSlugs] of Object.entries(expectedPublicSlugs)) {
+    const actualSlugs = guideSlugsBySection.get(section) ?? [];
+    const expected = [...expectedSlugs].sort();
+
+    for (const slug of actualSlugs) {
+      if (!expected.includes(slug)) {
+        failures.push(
+          `Unexpected public guide route exported: /${section}/${slug}. Check publicationStatus before publishing seeded pages.`,
+        );
+      }
+    }
+
+    for (const slug of expected) {
+      if (!actualSlugs.includes(slug)) {
+        failures.push(`Expected public guide route is missing: /${section}/${slug}.`);
+      }
     }
   }
 

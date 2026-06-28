@@ -288,13 +288,13 @@ const targets: PresetTarget[] = [
     path: `${arrPaths.sunhelmConfigDir}/normal.json`,
     format: "json",
     interpretations: {
-      "root.HUNGERRATE":
+      "root.HungerRate":
         "Normal hunger pressure is active and should be part of early route planning.",
-      "root.THIRSTRATE":
+      "root.ThirstRate":
         "Normal thirst pressure is active, making water access and town loops relevant.",
-      "root.FATIGUERATE":
+      "root.FatigueRate":
         "Normal fatigue pressure is active, so beds and rest cadence affect travel.",
-      "root.COLDRATE":
+      "root.ColdRate":
         "Cold pressure is enabled through the profile even when exact weather severity needs in-game context.",
       "root.DisableFastTravel":
         "Fast travel is not disabled by this SunHelm profile, so any fast-travel restriction must come from another layer.",
@@ -303,14 +303,14 @@ const targets: PresetTarget[] = [
   {
     sourceId: "sunhelm-hard",
     publicLabel: "SunHelm hard survival profile",
-    path: `${arrPaths.sunhelmConfigDir}/hard.json`,
+    path: `${arrPaths.sunhelmConfigDir}/Hard.json`,
     format: "json",
     interpretations: {
-      "root.HUNGERRATE":
+      "root.HungerRate":
         "Hard profile hunger rises faster than normal, increasing the cost of long routes.",
-      "root.THIRSTRATE":
+      "root.ThirstRate":
         "Hard profile thirst rises faster than normal, making water planning more important.",
-      "root.FATIGUERATE":
+      "root.FatigueRate":
         "Hard profile fatigue rises faster than normal, making rest access a stronger route constraint.",
     },
   },
@@ -467,7 +467,7 @@ const targets: PresetTarget[] = [
   {
     sourceId: "ocpa",
     publicLabel: "Power attack control preset",
-    path: arrPaths.mcmSetting("OCPA.ini"),
+    path: `${arrPaths.authoriaControllerConfigs}/MCM/Settings/OCPA.ini`,
     format: "ini",
     interpretations: {
       "general.iKeycode":

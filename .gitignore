@@ -1,3 +1,5 @@
 .tools/
 site/.devserver.err
 site/.devserver.log
+site/.codex-screenshots/
+docs/share/stage1-friend-preview/preview/

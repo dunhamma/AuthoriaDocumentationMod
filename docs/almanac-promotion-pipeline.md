@@ -53,14 +53,40 @@ but not required for the first public version of a page.
 
 ## First Tranche Standard
 
-The first survival-route tranche proves the workflow by promoting:
+The first survival-route tranche proved the workflow by promoting:
 
 - Survival and travel context.
 - Route readiness and return rules.
 - Riverwood and Whiterun as the first safe hub loop.
+- Falkreath, Riften/Ivarstead, Solitude, Windhelm, Winterhold, and Markarth as
+  spoiler-light route-first region pages.
 
 Later companion and quest-arc waves should use the same pipeline after the
 survival-route path is working well.
+
+## Post-Rebaseline Candidate Backlog
+
+The 2026-06-14 ARR rebaseline refreshed the source-of-truth profile. The Stage
+1 route work then promoted Riften/Ivarstead and the Solitude, Windhelm,
+Winterhold, and Markarth route-atlas pages.
+
+Next candidates, in order:
+
+1. Add route-specific danger labels for the seven public hubs where local
+   evidence supports practical recovery advice.
+   Evidence blocker: board destinations, dungeon entrances, travel services,
+   and route feel need either deeper record review or in-game walking.
+2. Promote a linked Xelzaz plus Wyrmstooth/Sirenroot route tranche.
+   Evidence blocker: verify recruitment timing, route interaction, quest
+   triggers, and follower-balance assumptions before setting public status.
+3. Promote Olenveld as a compact new-land readiness page.
+   Evidence blocker: verify trigger/readiness, travel burden, map support, and
+   Requiem-facing danger expectations.
+4. Promote Auri plus Vigilant as a later commentary/readiness tranche.
+   Evidence blocker: verify commentary triggers and avoid overclaiming combat
+   or Requiem behavior until local support is checked.
+5. Expand region danger labels only where local route or dungeon evidence
+   supports concrete recovery advice.
 
 ## Kickoff Lessons
 

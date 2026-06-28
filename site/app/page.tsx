@@ -72,7 +72,7 @@ export default function Home() {
               href="/progression/route-readiness-and-return-rules"
               className="inline-flex items-center gap-2 rounded-lg border border-black/8 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-teal-300 hover:bg-teal-50"
             >
-              Plan a safe route
+              Plan a recoverable route
               <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
@@ -92,9 +92,10 @@ export default function Home() {
           <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
             <li>Rest before leaving a warm hub.</li>
             <li>Carry food, recovery supplies, and a way back.</li>
-            <li>Take short work before remote quests.</li>
-            <li>Use Riverwood and Whiterun as your first safety loop.</li>
-            <li>Assume Requiem makes bad fights worse than you remember.</li>
+            <li>Use Missives deliveries, gathering jobs, and nearby errands to fund food, rooms, and early gear.</li>
+            <li>Use Riverwood and Whiterun as your first recovery loop.</li>
+            <li>Then compare Falkreath, Riften/Ivarstead, and the city hubs by weather, road length, services, and retreat.</li>
+            <li>Assume Requiem makes bad matchups worse than bad levels.</li>
           </ul>
         </aside>
       </section>
@@ -138,7 +139,7 @@ export default function Home() {
       <TopicBrowser
         entries={entries}
         heading="Almanac guides"
-        description="Search by the question you would ask before acting: where to start, what is safe, which companion changes a route, or how a system differs from vanilla Skyrim."
+        description="Search by the question you would ask before acting: where to start, what is recoverable, which companion changes a route, or how a system differs from vanilla Skyrim."
       />
     </div>
   );

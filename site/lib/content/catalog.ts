@@ -7,12 +7,13 @@ import type {
   SectionDefinition,
   SettingQuote,
 } from "@/lib/content/schema";
+import { arrPaths } from "@/lib/arr/paths";
 
-const arr = "D:/Wabbajack/modlists/ARR";
-const profile = `${arr}/profiles/ARSE`;
-const mcm = `${arr}/mods/Authoria - MCM and INI Settings`;
-const xedit = `${arr}/mods/Authoria - xEdit Output`;
-const synthesis = `${arr}/mods/Authoria - Synthesis Output`;
+const profile = arrPaths.profileDir();
+const mcm = arrPaths.authoriaMcmIniSettings;
+const controller = arrPaths.authoriaControllerConfigs;
+const xedit = arrPaths.authoriaXEditOutput;
+const synthesis = arrPaths.authoriaSynthesisOutput;
 
 export const sectionDefinitions: SectionDefinition[] = [
   {
@@ -37,7 +38,7 @@ export const sectionDefinitions: SectionDefinition[] = [
     slug: "survival",
     title: "Survival",
     description:
-      "Start here: food, fatigue, cold, seasons, maps, and safe roads.",
+      "Start here: food, fatigue, cold, seasons, maps, and recoverable roads.",
   },
   {
     slug: "companions",
@@ -808,7 +809,7 @@ const companionDetails: Record<
       {
         title: "Combat and camp angle",
         paragraphs: [
-          "Thogra's page should answer whether she is a safe early combat support pick, a quest commitment, or both. The local evidence points toward follower, quest, battle-camp, and location support that need direct verification.",
+          "Thogra's page should answer whether she is early combat support, a quest commitment, or both. The local evidence points toward follower, quest, battle-camp, and location support that need direct verification before any route recommendation.",
         ],
       },
     ],
@@ -855,43 +856,43 @@ const regionDetails: Record<
 > = {
   "falkreath-hub": {
     summary:
-      "Falkreath is a good second-step hub after Riverwood and Whiterun: useful services, short work, and forest roads, but enough wilderness pull to punish a character who treats quiet scenery as safety.",
+      "Falkreath is a useful second-step hub after Riverwood and Whiterun: it offers beds, vendors, and task-board income, but the forest turns quickly from errands into exposure, wounds, predators, ambushes, and remote-road drift.",
     tags: ["region", "hub", "falkreath", "forest", "early progression"],
     playerExperience: [
-      "The hold feels calmer than Whiterun, but the danger is spread through woods, roads, and nearby quest hooks.",
-      "Missives and town services make Falkreath useful, but leaving town without food, warmth, and retreat options can turn a simple errand into an attrition route.",
-      "The town works best when you use it as a recovery stop, not a launch button for every forest marker.",
+      "The hold feels quieter than Whiterun, but danger is less signposted: woods, animals, ambushes, bad weather, and road forks can all spend your supplies before a dungeon ever starts.",
+      "The town is valuable because it lets you turn delivery jobs, gathering requests, selling, food, and sleep into a repeatable recovery loop.",
+      "Use the hub to learn when a forest route is still recoverable: you should know where you will sleep, what you will eat, and which road brings you back.",
     ],
     progressionImpact: [
-      "Falkreath works best after the Riverwood/Whiterun loop has stabilized money, food, and a follower plan.",
-      "Forest routes reward cautious scouting and short jobs more than dungeon commitment.",
-      "Follower support is helpful because wilderness fights can become messy before the player has strong armor or reliable crowd control.",
+      "Falkreath works best after the Riverwood/Whiterun loop has taught you how to fund rooms, food, potions, and basic gear.",
+      "Forest jobs reward caution because Requiem makes attrition matter: a wound, disease, poison, or long retreat can be more expensive than the job reward.",
+      "Visible ruins, Daedric hooks, and long roads are readiness checks. They ask whether the build has damage, stamina, healing, resistances, and a return plan.",
     ],
     practicalGuidance: [
-      "Use Falkreath for short board jobs, resupply, and local scouting before pushing toward remote ruins or Daedric hooks.",
+      "Use Falkreath for one board job at a time: deliveries, gathering requests, nearby errands, or scouting legs that still return to town.",
       "Treat road exits as separate decisions: south and west routes can be longer and harder to recover from than they look on the map.",
-      "Carry food and water even for short errands because forest travel can stretch if the player avoids direct fights.",
-      "Return to town when the route starts spending potions, warmth, fatigue, or daylight faster than it pays you back.",
+      "Carry food, water, and a recovery plan even for errands because detours and avoided fights can stretch the trip.",
+      "Return to town when the route starts spending potions, warmth, fatigue, daylight, or wound risk faster than it pays you back.",
     ],
     uxTouchpoints: ["Missives board", "Paper map", "Survival widgets", "Follower controls", "Town services"],
     sections: [
       {
         title: "Use it after your first loop",
         paragraphs: [
-          "Falkreath is not a bad early hub, but it is a better second hub than first answer. Come here once the Riverwood and Whiterun loop has taught you how to sleep, sell, eat, take short work, and go home before the route turns sour.",
-          "Use the town for controlled errands, supplies, and scouting. If a job points deep into woods, ruins, or a long road with no obvious warm stop, treat that as a later route rather than today's paycheck.",
+          "Falkreath is not a bad early hub, but it is a better second hub than first answer. Come here once Riverwood and Whiterun have taught you how to sleep, sell, eat, read the board, and stop before the route turns sour.",
+          "The useful jobs are the ones you can finish or abandon without losing recovery: a Missives delivery, a gathering request, a nearby errand, or a scouting leg that returns before night. If a job points deep into woods, ruins, or a long road with no warm stop, treat that as a later route rather than today's pay.",
         ],
       },
       {
         title: "The forest hides the cost",
         paragraphs: [
-          "The danger is route drift. You can leave town for what looks like a short task and end up in poor recovery terrain, bad weather, or a fight you cannot disengage from cleanly.",
-          "Read Falkreath jobs by return path first. A small reward is only small work when you can name the bed, food source, and road back before you leave.",
+          "The danger is route drift. You can leave town for a delivery and end up in poor recovery terrain, bad weather, or a fight where the injury matters longer than the enemy did.",
+          "Read Falkreath jobs by return path first. A small reward is only low-commitment when you can name the bed, food source, and road back before you leave.",
         ],
         bullets: [
-          "Stable: town errands, short roads, known beds, and work that brings you back before night.",
+          "Stable: Missives deliveries, gathering requests, town errands, known beds, and work that brings you back before night.",
           "Scouting: forest routes where you can turn around before the objective.",
-          "Delay: remote ruins, Daedric hooks, long wilderness loops, and any job that makes retreat unclear.",
+          "Delay: remote ruins, Daedric hooks, long wilderness loops, and any job where retreat is less clear than the reward.",
         ],
       },
     ],
@@ -902,72 +903,90 @@ const regionDetails: Record<
   },
   "riften-ivarstead-corridor": {
     summary:
-      "Riften and Ivarstead should be framed as a corridor rather than a single hub: Riften gives services and money loops, while Ivarstead is a staging point that can lure the player toward mountain exposure and campaign routes too early.",
+      "Use Riften and Ivarstead as a staged route: Riften can stabilize money, services, and supplies, while Ivarstead is the checkpoint where you decide whether the mountain, nearby ruins, or another road is actually worth the cost.",
     tags: ["region", "hub", "riften", "ivarstead", "corridor", "travel"],
     playerExperience: [
-      "The player feels a strong pull from city work, road travel, temple routes, and mountain staging.",
-      "The corridor has more recovery than true wilderness, but overcommitting toward High Hrothgar, ruins, or remote jobs can strand a weak build.",
+      "Riften gives you city services, shops, beds, work boards, and locally adjusted interiors, so it can feel safer than the roads around it.",
+      "Ivarstead adds real services, but it is still a checkpoint before mountain pressure, nearby ruins, and longer road choices.",
+      "Visible roads and markers help you plan, but they do not tell you whether your food, fatigue, warmth, or combat tools can survive the route.",
     ],
     progressionImpact: [
-      "Riften can stabilize money through city services and task-board work, but the surrounding roads ask for better route discipline than Whiterun.",
+      "Riften can stabilize money through city services and task-board jobs. For new players, start with deliveries, gathering requests, and one-road errands before bigger city or mountain commitments.",
       "Ivarstead is useful as a rest point, not proof that the character is ready for every mountain-adjacent objective.",
-      "Cold, fatigue, and road readability should shape when the player attempts long legs.",
+      "High Hrothgar, Shroud Hearth Barrow, the Ratway, and nearby forts ask different questions: food and warmth for the climb, undead or interior tools for ruins, locks and close-quarters risk for undercity spaces, and retreat discipline for forts.",
     ],
     practicalGuidance: [
-      "Use Riften for services, selling, and safer work selection before taking corridor jobs.",
-      "Treat Ivarstead as a checkpoint: rest, refill, check warmth, and decide whether to continue or turn back.",
-      "Do not chain multiple road jobs without rechecking fatigue and food.",
+      "Use Riften to sell, sleep, buy food, check the Missives board, and reset before you take one road job.",
+      "Pick one corridor objective at a time instead of stacking city work, road work, ruins, and mountain travel into one outing.",
+      "At Ivarstead, stop and reassess food, fatigue, warmth, potions, daylight, and the road home before continuing.",
+      "Delay High Hrothgar, Shroud Hearth Barrow, Ratway trouble, and fort routes when you cannot name the recovery stop after them.",
     ],
-    uxTouchpoints: ["Carriage/ferry travel", "Missives board", "Paper map", "SunHelm needs", "Frostfall exposure"],
+    uxTouchpoints: ["Missives board", "Paper map", "SunHelm needs", "Requiem pressure", "Follower controls"],
     sections: [
       {
-        title: "Corridor logic",
+        title: "Think in legs, not markers",
         paragraphs: [
-          "This guide should answer how to move through the region, not just what is installed there. ARR has expanded carriage and ferry support, settlement-focused carriage destinations, visible town/farm/mining markers, and survival pressure. That combination makes Riften to Ivarstead a staged route: city, road, rest point, then decision.",
+          "Vanilla muscle memory says a visible marker is the next thing to chase. Authoria makes that a bad habit. Riften to Ivarstead works better as a set of legs: city services, road travel, checkpoint, then a decision.",
+          "The local setup supports that framing. Riften has many adjusted shops, inns, interiors, and service spaces. Ivarstead is expanded into more than a signpost, with a shop, smith, inn, bakery, chapel, farm, and houses to support a pause.",
         ],
       },
       {
-        title: "What is safe early",
+        title: "Use Riften to recover, not to spiral",
         paragraphs: [
-          "Safe early use means short city work, recoverable deliveries, and stopping at Ivarstead before the route becomes mountain ambition. Risky early use means turning the corridor into an all-day expedition while hungry, tired, cold, or under-geared.",
+          "Riften looks secure inside the walls and still points at trouble. Use it for selling, rooms, food, board jobs, and route selection. A good first board job is a delivery, gathering request, nearby errand, or one-road task you can turn back from cleanly. Do not let city confidence become permission to clear the Ratway, chase every nearby hook, and then start a mountain trip tired.",
+          "Ivarstead is the same lesson in smaller form. It can support a pause, but it is not proof that High Hrothgar, Shroud Hearth Barrow, or a long road is safe today.",
+        ],
+        bullets: [
+          "Stable: city services, Missives deliveries, gathering requests, short errands, one road leg, and a named return point.",
+          "Scouting: Ivarstead as a stop where you can turn back cleanly.",
+          "Delay: mountain pushes, nearby ruins, forts, sewer trouble, and any route that spends your recovery buffer before the objective.",
         ],
       },
     ],
     verificationNotes: [
-      "Confirm local carriage/ferry destinations and Ivarstead service availability.",
-      "Audit board jobs that send the player into mountain, cave, or ruin routes.",
+      "Manual route-feel proof is still needed before publishing exact danger tiers for nearby ruins, forts, mountain travel, or city underworld routes.",
+      "Carriage and ferry behavior should be checked in game before making precise travel-network claims.",
     ],
   },
   "solitude-hub": {
     summary:
-      "Solitude is a high-service stabilizer with a dangerous temptation profile: it can support money, travel, and shopping well, but its faction, museum, and coastal routes can pull a new character into large commitments.",
+      "Solitude is a high-service stabilizer: use it for rest, shopping, selling, and travel planning, then be deliberate about which faction, museum, coast, or cave hook becomes an actual trip.",
     tags: ["region", "hub", "solitude", "services", "travel"],
     playerExperience: [
-      "The player gets a strong city base with shops, beds, travel access, and a lot of authored content nearby.",
-      "The city can feel safe enough that players accept quests or routes before their combat and survival plan is ready.",
+      "The city gives you one of the strongest service bases in the province: beds, vendors, selling options, delivery/gathering jobs, and travel links are all useful.",
+      "That safety can make the next choice feel smaller than it is. Treat a resupply visit, a faction errand, a museum hook, and a coastal road as different decisions.",
+      "Use Solitude to get stable first; leave with one planned objective and a named way back.",
     ],
     progressionImpact: [
-      "Solitude can stabilize economy and travel once the player can afford rooms, food, and carriage use.",
-      "It is better as a planned hub than as a blind early destination because several nearby routes are long or campaign-adjacent.",
-      "Museum and faction hooks should be treated as pacing choices, not automatic early objectives.",
+      "A character with money can turn Solitude into a strong recovery loop, but a broke or tired character can still get stranded by expensive rooms, long roads, or stacked objectives.",
+      "Faction, museum, coast, cave, and dock hooks can each become a larger commitment than a first visit needs.",
+      "The danger is overcommitment, not the city itself. Strong vendors and beds improve recovery; they do not solve frost, poison, magic, boss, or long-route readiness for you.",
     ],
     practicalGuidance: [
-      "Use Solitude for shopping, rest, board work, and route planning.",
-      "Avoid stacking faction, museum, coastal, and cave objectives in the same early visit.",
-      "Use carriage/ferry access to return to known hubs instead of walking out under-supplied.",
+      "Arrive with enough gold for food, a room, and a ride back to a known hub.",
+      "Sell, rest, check the board, and choose one low-commitment job before taking faction or museum bait.",
+      "Keep coast, cave, dock, and campaign hooks separate from your basic city-resupply visit.",
+      "Use travel service for recovery when you are tired or under-supplied instead of walking out because the map looks familiar.",
     ],
-    uxTouchpoints: ["City services", "Carriage/ferry travel", "Missives board", "Museum route hooks", "Paper map"],
+    uxTouchpoints: ["City services", "Travel service", "Missives board", "Museum route hooks", "Paper map"],
     sections: [
       {
-        title: "High-service hub",
+        title: "Use the city as a reset",
         paragraphs: [
-          "Solitude's article should explain why service density changes the early game. A player with money can rest, shop, sell, and choose board work instead of scraping through wilderness routes. ARR's local Missives rewards make that loop meaningful: even low-risk deliveries and gathering work can pay enough to buy rooms and supplies.",
+          "Solitude changes early play because service density gives you choices. You can rest, sell, buy food, inspect board jobs, and plan travel instead of scraping through one more wilderness leg.",
+          "A useful first job is specific: a delivery, gathering request, nearby errand, or one-road task that still leaves enough gold, food, and daylight to recover.",
         ],
       },
       {
-        title: "Overcommitment risk",
+        title: "Separate visit from campaign",
         paragraphs: [
-          "The risk is not the city itself; it is what the city points at. Solitude sits near faction, museum, coast, and worldspace temptations. The guide should teach players to separate a resupply visit from a campaign decision.",
+          "The city points at a lot of interesting content. That does not mean all of it belongs in the same outing.",
+          "For a first Solitude trip, decide whether you are here to reset, to fund supplies, or to start a larger thread. If the answer becomes all three, sleep and split the plan.",
+        ],
+        bullets: [
+          "Stable: selling, shopping, room, food, delivery or gathering jobs, and travel back to known hubs.",
+          "Scouting: nearby city errands and one-road jobs that return cleanly.",
+          "Delay: stacked faction, museum, coastal, dock, cave, and campaign routes.",
         ],
       },
     ],
@@ -978,34 +997,42 @@ const regionDetails: Record<
   },
   "windhelm-hub": {
     summary:
-      "Windhelm should be treated as a cold-weather services hub: useful once reached, but the surrounding routes and seasonal exposure make preparation more important than city size implies.",
+      "Windhelm is a cold-weather service hub: useful once you reach it, but the approaches and exits ask for warmth, food, daylight, and a return plan before the next road.",
     tags: ["region", "hub", "windhelm", "cold", "survival"],
     playerExperience: [
-      "The player reaches a major city but still feels winter pressure on approach, exits, and nearby roads.",
-      "City services can recover a bad route, but they do not make the next road safe by default.",
+      "You get major-city support once you are inside: an inn, shops, docks, stables, and places to sell or rest.",
+      "The cold still matters on the way in and the way out. Do not judge the next road by the size of the city behind you.",
+      "Windhelm works best when you treat it as a recovery anchor before northern or eastern travel, not a free pass through winter roads.",
     ],
     progressionImpact: [
-      "Windhelm is better after the player understands food, warmth, fatigue, and carriage planning.",
-      "Cold-region work makes followers, camping supplies, and return routes more important.",
-      "Seasonal visuals and survival patches mean the same trip can feel materially different in winter than in warmer play.",
+      "Cold can turn a normal errand into a survival problem before combat starts if you leave hungry, tired, wet, or without a warm stop in mind.",
+      "Northern and eastern routes can stack exposure, road fights, fatigue, frost resistance needs, and long returns in the same outing.",
+      "Seasonal and survival systems mean the same map line can feel different depending on weather, time, warmth, food, and how much recovery buffer you brought.",
     ],
     practicalGuidance: [
-      "Arrive with warmth and money for a room instead of assuming city access solves exposure.",
-      "Use Windhelm as a recovery and resupply anchor before taking northern or eastern road work.",
-      "Prefer short, known routes until the build can handle cold plus combat in one outing.",
+      "Reach the city with warmth, food, and enough money for an inn stay.",
+      "Rest and resupply before accepting work that points north, east, or along the coast.",
+      "Pick short known routes first; leave long cold corridors until your build can handle exposure plus combat.",
+      "Turn back when food, fatigue, warmth, or daylight starts failing before the objective does.",
     ],
-    uxTouchpoints: ["SunHelm/Frostfall widgets", "Seasons", "Carriage travel", "Paper map", "Missives board"],
+    uxTouchpoints: ["SunHelm needs", "Seasons", "Travel service", "Paper map", "Missives board"],
     sections: [
       {
-        title: "Cold changes the hub",
+        title: "Cold changes the city",
         paragraphs: [
-          "Windhelm is the clearest city page for the rule that winter is progression, not flavor. ARR includes SunHelm, Frostfall, Seasons support, seasonal carriage visuals, and cold-region city/outskirts patches. The public guidance should therefore talk about approach and exit conditions, not just services inside the walls.",
+          "Windhelm teaches the route rule in a harsher way than Whiterun. A major city can recover you, but it cannot make a cold road safe after you leave tired or underfed.",
+          "Read the approach and exit conditions before the objective. A delivery is only low-commitment if warmth, food, daylight, and the return leg still work.",
         ],
       },
       {
-        title: "Safe early use",
+        title: "Use it as an anchor",
         paragraphs: [
-          "Safe use means reaching the city through planned travel, resting, resupplying, and choosing short work. Risky use means treating Windhelm like Whiterun and walking into cold roads while already hungry, tired, or injured.",
+          "A recoverable Windhelm plan is planned travel, a real rest, a resupply pass, then one clear piece of work. The risky version is treating it like Whiterun and walking into cold roads because the city itself felt secure.",
+        ],
+        bullets: [
+          "Stable: inn, vendors, docks, stables, delivery jobs, gathering requests, and short returns.",
+          "Scouting: one-road jobs where you can name the warm stop before you leave.",
+          "Delay: long northern roads, coastal commitments, remote ruins, and cold-plus-combat routes.",
         ],
       },
     ],
@@ -1016,34 +1043,42 @@ const regionDetails: Record<
   },
   "winterhold-hub": {
     summary:
-      "Winterhold is not a normal early hub in Authoria; it is a harsh northern staging point whose College ambition, restored town support, disabled-carriage patching, and exposure pressure need explicit warnings.",
+      "Winterhold is a deliberate cold-region trip, not a normal first hub: go for the College or northern work only when you can afford the route, the weather, and the return.",
     tags: ["region", "hub", "winterhold", "college", "cold", "magic"],
     playerExperience: [
-      "The player sees a destination tied to magic progression, but the place itself is remote and exposed.",
-      "A weak character may arrive with a plan for spells and leave with a survival problem.",
+      "The College makes Winterhold tempting early, especially for magic-minded characters.",
+      "The town can support a pause, but it is remote, cold, and easier to reach with ambition than to leave with a clean recovery plan.",
+      "Treat the route itself as part of the cost of becoming a northern or College-focused character; spell access still needs money, study time, food, warmth, and a way home.",
     ],
     progressionImpact: [
-      "Winterhold should usually be a deliberate trip, not the first stabilization hub.",
-      "Magic ambition does not remove the need for food, rest, warmth, and a route back.",
-      "Carriage and town patches need local verification before promising easy evacuation.",
+      "Magic goals do not replace food, sleep, warmth, gold, and return planning.",
+      "A new mage can arrive for spells and still be overmatched by cold roads, fatigue, poor resistances, or the next trip south.",
+      "Do not assume easy evacuation until you have checked the actual travel option in game.",
     ],
     practicalGuidance: [
-      "Do not recommend Winterhold as a first hub unless the character is explicitly built and supplied for it.",
-      "Treat College entry as a campaign/progression choice with travel costs attached.",
-      "Before leaving, confirm bed access, food, warmth, and how the player will return south.",
+      "Do not make Winterhold your first stabilization hub unless the character is built and supplied for a cold trip.",
+      "Bring food, warmth, rest money, and a clear plan for getting south again.",
+      "Treat College entry as a progression choice with travel costs attached, not just a dialogue stop.",
+      "Leave northern roads, ruins, and side routes alone when the return plan is weaker than the goal.",
     ],
-    uxTouchpoints: ["College entry", "Cold survival widgets", "Map markers", "Carriage/travel surfaces", "Restored town services"],
+    uxTouchpoints: ["College entry", "Cold survival needs", "Map markers", "Travel surfaces", "Town services"],
     sections: [
       {
-        title: "Remote ambition",
+        title: "Remote ambition has a travel cost",
         paragraphs: [
-          "Winterhold's guide should connect two ideas that players often separate: magic ambition and route burden. ARR contains restored Winterhold and College support, but the profile also shows cold survival systems and a local disabled-carriage patch for Winterhold Restored. That means the article must verify travel affordances before calling the hub easy to use.",
+          "Winterhold connects two things players often separate: magic ambition and route burden. Wanting the College is a valid plan, but the road and weather still count.",
+          "Use the town and College as reasons to plan a trip, not reasons to ignore what the trip costs. In Authoria, a spell purchase is not the whole magic plan: the character still needs time, safety, supplies, and enough route discipline to use that investment.",
         ],
       },
       {
-        title: "Early recommendation",
+        title: "Make the return plan first",
         paragraphs: [
-          "For most builds, Winterhold is a planned trip after the player has money, warmth, food, and a return strategy. The page can still support mage characters, but it should make clear that the route is part of the cost of that build path.",
+          "For most builds, Winterhold belongs after you have money, warmth, food, and a return strategy. Mage characters can go earlier than some builds, but they should still budget for the road.",
+        ],
+        bullets: [
+          "Stable: inn stop, town services, College objective, and a planned route south.",
+          "Scouting: College setup or town errands when you can recover immediately after.",
+          "Delay: remote northern roads, ruins, and side objectives that leave you cold, tired, or stuck.",
         ],
       },
     ],
@@ -1054,40 +1089,48 @@ const regionDetails: Record<
   },
   "markarth-hub": {
     summary:
-      "Markarth is a strong western service hub wrapped in terrain, ruins, politics, and Dwemer-adjacent danger; it should be recommended as a planned resupply base, not a casual early dungeon launcher.",
+      "Markarth is a strong western service hub wrapped in terrain, ruins, politics, and Dwemer-adjacent danger; use it as a planned base, not a casual early dungeon launcher.",
     tags: ["region", "hub", "markarth", "dwemer", "western route"],
     playerExperience: [
-      "The player gets a visually dense city with strong services and many hooks, but nearby terrain and interiors can be punishing.",
-      "The region can quickly shift from errands into Forsworn, Dwemer, cave, or city-quest complications.",
+      "The city gives you strong services, beds, vendors, and a western anchor once you reach it.",
+      "The surrounding region can turn quickly from city errands into cliffs, ruins, Forsworn pressure, mines, caves, or dense city hooks.",
+      "Use the city to recover and sort the plan before accepting work that points into old stone, remote roads, or deep interiors.",
     ],
     progressionImpact: [
-      "Markarth can stabilize a prepared character through services, rest, and board work.",
-      "Nearby Dwemer and western routes can punish weak damage, poor armor, and bad recovery planning.",
-      "Remiel and other specialist companions may become more relevant once Dwemer routes are on the table.",
+      "Markarth can stabilize a prepared character through rest, vendors, and board jobs, but it is a poor place to wander blindly.",
+      "Dwemer, Forsworn, cave, and terrain pressure can punish the wrong damage plan, poor armor, low supplies, missing resistances, or a vague retreat plan.",
+      "Visible mines, ruins, and city hooks are warning signs to plan, not proof that the work is safe today.",
     ],
     practicalGuidance: [
-      "Use Markarth as a base after the player has money, a follower plan, and reliable recovery supplies.",
-      "Separate city errands from Dwemer or Forsworn route commitments.",
-      "Treat nearby mines and ruins as economy/danger signals rather than guaranteed safe work.",
+      "Use Markarth after you have money, recovery supplies, and a clear reason to be in the west.",
+      "Separate city errands from Dwemer, Forsworn, cave, mine, or remote-road commitments.",
+      "Rest and sell before leaving town; do not start a ruin route while already tired or low on supplies.",
+      "Treat markers for mines and ruins as economy or danger signals first, not guaranteed safe work.",
     ],
-    uxTouchpoints: ["City services", "Missives board", "Mine markers", "Follower planning", "Paper map"],
+    uxTouchpoints: ["City services", "Missives board", "Mine markers", "Terrain pressure", "Paper map"],
     sections: [
       {
-        title: "Western hub role",
+        title: "Western hub, not first answer",
         paragraphs: [
-          "Markarth should answer a different early-progression question than Whiterun. It can be an excellent base once reached, but the local terrain and content density make it poor as a blind first expansion. ARR's map marker setup can reveal mines and important places, but visibility should not be confused with safety.",
+          "Markarth answers a different question than Whiterun. It can be an excellent base once reached, but the terrain and content density make it a bad blind first expansion.",
+          "Map visibility helps you notice mines, roads, and important places. It does not tell you whether your build can handle constructs, ambushes, poison, armor checks, or the climb back to safety.",
         ],
       },
       {
-        title: "When to go",
+        title: "When to use it",
         paragraphs: [
-          "Recommend Markarth when the player can afford recovery, handle tougher interiors, and wants western-region work. A fragile character can still visit by travel service, but should treat the city as a resupply stop before accepting anything that points into ruins, caves, or remote roads.",
+          "Use Markarth when you can afford recovery, handle tougher interiors, and want western-region work. A fragile character can still visit by travel service, but should treat the city as a resupply stop before accepting anything that points into ruins, caves, or remote roads.",
+        ],
+        bullets: [
+          "Stable: inn, vendors, delivery jobs, gathering requests, city errands, and western resupply.",
+          "Scouting: short roads and errands with a clear retreat to the city.",
+          "Delay: Dwemer routes, Forsworn pressure, remote terrain, mines, caves, and city hooks that turn into larger commitments.",
         ],
       },
     ],
     verificationNotes: [
       "Audit Markarth board destinations and nearby mine/ruin danger labels.",
-      "Cross-link Remiel and Dwemer-route guidance after companion and dungeon evidence is deeper.",
+      "Cross-link deeper Dwemer-route guidance after dungeon evidence is stronger.",
     ],
   },
 };
@@ -1126,29 +1169,31 @@ const entries: ReferenceEntry[] = [
     publicationStatus: "evidence-backed",
     title: "First Session Setup",
     strapline:
-      "Authoria starts before the cart, because difficulty, controls, survival, and presets are part of the character build.",
+      "Before the first road, confirm the exact controls, difficulty, survival posture, starter tools, and first recovery hub.",
     summary:
-      "Your first session starts with practical choices: controls, difficulty, season, survival posture, and starting-kit assumptions. Set those before the game state hardens around them.",
+      "Your first session should be a setup pass, not a blind launch. Test the keys you will actually touch, match the in-game difficulty to the selected setup, decide how hard survival should bite, choose a starter-kit direction, and name your first recovery hub before accepting travel work.",
     questionsAnswered: [
-      "What should be decided before a new save?",
-      "Why must the selected difficulty setup and in-game difficulty match?",
-      "Which setup choices affect the first hour most?",
+      "Which keys should I test before leaving setup?",
+      "Which difficulty and survival choices change the first hour?",
+      "What should I know before accepting the first road job?",
     ],
     tags: ["onboarding", "setup", "difficulty", "controls", "new save"],
     playerExperience: [
-      "The player is asked to make several non-cosmetic choices before normal movement begins.",
-      "A mismatched difficulty or missing controller/keybind setup can make the game feel broken rather than deliberately demanding.",
-      "The best first session is one where the player treats settings as part of character creation.",
+      "The player should leave setup knowing the keys for activation, weapon ready, sprint, dodge, power attack, lock-on, potion recovery, Wheeler, and the utility tools they will use on the road.",
+      "A mismatched difficulty, untested dodge key, or forgotten potion key can make the game feel broken when it is actually asking for practiced inputs.",
+      "The first session should produce a practical route posture: input method, difficulty, survival pressure, starter tools, first hub, and a rule for turning back.",
     ],
     progressionImpact: [
-      "Difficulty, follower weakening, survival posture, and start-kit access change what counts as safe early play.",
-      "Save-unsafe customization should be resolved before the character starts accumulating route and quest state.",
+      "Difficulty, follower weakening, survival posture, and starter-kit access change what counts as recoverable early play.",
+      "Static Skill Leveling and Experience mean early progress is planned through choices and level-up allocation, not passive vanilla skill grinding.",
+      "Save-sensitive customization, input conflicts, and difficulty mismatch should be resolved before the character starts accumulating route and quest state.",
     ],
     practicalGuidance: [
-      "Choose keyboard or controller support before starting.",
-      "Match the selected difficulty setup with the in-game difficulty prompt.",
-      "Pick season and survival posture before committing to a travel-heavy start.",
-      "Use the keybind reminder and controller menu before leaving the initial setup flow.",
+      "Keyboard/mouse check: press E to activate, R to ready or sheathe, Left Shift to sprint, Left Alt to dodge, Mouse4 to power attack, Mouse3 to lock on, and G to open Wheeler.",
+      "Controller check: press A to activate, X to ready or sheathe, L3 to sprint, B to dodge, R1 to power attack, R3 to lock on, and L1 to open Wheeler.",
+      "Recovery check: press 0 for health potion, - for stamina potion, and = for magicka potion while you are not under pressure.",
+      "Utility check: test B for Horse Whistle, L for QuickLight, H for follower commands, U for Character Sheet, K for Bestiary, V for Build Campfire, ; for Fill Water Bottle, N for Bathe, and Y for Helmet Toggle.",
+      "Before accepting work, match the in-game difficulty prompt to the setup you chose, pick season/survival pressure, choose a first hub, and decide what will make you turn back.",
     ],
     uxTouchpoints: [
       "Keybind reminder",
@@ -1156,6 +1201,7 @@ const entries: ReferenceEntry[] = [
       "Difficulty prompt",
       "Season and survival MCMs",
       "Starting-room initialization messages",
+      "Potion and utility hotkeys",
     ],
     settingQuotes: [
       setting(
@@ -1165,67 +1211,120 @@ const entries: ReferenceEntry[] = [
         "Travel, exposure, and daily planning should be interpreted through the local runtime clock, not vanilla assumptions.",
       ),
       setting(
-        "sunhelm-normal.root.HUNGERRATE",
+        "sunhelm-normal.root.HungerRate",
         "Normal hunger rate",
         "7",
         "Food planning is active in the baseline survival profile, so the first route should include supply access.",
       ),
       setting(
-        "sunhelm-normal.root.THIRSTRATE",
+        "sunhelm-normal.root.ThirstRate",
         "Normal thirst rate",
         "7",
         "Water access matters from the start instead of being an optional immersion detail.",
       ),
       setting(
-        "sunhelm-normal.root.FATIGUERATE",
+        "sunhelm-normal.root.FatigueRate",
         "Normal fatigue rate",
         "7",
         "Beds and rest cadence should be part of onboarding and route advice.",
       ),
       setting(
         "dynamic-activation-key.general.iHotkey",
-        "Dynamic activation hotkey",
-        "42",
-        "The interaction layer has a configured hotkey, so first-session setup should include interaction testing.",
+        "Dynamic activation modifier",
+        "Left Shift",
+        "The interaction layer uses the Left Shift keycode, so test alternate prompts before assuming vanilla activation behavior.",
       ),
       setting(
         "horse-whistle.main.iWhistleHotkey",
         "Horse whistle hotkey",
-        "48",
+        "B",
         "Mount recovery is keybound locally and belongs in travel onboarding once horses matter.",
+      ),
+      setting(
+        "optimal-potion-hotkey.hotkeys.iHealthpotionhotkey",
+        "Health potion hotkey",
+        "0",
+        "Health recovery needs a practiced key before the first serious fight.",
+      ),
+      setting(
+        "optimal-potion-hotkey.hotkeys.iStaminapotionhotkey",
+        "Stamina potion hotkey",
+        "-",
+        "Stamina recovery is part of sprinting, blocking, dodging, and retreat planning.",
+      ),
+      setting(
+        "optimal-potion-hotkey.hotkeys.iMagickapotionhotkey",
+        "Magicka potion hotkey",
+        "=",
+        "Magic recovery should be tested before a mage route depends on it.",
+      ),
+      setting(
+        "tk-dodge.general.iDodgeKey",
+        "Dodge key",
+        "Left Alt / gamepad B",
+        "Dodge is a committed defensive input with stamina cost and local perk gating, not a panic button to discover mid-fight.",
+      ),
+      setting(
+        "ocpa.general.iKeycode",
+        "Power attack input",
+        "Mouse4 / gamepad R1",
+        "Power attack has a dedicated input and should be tested before Requiem punishes a missed opening.",
+      ),
+      setting(
+        "true-directional-movement.keys.uTargetLockKey",
+        "Target lock input",
+        "Mouse3 / gamepad R3",
+        "Target lock affects combat readability and should be tested before a serious road fight.",
       ),
       setting(
         "mcm-keybinds.keybinds.0.keycode",
         "Managed helmet-toggle keybind",
-        "21",
-        "The keybind export includes a managed presentation hotkey, confirming that onboarding should review local controls rather than assume defaults.",
+        "Y",
+        "Helmet Toggle is a managed presentation hotkey, so players should confirm it during downtime rather than in combat or bad weather.",
       ),
     ],
     sections: [
       {
-        title: "Why setup is part of play",
+        title: "Test the controls first",
         paragraphs: [
-          "Some setup choices are not cosmetic toggles. Controller support, pausing behavior, difficulty, follower damage, survival posture, skill leveling, and visual setup decide what the opening hour feels like and what assumptions later articles can safely make.",
-          "Treat the customization stage as part of character creation. A player who chooses hard settings, survival pressure, and multiple followers is not starting the same game as a player who enables Requiem Lite, normal survival, and a solo route.",
+          "Do this before accepting the first road job. Stand somewhere quiet, then touch the controls that can save or ruin the first route.",
+          "Keyboard/mouse players should test E, R, Left Shift, Left Alt, Mouse4, Mouse3, G, 0, -, =, B, L, H, U, K, V, ;, N, and Y. Controller players should test A, X, L3, B, R1, R3, L1, D-pad right, D-pad left, plus the potion and utility bindings they expect to use from keyboard or menu.",
         ],
         bullets: [
-          "Resolve save-unsafe customization before the character starts.",
-          "Match the in-game difficulty prompt to the selected setup profile.",
-          "Check keybind and controller surfaces before combat asks for dodge, power attack, or quick menu fluency.",
+          "E or A: activate a container, door, or NPC.",
+          "R or X: ready and sheathe your weapon.",
+          "Left Shift or L3: sprint until you can feel the stamina cost.",
+          "Left Alt or B: dodge once, then notice that dodge spends stamina.",
+          "Mouse4 or R1: power attack deliberately, not by accident.",
+          "Mouse3 or R3: lock on, then unlock before moving on.",
+          "G or L1: open Wheeler and confirm you can leave it cleanly.",
+          "0, -, and =: health, stamina, and magicka potion recovery.",
         ],
       },
       {
-        title: "First-session checklist",
+        title: "Set the game state",
         paragraphs: [
-          "Leave setup with a complete operating posture, not a vague sense that many systems exist. Decide input method, difficulty, season, survival pressure, starter kit, first hub, and follower posture before leaving the initial room.",
-          "The first stable destination should be chosen before the player accepts travel-heavy work. This matters because Authoria layers hunger, thirst, fatigue, and Requiem danger together.",
-          "Local keybind evidence adds another concrete checklist item: interaction, mount recovery, and managed presentation hotkeys should be tested while the character is still safe.",
+          "Some setup choices are not cosmetic toggles. Difficulty, follower weakening, survival posture, season, starter kit, and visual setup decide what the opening hour feels like.",
+          "Match the in-game difficulty prompt to the setup you actually chose. A player on hard survival with a fragile starter kit is not playing the same opening as a normal-survival character with stronger tools.",
         ],
         bullets: [
-          "Keyboard players should know where the keybind reminder is; controller players should verify combo inputs and Wheeler controls.",
-          "Test dynamic activation and managed hotkeys before relying on them in combat or travel.",
-          "Survival players should identify food, water, and bed access before committing to a route.",
-          "New Requiem players should start with a conservative route rather than a famous quest objective.",
+          "Resolve character appearance and other save-sensitive customization before the route starts.",
+          "Choose the survival profile and season before accepting travel-heavy work.",
+          "Choose a starter kit for the first ten hours, not the endgame fantasy.",
+          "Decide whether followers are part of the opening route or a later comfort layer.",
+        ],
+      },
+      {
+        title: "Leave with a first route",
+        paragraphs: [
+          "Leave setup with a route, not just a character. Name the first recovery hub, the first vendor, the first bed, the first food source, and the road back before you accept travel-heavy work.",
+          "For Stage 1 advice, Riverwood and Whiterun are the teaching loop. Use them to practice selling, eating, resting, reading Missives, testing combat inputs, and leaving before a mistake becomes the whole session.",
+        ],
+        bullets: [
+          "Take a delivery, gathering request, nearby errand, or familiar-road scouting leg before a dungeon push.",
+          "Buy food before luxuries; keep enough gold for a room or ride back.",
+          "Turn back if food, warmth, potions, fatigue, or wounds start failing before the objective.",
+          "Treat Bleak Falls, giants, dragons, cold roads, and remote ruins as readiness checks, not automatic first stops.",
         ],
       },
     ],
@@ -1238,6 +1337,11 @@ const entries: ReferenceEntry[] = [
       },
       { label: "Dynamic activation preset", path: `${mcm}/MCM/Settings/Dynamic Activation Key - MCM.ini`, note: "Local interaction key and addon surface." },
       { label: "Horse whistle preset", path: `${mcm}/MCM/Settings/Horse Whistle Key.ini`, note: "Local mount recovery controls." },
+      { label: "Potion hotkey preset", path: `${mcm}/MCM/Settings/OptimalPotionHotkeyMCM.ini`, note: "Local recovery hotkeys." },
+      { label: "Dodge preset", path: `${mcm}/MCM/Settings/TKDodgeAddon.ini`, note: "Local dodge behavior and keybinding surface." },
+      { label: "Movement preset", path: `${mcm}/MCM/Settings/TrueDirectionalMovement.ini`, note: "Local target-lock and movement surface." },
+      { label: "Power attack preset", path: `${controller}/MCM/Settings/OCPA.ini`, note: "Local power-attack control behavior." },
+      { label: "Hotkeys reminder", path: `${mcm}/Interface/hotkeysreminder_data.json`, note: "Human-readable keyboard and controller labels." },
       { label: "Managed MCM keybind export", path: `${mcm}/MCM/Settings/keybinds.json`, note: "Local keybind preset export." },
     ],
     verificationNotes: [
@@ -1254,7 +1358,7 @@ const entries: ReferenceEntry[] = [
     strapline:
       "Authoria has enough deliberate controls and HUD state that learning the interface is part of the first route.",
     summary:
-      "Controls are part of survival here. Time and season are visible, looting and harvesting have interaction pacing, recovery needs practiced inputs, and appearance tools belong in safe downtime.",
+      "Controls are part of survival here. Time and season are visible, looting and harvesting have interaction pacing, recovery needs practiced inputs, and appearance tools belong in quiet downtime.",
     tags: ["controls", "hud", "keybinds", "interaction", "first session"],
     playerExperience: [
       "The player sees more state on screen than vanilla: clock, date, season, moon/state widgets, survival icons, and configured interaction prompts.",
@@ -1262,12 +1366,13 @@ const entries: ReferenceEntry[] = [
       "Combat controls must be tested before pressure arrives because dodge, power attack, recovery, and interaction are separate muscle-memory surfaces.",
     ],
     progressionImpact: [
-      "Control fluency changes early safety because missed potion, dodge, power-attack, or interaction inputs can turn a manageable fight into a route failure.",
+      "Control fluency changes early survivability because missed potion, dodge, power-attack, or interaction inputs can turn a manageable fight into a route failure.",
       "Visible time and season state make travel planning more explicit.",
       "Interaction animation and looting friction make gathering and scavenging route decisions, not instant background income.",
     ],
     practicalGuidance: [
-      "Before leaving the first safe room or hub, test dynamic activation, power attack, potion hotkeys, horse whistle, and any managed presentation hotkeys.",
+      "Before leaving the first quiet room or hub, press Mouse4 or R1 for power attack, Mouse3 or R3 for lock-on, Left Alt or gamepad B for dodge, and 0/-/= for potion recovery.",
+      "Test B for Horse Whistle, L for QuickLight, H for follower commands, U for Character Sheet, K for Bestiary, V for Build Campfire, ; for Fill Water Bottle, N for Bathe, and Y for Helmet Toggle.",
       "Use the clock/date/season HUD as route information, especially before accepting distant work.",
       "Do appearance tools deliberately during downtime rather than treating them as combat or travel tools.",
       "Sheathe weapons when utility interactions fail, because first-person interactions can be disabled while weapons are drawn.",
@@ -1281,18 +1386,6 @@ const entries: ReferenceEntry[] = [
       "Helmet/OBody/photo controls",
     ],
     settingQuotes: [
-      setting(
-        "a-matter-of-time.settings.bIGClockShown",
-        "In-game clock shown",
-        "1",
-        "Time is meant to be visible during route planning.",
-      ),
-      setting(
-        "a-matter-of-time.settings.bSymbol2ShowSeasons",
-        "Season HUD shown",
-        "1",
-        "Season state is visible and should be treated as route information.",
-      ),
       setting(
         "first-person-interactions.main.iDisableWeaponsDrawn",
         "Interaction disabled while weapons drawn",
@@ -1308,8 +1401,32 @@ const entries: ReferenceEntry[] = [
       setting(
         "ocpa.general.iKeycode",
         "Power attack key",
-        "260",
+        "Mouse4 / gamepad R1",
         "Power attack has a configured key and should be part of combat onboarding.",
+      ),
+      setting(
+        "true-directional-movement.keys.uTargetLockKey",
+        "Target lock key",
+        "Mouse3 / gamepad R3",
+        "Lock-on changes fight readability and should be tested before pressure arrives.",
+      ),
+      setting(
+        "optimal-potion-hotkey.hotkeys.iHealthpotionhotkey",
+        "Health potion hotkey",
+        "0",
+        "Health recovery has a direct key and should not be discovered mid-fight.",
+      ),
+      setting(
+        "optimal-potion-hotkey.hotkeys.iStaminapotionhotkey",
+        "Stamina potion hotkey",
+        "-",
+        "Stamina recovery matters because sprinting, blocking, dodging, and retreat all spend the same resource.",
+      ),
+      setting(
+        "optimal-potion-hotkey.hotkeys.iMagickapotionhotkey",
+        "Magicka potion hotkey",
+        "=",
+        "Magic recovery has a direct key and should be part of mage onboarding.",
       ),
       setting(
         "obody.settings.iPresetListKey",
@@ -1323,20 +1440,20 @@ const entries: ReferenceEntry[] = [
         title: "Why controls are gameplay",
         paragraphs: [
           "Authoria asks the player to read and act on more state than vanilla. The local HUD shows clock, date, season, and moon/season symbols, while survival and map systems make that information useful. A distant job is not only a marker; it is a time, weather, food, and recovery decision.",
-          "Controls are equally practical. Power attack, potion recovery, dynamic activation, horse whistle, and presentation tools are configured locally. Test those surfaces early so route and combat advice is actually usable.",
+          "Controls are equally practical. Power attack is Mouse4 or R1, target lock is Mouse3 or R3, dodge is Left Alt or gamepad B, and potion recovery uses 0, -, and =. Test those surfaces early so route and combat advice is actually usable.",
         ],
       },
       {
         title: "Interaction pacing",
         paragraphs: [
           "Looting, harvesting, and first-person interactions are not invisible background behavior. Container and harvest animations are active, first-person utility interactions can be disabled while weapons are drawn, and automatic torch equip is disabled. That creates small but real pacing rules around gathering, scavenging, and moving through dark or hostile spaces.",
-          "This is why the first-session flow should include a quiet interaction test: harvest, loot, sheathe, use dynamic activation, confirm recovery keys, and then leave the hub.",
+          "This is why the first-session flow should include a quiet interaction test: harvest, loot, sheathe, use alternate activation, confirm recovery keys, and then leave the hub.",
         ],
       },
       {
         title: "Presentation controls",
         paragraphs: [
-          "Helmet visibility, body preset selection, and photo mode should be framed as controlled presentation tools. They matter to comfort and roleplay, but they should be adjusted during safe downtime rather than discovered during combat, cold travel, or a timed route.",
+          "Helmet visibility, body preset selection, and photo mode should be framed as controlled presentation tools. They matter to comfort and roleplay, but they should be adjusted during quiet downtime rather than discovered during combat, cold travel, or a timed route.",
         ],
       },
     ],
@@ -1345,7 +1462,9 @@ const entries: ReferenceEntry[] = [
       { label: "Clock and season HUD preset", path: `${mcm}/MCM/Settings/AMatterOfTime.ini`, note: "Local time/date/season HUD surface." },
       { label: "First-person interaction preset", path: `${mcm}/MCM/Settings/FirstPersonInteractions.ini`, note: "Local first-person utility interaction behavior." },
       { label: "Looting interaction preset", path: `${mcm}/MCM/Settings/LootingAnimations.ini`, note: "Local looting and harvest animation behavior." },
-      { label: "Power attack preset", path: `${mcm}/MCM/Settings/OCPA.ini`, note: "Local power-attack control behavior." },
+      { label: "Power attack preset", path: `${controller}/MCM/Settings/OCPA.ini`, note: "Local power-attack control behavior." },
+      { label: "Potion hotkey preset", path: `${mcm}/MCM/Settings/OptimalPotionHotkeyMCM.ini`, note: "Local recovery hotkeys." },
+      { label: "Hotkeys reminder", path: `${mcm}/Interface/hotkeysreminder_data.json`, note: "Human-readable keyboard and controller labels." },
       { label: "Helmet visibility preset", path: `${mcm}/MCM/Settings/Helmet Toggle 2.ini`, note: "Local presentation and helmet behavior." },
       { label: "Body preset control", path: `${mcm}/MCM/Settings/OBody NG.ini`, note: "Local appearance preset key." },
     ],
@@ -1363,7 +1482,7 @@ const entries: ReferenceEntry[] = [
     strapline:
       "Race, birthsign, traits, religion, starting kit, and route are one pipeline rather than isolated flavor picks.",
     summary:
-      "Authoria asks the player to build for the world they are about to enter. Race and birthsign choices interact with Requiem expectations, traits and religion add long-tail commitments, and Noxrim/Starting Choices determine what tools and risks arrive before the first safe hub.",
+      "Authoria asks the player to build for the world they are about to enter. Race and birthsign choices interact with Requiem expectations, traits and religion add long-tail commitments, and Noxrim/Starting Choices determine what tools and risks arrive before the first recovery hub.",
     tags: ["character creation", "starting choices", "noxrim", "traits", "religion"],
     playerExperience: [
       "The player moves through a chained initialization sequence before normal play stabilizes.",
@@ -1458,23 +1577,23 @@ const entries: ReferenceEntry[] = [
     publicationStatus: "evidence-backed",
     title: "Requiem Progression",
     strapline:
-      "Requiem changes what counts as safe, ready, and worth attempting.",
+      "Requiem changes what counts as ready: level matters, but matchups, resistances, stamina, tools, money, and retreat matter first.",
     summary:
-      "Authoria asks you to read the world before you push forward. Gear, resistances, stamina, money, food, route knowledge, and follower choices often matter before raw level does.",
+      "Authoria asks you to read the world before you push forward. Gear, resistances, damage type, stamina, money, food, lock access, spell access, route knowledge, and retreat options often matter before raw level does.",
     tags: ["requiem", "progression", "noxrim", "difficulty", "power curve"],
     playerExperience: [
       "The player cannot treat generic level gain as a universal safety net.",
-      "Gear, resistances, stamina, route knowledge, and follower decisions often matter before raw level does.",
-      "A dungeon feeling impossible may be correct information rather than poor balance.",
+      "Enemy type matters. Bandits, undead, animals, mages, constructs, bosses, and dragons are not just higher or lower numbers; they ask for different tools.",
+      "A dungeon feeling impossible may be correct information rather than poor balance: the build may need armor, a resistance, a damage answer, a lock answer, or a safer route.",
     ],
     progressionImpact: [
       "Early character choices remain load-bearing longer than in vanilla.",
-      "Economy, food, spell learning, locks, dragons, and boss encounters should all be framed as progression systems.",
-      "Authoria's local setup can change advice you remember from other Requiem guides.",
+      "Economy, food, spell learning, locks, resistances, dragons, and boss encounters should all be framed as progression systems.",
+      "Authoria's local setup can change advice you remember from other Requiem guides because starting choices, Requiem tweaks, survival patches, and generated outputs all shape final behavior.",
     ],
     practicalGuidance: [
       "Treat level as a readiness hint, not a permission slip.",
-      "Prepare for the route you are taking: food, money, tools, resistances, and an escape plan.",
+      "Prepare for the route you are taking: food, money, damage type, armor, resistances, lock access, healing, and an escape plan.",
       "If a dungeon feels impossible, leave and come back with better answers.",
       "Treat locks, spell learning, vendor access, standing stones, dragons, and boss bars as progression signals rather than isolated features.",
     ],
@@ -1554,28 +1673,42 @@ const entries: ReferenceEntry[] = [
       {
         title: "Why Requiem changes planning",
         paragraphs: [
-          "A Requiem character is not safe just because a quest marker is nearby. The useful question is what the route asks for: damage, armor, stamina, food, resistance, lock access, money, a follower, or a clean way home.",
-          "Authoria builds on that idea. It expects preparation, specialization, and the discipline to walk away from bad matchups instead of treating every cave as first-session content.",
+          "A Requiem character is not ready just because a quest marker is nearby. The useful question is what the route asks for: damage that works on the target, armor that prevents wounds, stamina to block or disengage, food and warmth for the road, lock access, money, and a clean way home.",
+          "Authoria builds on that idea. It expects preparation, specialization, and the discipline to walk away from bad matchups instead of treating every cave as first-session content. When the world says no, the intended answer is often to change route, gear, resistances, or tools.",
+        ],
+      },
+      {
+        title: "Resistances and matchups",
+        paragraphs: [
+          "New players often read difficulty as level. In Authoria, read it as a matchup. Cold roads ask for warmth and recovery; mages ask what happens when armor is not enough; undead and constructs can punish the wrong damage plan; poison, disease, and traps can make a technically won fight ruin the next day.",
+          "Exact thresholds need record proof or playtesting. For now, use the player-facing habit that matters most: before a route, ask what damage you can deal, what damage you can survive, and what condition would force you to leave.",
+        ],
+        bullets: [
+          "Bring frost planning to northern and exposed roads.",
+          "Bring disease, poison, or wound recovery when caves, animals, ruins, or traps are likely.",
+          "Bring the right damage plan before treating undead, constructs, bosses, or dragons as normal fights.",
+          "Treat resistances as route gear, not endgame trivia.",
         ],
       },
       {
         title: "What changes from vanilla assumptions",
         paragraphs: [
           "Vanilla Skyrim encourages broad wandering because scaling and skill-use leveling smooth over bad plans. Authoria should be explained almost the opposite way. The player is reading the world for danger bands, required tools, route costs, and whether a fight is worth taking now.",
-          "The local preset also makes world persistence meaningful. Long respawn times mean clearing and route decisions are not disposable loops. A safe hub, a cleared nearby mine, or a missed supply opportunity can remain relevant for a long stretch of play.",
-          "Some famous Requiem pressures also need local wording. Fear/yield and on-hit disarm are disabled here, while dragon timing and killmove thresholds are configured. That means the Almanac should describe Authoria as played, not Requiem from memory.",
+          "The local preset also makes world persistence meaningful. Long respawn times mean clearing and route decisions are not disposable loops. A reliable hub, a cleared nearby mine, or a missed supply opportunity can remain relevant for a long stretch of play.",
+          "Some famous Requiem pressures also need local wording. Fear/yield and on-hit disarm are disabled here, while dragon timing is configured. That means the Almanac should describe Authoria as played, not Requiem from memory.",
         ],
         bullets: [
           "Level is a readiness hint, not a universal permission slip.",
-          "Gear, resistances, food, money, and escape routes are progression resources.",
+          "Gear, resistances, food, money, route knowledge, and escape routes are progression resources.",
           "Do not assume every upstream Requiem warning applies unchanged.",
           "When Authoria changes the final behavior, follow the Authoria result.",
         ],
       },
       {
-        title: "Noxrim and starting pressure",
+        title: "Noxrim, Noxcrab support, and starting pressure",
         paragraphs: [
           "Noxrim starting choices are part of progression, not just alternate-start flavor. Starting kits, easier early locks, and opening-route support decide whether the first trip feels equipped or desperate.",
+          "The active profile also carries Noxcrab survival support and Authoria Requiem/Reqtificator output, so the public guide should explain the final play behavior rather than treating Requiem, survival, magic, stealth, weapons, and starting choices as separate mod facts.",
         ],
       },
       {
@@ -1641,7 +1774,7 @@ const entries: ReferenceEntry[] = [
     publicationStatus: "evidence-backed",
     title: "Route Readiness and Return Rules",
     strapline:
-      "Safe early play means recoverable choices: short routes, known beds, readable maps, affordable supplies, and a plan to come back.",
+      "Good early play means recoverable choices: known beds, readable maps, affordable supplies, and a plan to come back.",
     summary:
       "Before accepting a job, road, cave, bounty, or worldspace hook, ask whether the route is recoverable. The answer is not level alone; it is beds, food, warmth, travel cost, season, reward tier, map readability, follower burden, and whether the route has an obvious exit.",
     tags: ["progression", "routes", "early game", "missives", "bounties", "travel"],
@@ -1651,13 +1784,13 @@ const entries: ReferenceEntry[] = [
       "Reward size, distance, weather, and map clarity become gameplay language rather than background details.",
     ],
     progressionImpact: [
-      "Recoverable work lets weak characters turn small wins into food, beds, training, and gear.",
+      "Recoverable work lets new characters turn small wins into food, beds, training, and gear.",
       "Overlong routes can convert one bad fight or cold night into multi-day recovery because survival, wounds, and economy systems compound.",
       "Follower support can make a route safer in combat while making stealth, dialogue pacing, carriage use, and resource management more complex.",
     ],
     practicalGuidance: [
       "Ask where you sleep, eat, warm up, sell, and retreat before accepting distant work.",
-      "Treat easy board work and modest deliveries as stabilization tools, not as generic content filler.",
+      "Treat deliveries, gathering requests, and nearby errands as stabilization tools when the route itself is recoverable.",
       "Treat giant, dragon, remote ruin, new-land, and long-corridor hooks as readiness checks until local route evidence proves otherwise.",
       "Use hub pages to find nearby recovery loops before chasing nearby danger.",
     ],
@@ -1688,7 +1821,7 @@ const entries: ReferenceEntry[] = [
         "missives.general.iEasyQuestChance",
         "Easy Missives chance",
         "80",
-        "The board is locally weighted toward easy work, so early guidance can recommend short board loops when the route itself is recoverable.",
+        "The board is locally weighted toward lower-risk jobs, so early guidance can recommend deliveries and gathering requests when the route itself is recoverable.",
       ),
       setting(
         "missives.general.iVeryHardQuestChance",
@@ -1697,33 +1830,15 @@ const entries: ReferenceEntry[] = [
         "Very hard jobs are not part of the local default board mix, which supports using boards as stabilization rather than ambush content.",
       ),
       setting(
-        "bounty-hunter.main.fBanditBountyReward",
-        "Bandit bounty reward",
-        "150",
-        "Bandit bounties are meaningful early income but still need route, group-size, and retreat checks.",
-      ),
-      setting(
-        "bounty-hunter.main.fGiantBountyReward",
-        "Giant bounty reward",
-        "350",
-        "Higher payout should be read as danger language; the reward is not an early-game recommendation by itself.",
-      ),
-      setting(
-        "better-carriage-destinations.main.bOnlySettlement",
-        "Settlement-only carriage destinations",
-        "1",
-        "Carriages stabilize travel around settlements, so route advice should identify settlement anchors before remote objectives.",
-      ),
-      setting(
         "map-marker-framework.hud.bObscuredUndiscovered",
         "Undiscovered marker HUD obscuring",
         "false",
         "Readable markers help planning, but visible direction is not the same as route safety.",
       ),
       setting(
-        "sunhelm-normal.root.HUNGERRATE",
+        "sunhelm-normal.root.HungerRate",
         "Normal hunger rate",
-        "6.0",
+        "7",
         "Food pressure is active enough that route length and meal access belong in early progression advice.",
       ),
       setting(
@@ -1737,11 +1852,11 @@ const entries: ReferenceEntry[] = [
       {
         title: "The recoverability test",
         paragraphs: [
-          "A safe early route is not a route with no danger. It is a route where a mistake does not strand the character. The player should know the nearest bed, food source, warmth source, vendor, and return path before turning a small job into a long walk.",
-          "This is why Riverwood and Whiterun are stronger teaching hubs than remote quest hooks. They let the player test combat, selling, food, sleep, board work, follower management, and map reading without losing the campaign to one overextended road.",
+          "A good early route is not a route with no danger. It is a route where a mistake does not strand the character. The player should know the nearest bed, food source, warmth source, vendor, and return path before turning a delivery into a long walk.",
+          "This is why Riverwood and Whiterun are stronger teaching hubs than remote quest hooks. They let the player test combat, selling, food, sleep, board jobs, follower management, and map reading without losing the campaign to one overextended road.",
         ],
         bullets: [
-          "Stable: short road, known bed, known vendor, affordable food, familiar retreat.",
+          "Stable: known road, known bed, known vendor, affordable food, familiar retreat.",
           "Scouting: unknown road, visible return path, no heavy loot commitment, enough supplies to turn around.",
           "Commitment: remote dungeon, cold corridor, boss marker, dragon risk, new-land travel, or quest state that may not release the player quickly.",
         ],
@@ -1749,14 +1864,14 @@ const entries: ReferenceEntry[] = [
       {
         title: "Reading work before accepting it",
         paragraphs: [
-          "Missives and bounties should be explained as local risk signals. The easy-work weighting makes boards useful for early stabilization, but the player still has to inspect distance, terrain, weather, and nearby recovery. A letter delivery can be reasonable from the right hub and poor from the wrong one.",
+          "Missives and bounties should be explained as local risk signals. The board weighting makes town jobs useful for early stabilization, but the player still has to inspect distance, terrain, weather, and nearby recovery. A letter delivery can be reasonable from the right hub and poor from the wrong one.",
           "Bounty payouts should be treated as warning labels as much as rewards. Bandit work can fund early gear when the route is close and retreatable. Giant and dragon rewards should tell the player that the task belongs to a later readiness tier unless they have specific tools and a recovery plan.",
         ],
       },
       {
         title: "Return rules",
         paragraphs: [
-          "The guide should normalize leaving. If the player reaches cold weather underfed, sees a boss bar, burns through potions before the objective, or finds that the map route keeps stretching away from services, the correct Authoria answer is often to return to the hub.",
+          "Leaving is normal. If you reach cold weather underfed, see a boss bar, burn through potions before the objective, or find that the map route keeps stretching away from services, the correct Authoria answer is often to return to the hub.",
           "Followers do not erase this rule. A follower can make combat safer, but they can also add management overhead and make overconfidence more expensive. The local follower stat scale supports cautious party advice: bring help for readability and stability, not to bypass route planning.",
         ],
         bullets: [
@@ -1903,7 +2018,7 @@ const entries: ReferenceEntry[] = [
       {
         title: "Camera and readability",
         paragraphs: [
-          "True Directional Movement is part of the combat explanation because camera behavior and target lock affect how readable commitment-heavy fights feel. The article should tell players to treat spacing, lock use, camera control, and manual retreat paths as part of combat skill.",
+          "True Directional Movement matters because camera behavior and target lock affect how readable commitment-heavy fights feel. Treat spacing, lock use, camera control, and manual retreat paths as part of combat skill.",
         ],
       },
     ],
@@ -1929,21 +2044,21 @@ const entries: ReferenceEntry[] = [
     strapline:
       "Travel is part of the challenge loop; winter, distance, weather, food, and map readability all change route quality.",
     summary:
-      "Survival turns movement into a real decision. Food, fatigue, cold, seasons, camping, maps, and Requiem pressure all affect whether a route is a quick errand or a bad idea.",
+      "Survival turns movement into a real decision. Food, thirst, fatigue, cold, seasons, camping, maps, and Requiem pressure all affect whether a route is recoverable.",
     tags: ["survival", "travel", "seasons", "map", "camping"],
     playerExperience: [
-      "The player needs to think about supplies and return paths before accepting distant work.",
-      "Season choice is not flavor if cold, daylight, and travel burden are active.",
-      "Map support changes whether a region is readable or intimidating.",
+      "The player needs to think about food, water, fatigue, warmth, daylight, and return paths before accepting distant work.",
+      "Season choice is not flavor if cold, daylight, weather, and travel burden are active.",
+      "Map support helps route planning, but a visible marker does not say whether you can survive the road.",
     ],
     progressionImpact: [
-      "A safe early quest can become unsafe if it requires long cold travel with poor resupply.",
-      "Hub guides need survival and map notes, not only enemy notes.",
+      "A low-combat errand can fail before the fight starts if hunger, thirst, fatigue, cold, darkness, or wet weather has already spent the recovery buffer.",
+      "Northern roads, mountain routes, and remote inns ask for survival planning as much as combat planning: food, warmth, water, bed access, and a return option.",
     ],
     practicalGuidance: [
-      "Plan food, fatigue, cold, rest, camping, and resupply together.",
-      "Decide whether a route is a day trip, overnight risk, or campaign departure.",
-      "Treat winter as a progression modifier.",
+      "Check food, water, fatigue, warmth, daylight, and bed access before the objective, not after trouble starts.",
+      "Decide whether a route is a town errand, road errand, overnight risk, or campaign departure.",
+      "Treat winter and northern exposure as progression pressure: the route may need gear or timing before it needs bravery.",
     ],
     uxTouchpoints: [
       "SunHelm",
@@ -1954,13 +2069,13 @@ const entries: ReferenceEntry[] = [
     ],
     settingQuotes: [
       setting(
-        "sunhelm-normal.root.HUNGERRATE",
+        "sunhelm-normal.root.HungerRate",
         "Normal hunger rate",
         "7",
         "The baseline survival profile expects food planning during normal travel.",
       ),
       setting(
-        "sunhelm-hard.root.HUNGERRATE",
+        "sunhelm-hard.root.HungerRate",
         "Hard hunger rate",
         "9",
         "Hard survival increases route cost and should be described as a different planning mode.",
@@ -1970,18 +2085,6 @@ const entries: ReferenceEntry[] = [
         "SunHelm fast-travel disable",
         "0",
         "The normal SunHelm profile does not disable fast travel by itself, so map/travel friction should be attributed precisely.",
-      ),
-      setting(
-        "inns-can-be-closed.general.iFullChance",
-        "Inn full chance",
-        "33",
-        "Beds are not guaranteed on every stop, so overnight routes should include backup recovery plans.",
-      ),
-      setting(
-        "camping-expansion.beta.iShelterAsset",
-        "Camping shelter asset",
-        "1",
-        "Camping support is configured, making shelter part of travel planning rather than a decorative feature.",
       ),
       setting(
         "stress-and-fear.settings.iStressRate",
@@ -2001,12 +2104,12 @@ const entries: ReferenceEntry[] = [
       {
         title: "Winter is a progression rule",
         paragraphs: [
-          "Season choice belongs in early progression guidance because it changes how expensive distance feels. A low-level character who can solve a summer errand may still be poorly prepared for a northern or exposed winter route. The player needs to know whether a destination is safe because of enemy level, supply access, weather, or all three.",
+          "Season choice belongs in early progression guidance because it changes how expensive distance feels. A low-level character who can solve a summer errand may still be poorly prepared for a northern or exposed winter route. The player needs to know whether a destination is workable because of enemy level, supply access, weather, or all three.",
           "Survival settings matter because they decide what travel costs. Hunger, thirst, fatigue, cold, widgets, rest, and water access form a travel loadout just like weapons and armor form a combat loadout.",
           "Local inn and camping presets make recovery less abstract. Inns can be full, while camping has configured shelter support. That means an overnight route should mention backup shelter, return plans, and whether the player can recover if the expected bed fails.",
         ],
         bullets: [
-          "Mention the nearest bed or safe interior on travel-heavy routes.",
+          "Mention the nearest bed, warm interior, or recovery stop on travel-heavy routes.",
           "Give a backup plan when a route assumes an inn bed.",
           "Explain whether map markers and paper maps make the route readable.",
           "Separate local roads, overnight travel, and expedition travel.",
@@ -2076,37 +2179,19 @@ const entries: ReferenceEntry[] = [
         "missives.general.iEasyQuestChance",
         "Easy missive chance",
         "75",
-        "Boards are weighted toward safer jobs, making towns useful early stabilization hubs.",
+        "Boards are weighted toward lower-risk jobs, making towns useful early stabilization hubs.",
       ),
       setting(
         "missives.general.iVeryHardQuestChance",
         "Very hard missive chance",
         "0",
-        "Very hard board work is disabled locally, reducing accidental overcommitment from missive boards.",
+        "Very hard board jobs are disabled locally, reducing accidental overcommitment from missive boards.",
       ),
       setting(
         "missives.courierquests.iEasyLetterDeliveryReward",
         "Easy delivery reward",
         "100",
         "Low-risk errands have enough cash value to matter for food, rooms, and early supplies.",
-      ),
-      setting(
-        "bounty-hunter.main.fBanditBountyReward",
-        "Bandit bounty reward",
-        "500",
-        "Bandit bounties can fund meaningful upgrades, but they still require combat readiness.",
-      ),
-      setting(
-        "bounty-hunter.main.fGiantBountyReward",
-        "Giant bounty reward",
-        "1000.000000",
-        "Higher bounty pay signals a serious fight, not an efficient early shortcut.",
-      ),
-      setting(
-        "bounty-hunter.main.fDragonBountyReward",
-        "Dragon bounty reward",
-        "2500.000000",
-        "Dragon bounties are campaign-scale money and should be discussed separately from normal errands.",
       ),
       setting(
         "simple-hunting-overhaul.carcassrewards.iSmall",
@@ -2133,18 +2218,18 @@ const entries: ReferenceEntry[] = [
         paragraphs: [
           "The useful player question is not only whether an armor is craftable. It is how the player is expected to climb from vulnerable gear to adequate gear without accidentally starting a campaign-scale quest.",
           "The local Missives preset answers part of that question: easy jobs are common, very hard jobs are disabled, and delivery/gathering rewards are large enough to pay for early survival costs. That turns town boards into progression infrastructure, not filler content.",
-          "Bounty presets add the other half of the loop: bandits pay substantially more than a letter delivery, while giants and dragons pay more because they belong to a different readiness tier. The guide should teach players to read reward size as risk language.",
-          "Hunting sits between survival and economy. Carcass rewards can fund early supplies, but processing takes time and exposure. A route guide should only recommend hunting where the player can safely stop, recover, and carry the result.",
+          "Bounty presets add the other half of the loop: bandits pay substantially more than a letter delivery, while giants and dragons pay more because they belong to a different readiness tier. Read reward size as risk language.",
+          "Hunting sits between survival and economy. Carcass rewards can fund early supplies, but processing takes time and exposure. Hunt where you can stop, recover, and carry the result without losing the route.",
         ],
       },
       {
         title: "Gear enters the world through play",
         paragraphs: [
-          "The old guide said modded armors and weapons are not craftable and are instead bought, looted, or found in new chests. The deeper guide should explain the consequence: crafting is not the only route to power, and the player is expected to engage with merchants, bandits, dungeons, and local economy loops.",
+          "The old guide said modded armors and weapons are not craftable and are instead bought, looted, or found in new chests. The consequence is practical: crafting is not the only route to power, and the player is expected to engage with merchants, bandits, dungeons, and local economy loops.",
           "Itemization articles should distinguish combat gear, display gear, replicas, and quest artifacts. Legacy of the Dragonborn replica nerfs are important because museum completion should not be mistaken for combat readiness unless a local exception preserves artifact properties.",
         ],
         bullets: [
-          "Use board work to fund food, rooms, training, and small gear upgrades.",
+          "Use deliveries, gathering requests, and nearby errands to fund food, rooms, training, and small gear upgrades.",
           "Treat bandit loot as risk-managed gear acquisition, not guaranteed early income.",
           "Treat giant and dragon bounties as readiness tests, not attractive early income.",
           "Treat hunting as route work: safe terrain and recovery matter as much as the carcass reward.",
@@ -2184,7 +2269,7 @@ const entries: ReferenceEntry[] = [
       "Choose companions for route and tone, not only popularity.",
     ],
     progressionImpact: [
-      "Follower access can change what is safe early, but Authoria is not assuming full-strength custom follower power.",
+      "Follower access can change what is recoverable early, but Authoria is not assuming full-strength custom follower power.",
       "Follower weakening and local balance settings are essential context for party size advice.",
       "Follower support is strongest when matched to the route: travel companions for roads, story companions for arcs, specialists for themed spaces, and combat companions for dangerous open-world work.",
     ],
@@ -2215,14 +2300,14 @@ const entries: ReferenceEntry[] = [
         paragraphs: [
           "A good companion guide helps readers choose a party strategy instead of browsing installed follower mods. Recruitment, early safety, combat role, chatter density, travel utility, party-size expectations, and quest interactions all matter.",
           "Requiem danger and custom followers can pull in opposite directions. Followers add safety, utility, and personality, but unmanaged party power can erase the intended risk curve.",
-          "Authoria reins in follower strength while still allowing party play. That does not make every follower weak in every circumstance, but it does mean the guide should not assume followers are meant to carry the campaign.",
+          "Authoria reins in follower strength while still allowing party play. That does not make every follower weak in every circumstance, but it does mean followers should not be treated as campaign carries.",
         ],
       },
       {
         title: "What followers change",
         paragraphs: [
           "A follower changes more than damage output. Travel can be smoother, story routes can be richer, and management overhead rises.",
-          "Follower transport and interruption controls should be presented as friction reduction. They make a party easier to live with, but they do not remove the need to choose safe routes, manage supplies, or retreat from fights that still overmatch the character.",
+          "Follower transport and interruption controls should be presented as friction reduction. They make a party easier to live with, but they do not remove the need to choose recoverable routes, manage supplies, or retreat from fights that still overmatch the character.",
         ],
         bullets: [
           "Use one companion when the goal is tone, commentary, or light safety.",
@@ -2233,7 +2318,7 @@ const entries: ReferenceEntry[] = [
       {
         title: "How to choose a party",
         paragraphs: [
-          "A companion is a route decision. A combat-heavy follower can open dangerous roads sooner; a story-heavy follower can make long quest arcs more vivid; a utility follower can reduce friction around locks, ranged pressure, or survival. The guide should help players choose for the next ten hours, not only for favorite dialogue.",
+          "A companion is a route decision. A combat-heavy follower can open dangerous roads sooner; a story-heavy follower can make long quest arcs more vivid; a utility follower can reduce friction around locks, ranged pressure, or survival. Choose for the next ten hours, not only for favorite dialogue.",
           "Party size also changes clarity. More followers can make fights safer but noisier, pathing more fragile, and story pacing more crowded. Companion pages should state whether they are best as a solo partner, one member of a small party, or a high-banter campaign companion.",
         ],
         bullets: [
@@ -2300,7 +2385,7 @@ const entries: ReferenceEntry[] = [
           {
             title: "Evidence questions",
             paragraphs: [
-              "This page should be grounded in ARR evidence and in-game verification: where the companion enters play, what they change about safe routes, and whether they interact with large quest arcs or other major companions.",
+              "This page should be grounded in ARR evidence and in-game verification: where the companion enters play, what they change about recoverable routes, and whether they interact with large quest arcs or other major companions.",
             ],
           },
         ],
@@ -2323,23 +2408,23 @@ const entries: ReferenceEntry[] = [
     publicationStatus: "evidence-backed",
     title: "Riverwood and Whiterun Early Hub",
     strapline:
-      "Use Riverwood and Whiterun as your first safety loop: beds, food, vendors, short work, and roads you can learn before ambition takes over.",
+      "Use Riverwood and Whiterun as your first recovery loop: beds, food, vendors, Missives jobs, and roads you can learn before ambition takes over.",
     summary:
-      "This is the first place to practice Authoria's rhythm. Rest before leaving, sell before you overload, buy food before luxuries, take short work before remote quests, and treat nearby dungeons as readiness checks rather than automatic first stops.",
-    tags: ["region", "early game", "whiterun", "riverwood", "safe route"],
+      "This is the first place to practice Authoria's rhythm. Rest before leaving, sell before you overload, buy food before luxuries, use deliveries and gathering requests to fund supplies, and treat nearby dungeons as readiness checks rather than automatic first stops.",
+    tags: ["region", "early game", "whiterun", "riverwood", "recoverable route"],
     playerExperience: [
-      "This corridor turns survival rules into routine: sleep, eat, sell, buy, take work, test roads, and come back before trouble compounds.",
-      "A good early hub reduces confusion without pretending Requiem danger is gone.",
-      "The route is useful because mistakes are more recoverable here than on remote roads or inside long quest arcs.",
+      "This corridor turns survival rules into routine: sleep, eat, sell, buy, take a delivery or gathering job, test roads, and come back before trouble compounds.",
+      "A good first hub reduces confusion without pretending Requiem danger is gone.",
+      "The route is useful because mistakes are more recoverable here than on remote roads or inside long quest arcs: a bad fight, missed meal, or heavy loot load can still be corrected.",
     ],
     progressionImpact: [
-      "Stable hubs let fragile characters build money and gear before campaign arcs.",
-      "Treat nearby caves, ruins, cold roads, and large quest hooks as later choices until the character has tools and a return plan.",
-      "Short work can stabilize a character; distant work can become a survival problem even when the reward looks modest.",
+      "Reliable hubs let new characters build money and gear before campaign arcs.",
+      "Treat nearby caves, ruins, cold roads, and large quest hooks as later choices until the character has damage, armor, resistances, supplies, and a return plan.",
+      "Delivery and gathering jobs can stabilize a character; distant work can become a survival problem even when the reward looks modest.",
     ],
     practicalGuidance: [
       "Start with a bed, food, a vendor, and a known road back.",
-      "Use local errands, delivery work, and short board jobs before major dungeon pushes.",
+      "Use Missives deliveries, gathering requests, nearby errands, and familiar roads before major dungeon pushes.",
       "Treat Bleak Falls-style ambition, giant work, dragon hooks, cold corridors, and remote ruins as later readiness checks.",
       "Recruit help only when it supports the route; do not use followers as permission to ignore food, rest, and retreat.",
     ],
@@ -2360,20 +2445,21 @@ const entries: ReferenceEntry[] = [
     ],
     sections: [
       {
-        title: "Do the small loop first",
+        title: "Practice the recovery loop",
         paragraphs: [
-          "Riverwood and Whiterun are useful because they let you practice Authoria without committing to a long absence from safety. Sell what you do not need, buy food, check bed access, inspect short work, and learn which roads you can walk without burning your whole recovery buffer.",
-          "A safe loop is not harmless. It is recoverable. If a fight, cold night, bad road, or missed meal goes wrong, this corridor gives you a reasonable chance to return to a bed, vendor, and food source before the mistake becomes the whole session.",
+          "Riverwood and Whiterun are useful because they let you practice Authoria without committing to a long absence from safety. Sell what you do not need, buy food, check bed access, inspect delivery and gathering jobs, and learn which roads you can walk without burning your whole recovery buffer.",
+          "A recoverable loop is not harmless. It is a route where failure has an exit. If a fight, cold night, bad road, or missed meal goes wrong, this corridor gives you a reasonable chance to return to a bed, vendor, and food source before the mistake becomes the whole session.",
         ],
       },
       {
-        title: "Short work is not filler",
+        title: "Board jobs fund the first week",
         paragraphs: [
-          "Short local work is how a fragile character turns the first week into food, rooms, repairs, and better equipment. Delivery work, nearby errands, and modest board jobs are stabilization tools when the route is close enough to return from.",
-          "Do not read easy work as guaranteed safety. A simple job can still become a bad choice if it sends you through cold weather, darkness, hostile terrain, or a road with no useful retreat.",
+          "Delivery and gathering jobs are how a new character turns the first week into food, rooms, repairs, and better equipment. Start with the Missives board when the road home is obvious: a delivery, a gathering request, a nearby errand, or a familiar road that can be abandoned cleanly.",
+          "Selling loot, scouting one familiar road, or doing a town errand counts as progress because it teaches the local economy without forcing a dungeon commitment.",
+          "Do not read lower-risk work as guaranteed safety. A simple job can still become a bad choice if it sends you through cold weather, darkness, hostile terrain, or a road with no useful retreat.",
         ],
         bullets: [
-          "Stable: a short road, known bed, vendor access, affordable food, and a familiar retreat.",
+          "Stable: a known road, known bed, vendor access, affordable food, and a familiar retreat.",
           "Scouting: an unknown road with enough supplies to turn around before the objective.",
           "Delay: remote ruins, long cold routes, boss markers, dragon risk, new-land travel, and quest hooks that may not release you quickly.",
         ],
@@ -2405,12 +2491,12 @@ const entries: ReferenceEntry[] = [
     related: ["survival-seasons-and-travel", "route-readiness-and-return-rules"],
   }),
   ...[
-    ["falkreath-hub", "Falkreath Hub", "Use Falkreath as a second-step forest hub: short work, supplies, scouting, and a quick return before the woods pull you too far."],
-    ["riften-ivarstead-corridor", "Riften and Ivarstead Corridor", "A travel corridor where road safety, resupply, and quest temptation need explicit staging."],
-    ["solitude-hub", "Solitude Hub", "A high-service hub that can stabilize money and travel but may tempt overcommitment."],
-    ["windhelm-hub", "Windhelm Hub", "A cold-weather hub where season and survival pressure should be first-class guidance."],
-    ["winterhold-hub", "Winterhold Hub", "A harsh northern hub where magic ambition and exposure risk need to be documented together."],
-    ["markarth-hub", "Markarth Hub", "A western hub whose roads, terrain, and local quest density require stronger risk warnings."],
+    ["falkreath-hub", "Falkreath Hub", "Use Falkreath as a second-step forest hub: deliveries, gathering, food, recovery, and a return plan before the woods pull you too far."],
+    ["riften-ivarstead-corridor", "Riften and Ivarstead Corridor", "Stage this corridor around recovery, road legs, mountain pressure, and city hooks instead of chasing every visible marker."],
+    ["solitude-hub", "Solitude Hub", "Use Solitude as a service reset, then choose one faction, museum, coast, or road commitment deliberately."],
+    ["windhelm-hub", "Windhelm Hub", "Treat Windhelm as a cold-weather recovery anchor where warmth, food, fatigue, and the return leg matter before the next road."],
+    ["winterhold-hub", "Winterhold Hub", "Make Winterhold a deliberate College or northern trip, with spell ambition, cold exposure, and the route south planned together."],
+    ["markarth-hub", "Markarth Hub", "Use Markarth as a western base, then separate city errands from Dwemer, Forsworn, mine, cave, and terrain commitments."],
   ].map(([slug, title, strapline]) => {
     const detail = regionDetails[slug];
 
@@ -2418,7 +2504,16 @@ const entries: ReferenceEntry[] = [
       slug,
       kind: "regionGuide",
       section: "regions",
-      ...(slug === "falkreath-hub" ? { publicationStatus: "evidence-backed" as const } : {}),
+      ...([
+        "falkreath-hub",
+        "riften-ivarstead-corridor",
+        "solitude-hub",
+        "windhelm-hub",
+        "winterhold-hub",
+        "markarth-hub",
+      ].includes(slug)
+        ? { publicationStatus: "evidence-backed" as const }
+        : {}),
       title,
       strapline,
       summary:
@@ -2435,27 +2530,21 @@ const entries: ReferenceEntry[] = [
         ],
       practicalGuidance:
         detail?.practicalGuidance ?? [
-          "Capture beds, vendors, food, boards, carriages, safe roads, and avoid-until-ready routes.",
+          "Capture beds, vendors, food, Missives boards, carriage options, recoverable roads, and avoid-until-ready routes.",
         ],
       uxTouchpoints: detail?.uxTouchpoints ?? ["Map markers", "Survival widgets", "Missives", "Carriage/travel surfaces"],
       settingQuotes: [
         setting(
           "missives.general.iEasyQuestChance",
-          "Easy board work chance",
+          "Lower-risk board-job chance",
           "75",
-          "Task boards are weighted toward easy work, so hubs can be used for low-commitment stabilization.",
+          "Task boards are weighted toward lower-risk jobs, so hubs can be used for low-commitment stabilization.",
         ),
         setting(
           "missives.general.iVeryHardQuestChance",
-          "Very hard board work chance",
+          "Very hard board-job chance",
           "0",
           "The local preset disables very hard board jobs, reducing accidental overcommitment from town boards.",
-        ),
-        setting(
-          "better-carriage-destinations.main.bOnlySettlement",
-          "Settlement-only carriage destinations",
-          "1",
-          "Travel advice should treat settlements as the intended fast-travel anchors.",
         ),
         setting(
           "map-marker-framework.hud.bObscuredUndiscovered",
@@ -2477,11 +2566,6 @@ const entries: ReferenceEntry[] = [
         ...coreEvidence,
         { label: "Missives task-board preset", path: `${mcm}/MCM/Settings/Missives.ini`, note: "Board work difficulty and reward weights." },
         {
-          label: "Carriage destination preset",
-          path: `${mcm}/MCM/Settings/Better Carriage Destinations.ini`,
-          note: "Settlement-focused travel anchoring.",
-        },
-        {
           label: "Map readability preset",
           path: `${mcm}/SKSE/Plugins/MapMarkerFramework.ini`,
           note: "Paper-map and compass marker visibility settings.",
@@ -2490,6 +2574,21 @@ const entries: ReferenceEntry[] = [
           label: "Atlas marker visibility preset",
           path: `${mcm}/MCM/Settings/atlas map markers.ini`,
           note: "Local marker groups that affect hub and route planning.",
+        },
+        {
+          label: "SunHelm normal profile",
+          path: `${mcm}/SunHelm/Config/normal.json`,
+          note: "Food, thirst, fatigue, cold, and fast-travel survival settings.",
+        },
+        {
+          label: "Local Riften/Ivarstead route evidence",
+          path: "docs/evidence/riften-ivarstead-stage1.md",
+          note: "Read-only houseCARL record findings for the Stage 1 route tranche.",
+        },
+        {
+          label: "Stage 1 route-atlas evidence",
+          path: "docs/evidence/region-route-atlas-stage1.md",
+          note: "Read-only houseCARL and local preset findings for the Solitude, Windhelm, Winterhold, and Markarth route tranche.",
         },
       ],
       verificationNotes: detail?.verificationNotes ?? ["Needs route walk, resupply audit, and local danger labeling."],
@@ -2548,7 +2647,7 @@ const entries: ReferenceEntry[] = [
       evidence: [
         ...coreEvidence,
         { label: "Large-content patch layer", path: xedit, note: "Contains local compatibility and Requiem patches for major quest/worldspace content." },
-        { label: "Map support layer", path: `${arr}/mods/Authoria - FMWF Map Marker Settings`, note: "Supports navigation and worldspace map claims." },
+        { label: "Map support layer", path: arrPaths.authoriaMapMarkers, note: "Supports navigation and worldspace map claims." },
       ],
       verificationNotes: detail?.verificationNotes ?? [
         "Exact trigger requirements should be checked against local plugin records and in-game behavior before final wording.",
@@ -2708,8 +2807,4 @@ export function getRelatedEntries(slugs: string[]) {
 
 export function getSection(section: string) {
   return sectionDefinitions.find((item) => item.slug === section);
-}
-
-export function getArticleHref(entry: ReferenceEntry) {
-  return `/${entry.section}/${entry.slug}`;
 }

@@ -12,7 +12,8 @@ import {
 import type { ReferenceEntry } from "@/lib/content/schema";
 import type { PresetFact } from "@/lib/arr/presets";
 import { EvidenceList } from "@/components/evidence-list";
-import { getArticleHref, getSection } from "@/lib/content/catalog";
+import { getSection } from "@/lib/content/catalog";
+import { getArticleHref } from "@/lib/content/routes";
 
 const headings = {
   systemArticle: "Guide",

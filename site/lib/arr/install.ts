@@ -219,7 +219,7 @@ function parseSelectedProfile(rawIni: string | null) {
     return DEFAULT_PROFILE;
   }
 
-  const match = rawIni.match(/selected_profile=@ByteArray\(([^)]+)\)/);
+  const match = rawIni.match(/selected_profile\s*=\s*@ByteArray\(([^)]+)\)/);
   return match?.[1] ?? DEFAULT_PROFILE;
 }
 
@@ -510,4 +510,3 @@ export const getArrInstallData = cache(async (): Promise<ArrInstallData> => {
         ],
   };
 });
-

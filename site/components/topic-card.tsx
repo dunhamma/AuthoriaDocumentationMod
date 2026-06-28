@@ -11,7 +11,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import type { ReferenceEntry } from "@/lib/content/schema";
-import { getArticleHref } from "@/lib/content/catalog";
+import { getArticleHref } from "@/lib/content/routes";
 
 const kindStyles = {
   systemArticle: {

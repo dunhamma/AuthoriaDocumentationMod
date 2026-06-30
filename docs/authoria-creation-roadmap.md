@@ -36,6 +36,12 @@ creation path:
 The canonical gates are: design intent, MO2/profile change, generated outputs,
 local verification, article update, and release note.
 
+For friend or outside-helper contributions, use
+`docs/contributing/friend-contributor-workflow.md` and keep first PRs focused on
+evidence notes, narrow copy revisions, or one article promotion. Use
+`docs/contributing/pr-sized-task-board.md` to split this roadmap into reviewable
+GitHub issues.
+
 ## Build Output Ownership
 
 Authoria-owned work should stay in existing separated output modules. Each
@@ -80,6 +86,9 @@ Minimum evidence record:
 - claim supported
 - verification status
 - notes or unresolved checks
+
+Use `docs/contributing/evidence-note-template.md` when an evidence pass needs a
+durable maintainer note before a public article changes.
 
 Record-level facts should come from exported data, not binary plugin parsing
 inside the Next app. The site has a dedicated future adapter in

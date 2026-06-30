@@ -1,0 +1,47 @@
+name: Evidence mining task
+description: Mine local ARR or Authoria evidence for a small article, route, system, companion, or quest claim.
+title: "[Evidence] "
+labels: ["needs-triage"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Player or maintainer question
+      description: What question should this evidence help answer?
+      placeholder: Example: Can the Xelzaz plus Wyrmstooth route be promoted without overclaiming recruitment timing?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Small scope
+      description: Keep this to one route, one companion, one quest arc, one system, or one source surface.
+      placeholder: Example: Check Xelzaz recruitment timing and Wyrmstooth local support only.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence to inspect
+      description: Name the local ARR files, Authoria output modules, dossier, or upstream secondary source to inspect.
+      placeholder: |
+        - D:\Wabbajack\modlists\ARR\profiles\Authoria - Requiem Reforged - Main Profile\modlist.txt
+        - docs/evidence/region-route-atlas-stage1.md
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: What should the PR contain?
+      placeholder: |
+        - Evidence note added or updated.
+        - Claims are marked evidence-backed, needs-record-check, needs-playtest, or unsupported.
+        - No public page is promoted unless requested.
+    validations:
+      required: true
+  - type: textarea
+    id: blockers
+    attributes:
+      label: Known blockers or stop rules
+      placeholder: Stop if the local install does not expose trigger timing; record that as a manual or in-game check instead of guessing.

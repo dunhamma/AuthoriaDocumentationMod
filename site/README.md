@@ -46,3 +46,7 @@ terms.
   setting materially supports an article claim.
 - Mark unverified gameplay interpretation as a verification note instead of
   presenting it as final.
+
+Contributor workflow and PR expectations live in
+`../docs/contributing/friend-contributor-workflow.md` and
+`../.github/PULL_REQUEST_TEMPLATE.md`.

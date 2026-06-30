@@ -1,0 +1,56 @@
+name: Almanac article promotion
+description: Promote or revise one public Authoria Almanac page from local evidence.
+title: "[Article] "
+labels: ["needs-triage"]
+body:
+  - type: input
+    id: route
+    attributes:
+      label: Target route or slug
+      placeholder: Example: /regions/riften-ivarstead-corridor
+    validations:
+      required: true
+  - type: dropdown
+    id: article_type
+    attributes:
+      label: Article type
+      options:
+        - systemArticle
+        - companionArticle
+        - regionGuide
+        - questArcGuide
+        - presetFactReference
+        - evidenceDossier
+    validations:
+      required: true
+  - type: textarea
+    id: player_question
+    attributes:
+      label: Player question
+      description: State the player-facing question this page should answer.
+      placeholder: Example: When is Markarth useful as a recovery hub, and what should an early character avoid there?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Required evidence
+      description: List local support needed before the page can be public.
+      placeholder: |
+        - Route, resupply, map, weather, and danger evidence for region pages.
+        - Recruitment, role, follower-balance, and route interaction evidence for companions.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - Page starts with practical player action.
+        - Vanilla Skyrim assumption is explained.
+        - Warnings are concrete and recoverable.
+        - Public source notes are plain English.
+        - `site/lib/content/validation-manifest.mjs` is updated if a new public slug is promoted.
+        - `pnpm lint`, `pnpm build`, and `pnpm validate:content` pass from `site/`.
+    validations:
+      required: true

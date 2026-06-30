@@ -7,6 +7,10 @@ For the end-to-end creation lifecycle that connects playable ARR build work to
 reference-site evidence and release gates, see
 `docs/authoria-creation-roadmap.md`.
 
+For friend-sized contribution planning, see
+`docs/contributing/friend-contributor-workflow.md` and
+`docs/contributing/pr-sized-task-board.md`.
+
 ## Current Site Shape
 
 The public site is organized by player experience instead of installed-mod
@@ -225,6 +229,10 @@ The guide now quotes or interprets local facts from these surfaces:
 - Artifact, replica, and display behavior for Legacy of the Dragonborn.
 - A richer maintainer evidence view that exposes dossiers without making the
   public guide feel like a mod catalog.
+
+The contributor task board breaks these slices into small PRs. Keep new friend
+tasks scoped to one route, one companion, one quest arc, one system claim, or one
+validation improvement.
 
 ## Almanac Kickoff Lessons
 

@@ -19,6 +19,10 @@ technical proof work as public reading.
 Public Almanac pages start at `evidence-backed`. Stronger states are welcome
 but not required for the first public version of a page.
 
+For contributor PRs, prefer evidence-only work before promotion work. The
+friend workflow lives at `docs/contributing/friend-contributor-workflow.md`, and
+small candidate issues live in `docs/contributing/pr-sized-task-board.md`.
+
 ## Promotion Steps
 
 1. **Seed review**
@@ -87,6 +91,11 @@ Next candidates, in order:
    or Requiem behavior until local support is checked.
 5. Expand region danger labels only where local route or dungeon evidence
    supports concrete recovery advice.
+
+When assigning these to a friend, split each candidate into one GitHub issue per
+route, companion, quest arc, or evidence surface. Use the evidence-mining issue
+template for proof-gathering tasks and the article-promotion issue template only
+when the intended output is public copy.
 
 ## Kickoff Lessons
 
